@@ -2,9 +2,19 @@ class ProvisionRequestsController < ApplicationController
   before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
 
   def accept
-    @provision_request.devices.update_all(provisioned: true)
-    @provision_request.accepted!
+    unless @provision_request.accepted?
+      @provision_request.devices.update_all(provisioned: true)
+      @provision_request.accepted!
 
+      mqtt_account = @provision_reqeust.mosquitto_account
+      unless mqtt_account
+        mqtt_account = @provision_request.build_mosquitto_account(superuser: true)
+      end
+    end
+
+    mqtt_account.generate_mqtt_credentials!
+    mqtt_account.save
+    
     respond_to do |format|
       if @provision_request.save
         format.html { redirect_to @provision_request, notice: 'Provision request was successfully accepted.' }
