@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @mosquitto_acl.username %>
+</p>
+
+<p>
+  <strong>Topic:</strong>
+  <%= @mosquitto_acl.topic %>
+</p>
+
+<p>
+  <strong>Rw:</strong>
+  <%= @mosquitto_acl.rw %>
+</p>
+
+<p>
+  <strong>Provision request:</strong>
+  <%= @mosquitto_acl.provision_request %>
+</p>
+
+<%= link_to 'Edit', edit_mosquitto_acl_path(@mosquitto_acl) %> |
+<%= link_to 'Back', mosquitto_acls_path %>

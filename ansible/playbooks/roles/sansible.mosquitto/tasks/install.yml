@@ -1,0 +1,56 @@
+---
+
+- name: Add Mosquitto repository
+  become: yes
+  apt_repository:
+    repo: ppa:mosquitto-dev/mosquitto-ppa
+    state: present
+    update_cache: yes
+    validate_certs: no
+
+- name: Ensure Mosquitto service is installed
+  become: yes
+  apt:
+    name: "mosquitto={{ sansible_mosquitto_version }}"
+    state: present
+
+- name: Ensure Mosquitto clients
+  become: yes
+  apt:
+    name: "mosquitto-clients={{ sansible_mosquitto_version }}"
+    state: present
+  when: sansible_mosquitto_install_clients
+
+- name: Install Pip for boto
+  become: yes
+  apt:
+    name: python-pip
+  when: sansible_mosquitto_aws_enabled
+
+- name: Install boto
+  become: yes
+  pip:
+    name: boto
+  when: sansible_mosquitto_aws_enabled
+
+- name: Add ulimits to Upstart config
+  become: yes
+  lineinfile:
+    line: "limit nofile {{ sansible_mosquitto_limits_nofile_soft }} {{ sansible_mosquitto_limits_nofile_hard }}"
+    dest: /etc/init/mosquitto.conf
+    regexp: "^limit nofile"
+    create: yes
+  when: ansible_service_mgr == 'upstart'
+  notify:
+    - restart mosquitto
+
+- name: Add ulimits to Sysvinit config
+  become: yes
+  lineinfile:
+    insertafter: "^umask"
+    line: "ulimit -Hn {{ sansible_mosquitto_limits_nofile_hard }} && ulimit -Sn {{ sansible_mosquitto_limits_nofile_soft }}"
+    dest: /etc/init.d/mosquitto
+    regexp: '^ulimit'
+  when: ansible_service_mgr == 'sysvinit'
+  notify:
+    - restart mosquitto

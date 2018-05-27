@@ -1,0 +1,4 @@
+all:
+  hosts:
+    10.0.1.119:
+      ansible_user: pi

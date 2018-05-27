@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @mosquitto_account.username %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @mosquitto_account.password %>
+</p>
+
+<p>
+  <strong>Superuser:</strong>
+  <%= @mosquitto_account.superuser %>
+</p>
+
+<p>
+  <strong>Provision request:</strong>
+  <%= @mosquitto_account.provision_request %>
+</p>
+
+<%= link_to 'Edit', edit_mosquitto_account_path(@mosquitto_account) %> |
+<%= link_to 'Back', mosquitto_accounts_path %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= @provision_request.friendly_name %><br/>
+  <%= @provision_request.friendly_location %><br/>
+  <%= @provision_request.manufacturer %>, <%= @provision_request.model %><br />
+  <b>serial number:</b> <%= @provision_request.serial_number %>
+</p>
+<p>
+  <strong>Pin:</strong>
+  <%= @provision_request.pin %>
+</p>
+
+<p>
+  <strong>IP Address:</strong>
+  <%= @provision_request.ip_address %>
+</p>
+
+<% if @provision_request.unanswered? %>
+<a href='<%= accept_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-success">Accept</button></a><a href='<%= deny_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-danger">Deny</button></a>
+<% end %>
+
+<% if @provision_request.accepted? %>
+<strong>Accepted</strong>
+<% end %>
+
+<% if @provision_request.denied? %>
+<strong>Denied</strong>
+<% end %>
+
+<p>
+<%= link_to 'Edit', edit_provision_request_path(@provision_request) %> |
+<%= link_to 'Back', provision_requests_path %>
+</p>

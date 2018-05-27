@@ -1,0 +1,7 @@
+##
+# {{ ansible_managed }}
+
+{% for option, value in sansible_mosquitto_settings.iteritems() %}
+{{ option }} {% if value == true %}true{% elif value == false %}false{% else %}{{ value }}{% endif %}
+
+{% endfor %}

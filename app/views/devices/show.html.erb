@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Provisioned:</strong>
+  <%= @device.provisioned %>
+</p>
+
+<p>
+  <strong>Friendly name:</strong>
+  <%= @device.friendly_name %>
+</p>
+
+<p>
+  <strong>Friendly Location:</strong>
+  <%= @device.friendly_name %>
+</p>
+
+<p>
+  <strong>Accuracy:</strong>
+  <%= @device.accuracy %>
+</p>
+
+<p>
+  <strong>Precision:</strong>
+  <%= @device.precision %>
+</p>
+
+<p>
+  <strong>Update frequency:</strong>
+  <%= @device.update_frequency %>
+</p>
+
+<p>
+  <strong><%= link_to "Provision request", @device.provision_request %></strong>
+</p>
+
+<%= link_to 'Edit', edit_device_path(@device) %> |
+<%= link_to 'Back', devices_path %>

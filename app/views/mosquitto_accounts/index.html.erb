@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Mosquitto Accounts</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Superuser</th>
+      <th>Provision request</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @mosquitto_accounts.each do |mosquitto_account| %>
+      <tr>
+        <td><%= mosquitto_account.username %></td>
+        <td><%= mosquitto_account.password %></td>
+        <td><%= mosquitto_account.superuser %></td>
+        <td><%= mosquitto_account.provision_request %></td>
+        <td><%= link_to 'Show', mosquitto_account %></td>
+        <td><%= link_to 'Edit', edit_mosquitto_account_path(mosquitto_account) %></td>
+        <td><%= link_to 'Destroy', mosquitto_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Mosquitto Account', new_mosquitto_account_path %>

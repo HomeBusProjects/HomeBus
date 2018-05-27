@@ -1,0 +1,111 @@
+---
+- hosts: all
+  gather_facts: true
+  become: true
+  become_user: root
+  vars:
+    ruby_version: 2.5.1 
+    rbenv:
+      env: user
+      version: v1.1.1
+      default_ruby:  "{{ ruby_version }}"
+      rubies:
+        - version:  "{{ ruby_version }}"
+      database_name: homebus 
+      database_user_password: foobar
+      database_admin_password: foobar
+  roles:
+    - name: bennojoy.ntp
+      tags: ntp
+
+    - name: yatesr.timezone
+      tags: timezone
+      timezone: America/Los_Angeles
+
+    - name: sansible.mosquitto
+      tags: mosquitto
+      sansible_mosquitto_install_clients: yes
+      sansible_mosquitto_settings:
+        allow_anonymous: yes
+        persistence: yes
+      sansible_mosquitto_user_list:
+        admin: $6$I3wI4LEXWVpWrZXZ$s47STC9s8xElXiOQgoHIKIq1QidizZmAGMxxj/agdQ8wAzpXn3GOZJcMEm4PwiRsZb38g/zh4ocMp2ZY7SuDcQ==
+
+    - name: geerlingguy.redis
+      tags: redis
+      redis_bind_interface: 0.0.0.0
+      redis_save:
+        - 900 1
+        - 300 10
+        - 60 10000
+      redis_rdbcompression: "yes"
+      redis_dbfilename: dump.rdb
+      redis_dbdir: /var/lib/redis
+      redis_requirepass: ""
+
+    - name: pwelch.avahi
+      avahi_hostname: "HomeBus"
+      avahi_domain: "local"
+      avahi_useipv6:  yes 
+      avahi_install_utils: true
+      tags: avahi
+
+    - name: geerlingguy.nodejs
+      tags: node
+
+    - name: node-red
+      tags: node
+
+    - name: zzet.rbenv
+      tags: ruby 
+      env: user
+      default_ruby: "{{ ruby_version }}"
+      rubies:
+        - version: "{{ ruby_version }}"
+      rbenv_plugins:
+        - { name: "rbenv-vars",
+            repo: "https://github.com/rbenv/rbenv-vars.git",
+            version: "v1.2.0" }
+        - { name: "ruby-build",
+            repo: "https://github.com/rbenv/ruby-build.git",
+            version: "master" }
+        - { name: "rbenv-default-gems",
+            repo: "https://github.com/rbenv/rbenv-default-gems.git",
+            version: "v1.0.0" }
+      rbenv_users: [ "homebus", "romkey" ]
+
+    - name: ANXS.postgresql
+      tags: postgresql 
+      postgresql_version: 10
+      postgresql_databases:
+        - name: homebus_production
+          owner: homebus_prod
+          hstore: yes
+      postgresql_users:
+        - name: homebus_prod
+          db: homebus_production
+          pass: md5d1825347842ed194f50f176f0717cb31
+          encrypted: yes
+        - name: mosquitto
+          db: homebus_production
+          pass: foobar23
+          encrypted: yes
+# needs a GRANT SELECT on mosquitto_accounts and mosquitto_acls
+# grant select on mosquitto_accounts to mosquitto;
+# grant select on mosquitto_acls to mosquitto;
+        - name: postgres
+          pass: md53175bce1d3201d16594cebf9d7eb3f9d
+          encrypted: yes
+          priv: "ALL"
+
+    - name: geerlingguy.nginx          
+      tags: nginx 
+
+    - name: ocha.yarn
+      tags: yarn
+
+    - name: homebus
+      tags: homebus
+      homebus_database: homebus_production
+      mosquitto_database_username: mosquitto
+      mosquitto_database_password: foobar

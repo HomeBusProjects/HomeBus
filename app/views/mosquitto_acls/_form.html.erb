@@ -1,0 +1,37 @@
+<%= form_with(model: mosquitto_acl, local: true) do |form| %>
+  <% if mosquitto_acl.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(mosquitto_acl.errors.count, "error") %> prohibited this mosquitto_acl from being saved:</h2>
+
+      <ul>
+      <% mosquitto_acl.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= form.label :topic %>
+    <%= form.text_field :topic %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rw %>
+    <%= form.check_box :rw %>
+  </div>
+
+  <div class="field">
+    <%= form.label :provision_request %>
+    <%= form.text_field :provision_request %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

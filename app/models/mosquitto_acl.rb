@@ -1,0 +1,2 @@
+class MosquittoAcl < ApplicationRecord
+end

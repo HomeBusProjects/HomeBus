@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pin: MyString
+  ip_adress: 
+  wo_topics: MyString
+  ro_topics: MyString
+  status: 
+
+two:
+  pin: MyString
+  ip_adress: 
+  wo_topics: MyString
+  ro_topics: MyString
+  status: 

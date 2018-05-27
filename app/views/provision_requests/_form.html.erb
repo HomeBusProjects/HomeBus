@@ -1,0 +1,42 @@
+<%= form_with(model: provision_request, local: true) do |form| %>
+  <% if provision_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(provision_request.errors.count, "error") %> prohibited this provision_request from being saved:</h2>
+
+      <ul>
+      <% provision_request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :pin %>
+    <%= form.text_field :pin %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ip_adress %>
+    <%= form.text_field :ip_adress %>
+  </div>
+
+  <div class="field">
+    <%= form.label :wo_topics %>
+    <%= form.text_field :wo_topics %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ro_topics %>
+    <%= form.text_field :ro_topics %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,41 @@
+---
+- name: create postgresql
+  user: 
+    name:  postgres
+    system: yes 
+   
+- name: install postgresql
+  apt: name="{{ item }}" state=latest
+  loop:
+    - postgresql 
+    - libpq-dev
+    - postgresql-client
+    - postgresql-common
+    - postgresql-contrib
+    - postgresql-doc
+
+- name: make sure postgresql is running
+  service:
+    name: postgresql
+    state: started
+
+- name: create users
+  postgresql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.pass }}"
+    encrypted: "{{ item.encrypted }}"
+  become: yes 
+  become_user: postgres 
+  with_items: "{{ postgresql_users }}"
+  when: postgresql_users|length > 0 
+
+- name: add postgresql databases
+  postgresql_db:
+    name: "{{ item.name }}"
+    owner: "{{ item.owner  | default(omit) }}"
+    state: present
+  become: yes 
+  become_user: postgres 
+  with_items: "{{postgresql_databases }}"
+  when: postgresql_users|length > 0
+

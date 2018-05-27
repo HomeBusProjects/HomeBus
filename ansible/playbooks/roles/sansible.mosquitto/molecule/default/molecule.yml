@@ -1,0 +1,37 @@
+---
+
+driver:
+  name: docker
+
+platforms:
+  - name: sansible_mysql-trusty
+    image: ubuntu:trusty
+  - name: sansible_mysql-xenial
+    image: ubuntu:xenial
+
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+
+lint:
+  name: yamllint
+  options:
+    config-data:
+      extends: default
+      ignore: .venv_ansible*
+      rules:
+        line-length:
+          max: 150
+        truthy: disable
+
+dependency:
+  name: galaxy
+
+scenario:
+  name: default
+
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

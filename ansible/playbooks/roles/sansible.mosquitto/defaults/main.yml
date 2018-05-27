@@ -1,0 +1,14 @@
+---
+
+sansible_mosquitto_aws_enabled: no
+sansible_mosquitto_aws_region: eu-west-1
+sansible_mosquitto_aws_s3_files: []
+sansible_mosquitto_install_clients: no
+sansible_mosquitto_limits_nofile_hard: 65535
+sansible_mosquitto_limits_nofile_soft: 65535
+sansible_mosquitto_password_file: ~
+sansible_mosquitto_settings:
+  allow_anonymous: yes
+  persistence: yes
+sansible_mosquitto_user_list: {}
+sansible_mosquitto_version: 1.4.*

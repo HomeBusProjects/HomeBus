@@ -1,0 +1,11 @@
+---
+
+- name: Install Mosquitto
+  include: install.yml
+  tags:
+    - build
+
+- name: Install Mosquitto
+  include: configure.yml
+  tags:
+    - configure

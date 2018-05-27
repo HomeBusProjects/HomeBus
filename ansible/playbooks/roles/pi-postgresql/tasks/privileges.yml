@@ -1,0 +1,13 @@
+---
+- name: postgresql privileges
+  postgresql_privs:
+    database: homebus_production
+    state: present
+    privs: SELECT
+    type: table
+    objs: mosquitto_accounts,mosquitto_acls
+    schema: homebus_production
+    roles: mosquitto
+    grant_option: yes
+  become: yes 
+  become_user: postgres

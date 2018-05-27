@@ -1,0 +1,34 @@
+---
+- name: create node-red user 
+  user: 
+    name:  nodered
+    system: yes
+
+- name: install node-red and packages
+  npm:
+    name: "{{ item }}"
+    global: yes
+    state: latest
+  loop:
+    - node-red
+    - node-red-dashboard
+    - node-red-node-random
+    - node-red-node-feedparser
+    - node-red-twitter
+    - node-red-node-smooth 
+    - node-red-contrib-ifttt
+    - node-red-node-snmp
+    - node-red-contrib-mqtt-json
+    - node-red-node-wol
+    - node-red-node-timeswitch
+    - node-red-node-wemo
+    - node-red-node-openweathermap
+    - node-red-contrib-postgrestor
+    - node-red-contrib-sunpos 
+    - node-red-contrib-persist 
+    - node-red-contrib-openhab2
+    - node-red-contrib-ringdoorbell
+    - node-red-contrib-cpu
+    - forever
+
+#        - node-red-weatherunderground 

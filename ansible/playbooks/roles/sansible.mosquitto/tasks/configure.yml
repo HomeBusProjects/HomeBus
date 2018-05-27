@@ -1,0 +1,41 @@
+---
+
+- name: Download files from S3
+  become: yes
+  s3:
+    bucket: "{{ item.bucket }}"
+    dest: "{{ item.dest }}"
+    mode: get
+    object: "{{ item.path }}"
+    region: "{{ sansible_mosquitto_aws_region }}"
+  with_items: "{{ sansible_mosquitto_aws_s3_files }}"
+  when:
+    - sansible_mosquitto_aws_enabled
+    - sansible_mosquitto_aws_s3_files | length > 0
+
+- name: Secure downloaded S3 files
+  become: yes
+  file:
+    mode: "{{ item.mode }}"
+    path: "{{ item.dest }}"
+  with_items: "{{ sansible_mosquitto_aws_s3_files }}"
+  when:
+    - sansible_mosquitto_aws_enabled
+    - sansible_mosquitto_aws_s3_files | length > 0
+
+- name: Setup password file
+  become: yes
+  template:
+    src: mosquitto.passwd.j2
+    dest: "{{ sansible_mosquitto_password_file }}"
+  when: sansible_mosquitto_password_file is not none
+  notify:
+    - restart mosquitto
+
+- name: Setup local config
+  become: yes
+  template:
+    src: mosquitto.local.conf.j2
+    dest: /etc/mosquitto/conf.d/mosquitto.local.conf
+  notify:
+    - restart mosquitto

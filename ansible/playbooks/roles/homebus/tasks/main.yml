@@ -1,0 +1,30 @@
+---
+- name: install packages
+  apt: name={{ item }} state=latest
+  loop:
+    - openssl
+    - libreadline6-dev
+    - git
+    - git-core
+    - zlib1g
+    - libssl-dev
+    - libyaml-dev
+    - libxml2-dev
+    - libxslt-dev
+    - autoconf
+    - automake
+    - libtool
+    - curl
+    - zlib1g-dev
+
+- name: create homebus user 
+  user: 
+    name:  homebus
+   
+- name: .env
+  template:
+    src: templates/env.j2
+    dest: /home/homebus/.env
+    owner: homebus
+    group: homebus
+    mode: 0400

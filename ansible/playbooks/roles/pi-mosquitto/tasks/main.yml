@@ -1,0 +1,15 @@
+---
+- name: create mosquitto user
+  user: 
+    name:  mosquitto
+    system: yes 
+   
+- name: install mosquitto
+  apt: name={{ item }} state=latest
+  loop:
+    - mosquitto 
+    - mosquitto-auth-plugin
+    - mosquitto-clients
+    - mosquitto-dev
+    - libmosquitto-dev 
+    - libmosquittopp-dev 

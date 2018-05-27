@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Provision Requests</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>UUID</th>
+      <th>Pin</th>
+      <th>IP Address</th>
+      <th>Friendly Name</th>
+      <th>Friendly Location</th>
+      <th>Manufacturer</th>
+      <th>Model</th>
+      <th>Serial Number</th>
+      <th>Status</th>
+      <th>Devices</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @provision_requests.each do |provision_request| %>
+      <tr>
+	<td><%= provision_request.id %></td>
+        <td><%= provision_request.pin %></td>
+        <td><%= provision_request.ip_address %></td>
+        <td><%= provision_request.friendly_name %></td>
+        <td><%= provision_request.friendly_location %></td>
+        <td><%= provision_request.manufacturer %></td>
+        <td><%= provision_request.model %></td>
+        <td><%= provision_request.serial_number %></td>
+        <td><%= provision_request.status %></td>
+	<td><%= provision_request.devices.count %></td>
+        <td><%= link_to 'Show', provision_request %></td>
+        <td><%= link_to 'Edit', edit_provision_request_path(provision_request) %></td>
+        <td><%= link_to 'Destroy', provision_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Provision Request', new_provision_request_path %>

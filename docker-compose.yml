@@ -1,0 +1,47 @@
+version: '3'
+services:
+  homebus-rabbitmq:
+    image: rabbitmq
+    networks: 
+      - homebus-net 
+
+  homebus-postgres:
+    image: postgres:10.3
+    ports:
+      - "5432:5432"
+    networks: 
+      - homebus-net 
+
+# docker-compose run -p 127.0.0.1:3000:3000 homebus-web
+# for some reason "ports" in here hasn't been enough and we still need
+# thte command line option
+  homebus-web:
+    build: .
+#    entrypoint: ["/app/lib/docker-entrypoint.sh"]
+    command: ["bin/rails","server","-b","0.0.0.0","-p","3000"]
+    ports:
+      - "127.0.0.1:3000:3000"
+    links:
+      - homebus-postgres
+      - homebus-rabbitmq
+      - visualizer
+    volumes:
+      - .:/app
+    environment:
+      DOCKER: docker
+      RAILS_ENV: development
+    env_file: .env.docker
+    networks: 
+      - homebus-net 
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - homebus-net
+
+networks:
+  homebus-net:

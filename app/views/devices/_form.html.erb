@@ -1,0 +1,67 @@
+<%= form_with(model: device, local: true) do |form| %>
+  <% if device.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(device.errors.count, "error") %> prohibited this device from being saved:</h2>
+
+      <ul>
+      <% device.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :provisioned %>
+    <%= form.check_box :provisioned %>
+  </div>
+
+  <div class="field">
+    <%= form.label :friendly_name %>
+    <%= form.text_field :friendly_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :manufacturer %>
+    <%= form.text_field :manufacturer %>
+  </div>
+
+  <div class="field">
+    <%= form.label :model_number %>
+    <%= form.text_field :model_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :serial_number %>
+    <%= form.text_field :serial_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accuracy %>
+    <%= form.number_field :accuracy %>
+  </div>
+
+  <div class="field">
+    <%= form.label :precision %>
+    <%= form.number_field :precision %>
+  </div>
+
+  <div class="field">
+    <%= form.label :update_frequency %>
+    <%= form.number_field :update_frequency %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bridge %>
+    <%= form.check_box :bridge %>
+  </div>
+
+  <div class="field">
+    <%= form.label :provision_request_id %>
+    <%= form.text_field :provision_request_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
