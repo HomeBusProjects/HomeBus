@@ -1,7 +1,7 @@
 class MosquittoAccount < ApplicationRecord
   belongs_to :provision_request
 
-  def generate_mqtt_credentials!
+  def generate_password!
     password = _get_random_string(32)
 
     hashed_password = `np -p #{password}`
@@ -9,6 +9,9 @@ class MosquittoAccount < ApplicationRecord
 
     puts "encoded password for device is #{password}"
     self.password = hashed_password
+    self.save
+
+    password
   end
 
   private

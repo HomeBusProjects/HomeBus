@@ -22,12 +22,14 @@ class ProvisionController < ApplicationController
 
     if pr
       if pr.accepted?
+        password = pr.mosquitto_account.generate_password!
+
         response = { uuid: pr.id,
                      status: 'provisioned',
-                     mqtt_hostname: 'localhost',
-                     mqtt_port: 3000,
-                     mqtt_username: 'foo',
-                     mqtt_password: 'bar'
+                     mqtt_hostname: 'homebus',
+                     mqtt_port: 80,
+                     mqtt_username: pr.mosquitto_account.id,
+                     mqtt_password: password
                    }
       else
         response = { uuid: pr.id,
@@ -38,6 +40,9 @@ class ProvisionController < ApplicationController
     else
       pr = ProvisionRequest.create args
       if pr
+        pr.build_mosquitto_account(superuser: true)
+        pr.generate_password!
+
         requested_devices.each do |device|
           dev = pr.devices.create device
         end

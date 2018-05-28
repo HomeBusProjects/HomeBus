@@ -2,19 +2,9 @@ class ProvisionRequestsController < ApplicationController
   before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
 
   def accept
-    unless @provision_request.accepted?
-      @provision_request.devices.update_all(provisioned: true)
-      @provision_request.accepted!
+    @provision_request.devices.update_all(provisioned: true)
+    @provision_request.accepted!
 
-      mqtt_account = @provision_reqeust.mosquitto_account
-      unless mqtt_account
-        mqtt_account = @provision_request.build_mosquitto_account(superuser: true)
-      end
-    end
-
-    mqtt_account.generate_mqtt_credentials!
-    mqtt_account.save
-    
     respond_to do |format|
       if @provision_request.save
         format.html { redirect_to @provision_request, notice: 'Provision request was successfully accepted.' }
@@ -30,6 +20,8 @@ class ProvisionRequestsController < ApplicationController
     @provision_request.devices.update_all(provisioned: false)
     @provision_request.dened!
 
+    @provision_request.mosquitto_account.generate_password!
+
     respond_to do |format|
       if @provision_request.save
         format.html { redirect_to @provision_request, notice: 'Provision request was successfully denied.' }
@@ -44,6 +36,8 @@ class ProvisionRequestsController < ApplicationController
   def revoke
     @provision_request.devices.update_all(provisioned: false)
     @provision_request.revoked!
+
+    @provision_request.mosquitto_account.generate_password!
 
     respond_to do |format|
       if @provision_request.save
