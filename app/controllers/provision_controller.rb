@@ -27,7 +27,7 @@ class ProvisionController < ApplicationController
         response = { uuid: pr.id,
                      status: 'provisioned',
                      mqtt_hostname: 'homebus',
-                     mqtt_port: 80,
+                     mqtt_port: 1883,
                      mqtt_username: pr.mosquitto_account.id,
                      mqtt_password: password
                    }
