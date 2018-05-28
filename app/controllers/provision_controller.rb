@@ -40,8 +40,8 @@ class ProvisionController < ApplicationController
     else
       pr = ProvisionRequest.create args
       if pr
-        pr.build_mosquitto_account(superuser: true)
-        pr.generate_password!
+        ma = pr.build_mosquitto_account(superuser: true)
+        ma.generate_password!
 
         requested_devices.each do |device|
           dev = pr.devices.create device
