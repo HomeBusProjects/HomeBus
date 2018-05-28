@@ -5,7 +5,7 @@
 <table class='table'>
   <thead>
     <tr>
-      <th>Username</th>
+      <th>Username/ID</th>
       <th>Password</th>
       <th>Superuser</th>
       <th>Provision request</th>
@@ -16,7 +16,7 @@
   <tbody>
     <% @mosquitto_accounts.each do |mosquitto_account| %>
       <tr>
-        <td><%= mosquitto_account.username %></td>
+        <td><%= mosquitto_account.id %></td>
         <td><%= mosquitto_account.password %></td>
         <td><%= mosquitto_account.superuser %></td>
         <td><%= mosquitto_account.provision_request %></td>
