@@ -2,16 +2,16 @@ class MosquittoAccount < ApplicationRecord
   belongs_to :provision_request
 
   def generate_password!
-    password = _get_random_string(32)
+    unencoded_password = _get_random_string(32)
 
     hashed_password = `np -p #{password}`
     hashed_password.chomp!
 
-    puts "encoded password for device is #{password}"
+    puts "unencoded password for device is #{unencoded_password}"
     self.password = hashed_password
     self.save
 
-    password
+    return unencoded_password
   end
 
   private

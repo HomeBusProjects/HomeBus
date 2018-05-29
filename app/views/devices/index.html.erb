@@ -5,6 +5,7 @@
 <table class='table'>
   <thead>
     <tr>
+      <th>UUID</th>
       <th>Provisioned</th>
       <th>Friendly name</th>
       <th>Friendly Location</th>
@@ -19,6 +20,7 @@
   <tbody>
     <% @devices.each do |device| %>
       <tr>
+	<td><%= device.id %></td>
         <td><%= device.provisioned ? 'Y' : 'n'  %></td>
         <td><%= device.friendly_name %></td>
         <td><%= device.friendly_location %></td>
