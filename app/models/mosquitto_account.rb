@@ -4,8 +4,14 @@ class MosquittoAccount < ApplicationRecord
   def generate_password!
     unencoded_password = _get_random_string(32)
 
-    hashed_password = `np -i 1000 -p #{unencoded_password}`
-    hashed_password.chomp!
+    hashed_password = ''
+
+    if Rails.env.development?
+      hashed_password = 'this is really not gonna work'
+    else
+      hashed_password = `np -i 1000 -p #{unencoded_password}`
+      hashed_password.chomp!
+    end
 
     puts "unencoded password for device is #{unencoded_password}"
     puts "encoded password for device is #{hashed_password}"
