@@ -48,6 +48,8 @@ class ProvisionController < ApplicationController
         end
       end
 
+      NotifyRequestMailer.with(provision_request: pr).request.deliver_now
+
       response = { uuid: pr.id,
                    status: 'waiting',
                    retry_time: '60'
