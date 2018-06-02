@@ -13,5 +13,6 @@ PIN number <%= @provision_request.pin %> - you may find the PIN printed on the d
 
 <% @provison_request.devices.each do |device| %>
 - Device <%= device.friendly_name %>, <%= device.friendly_location %></li>
+<% end %>
 
 Please <%= link_to @provision_request, "accept or deny the request" %>.
