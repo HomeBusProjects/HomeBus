@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+<h1>Hello from HomeBus</h1>
+
+<p>
+A new device, <%= @provision_request.friendly_name %> - <%= @provision_request.friendly_location %>, would like to access your HomeBus.
+</p>
+
+<ul>
+  <li><%= @provision_request.manufacturer %></li>
+  <li><%= @provision_request.model %></li>
+  <li><%= @provision_request.serial_number %></li>
+</ul>
+<% if @provision_request.pin.present? %>
+PIN number <%= @provision_request.pin %> - you may find the PIN printed on the device or displayed, if it has a display.
+<% end %>
+
+<ul>
+<% @provison_request.devices.each do |device| %>
+<li>Device <%= device.friendly_name %>, <%= device.friendly_location %></li>
+</ul>
+
+Please <%= link_to @provision_request, "accept or deny the request" %>.

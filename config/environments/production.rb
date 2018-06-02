@@ -64,6 +64,23 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "Homebus_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_options = {
+    from: 'homebus@romkey.com',
+    reply_to: 'no-reply@romkey.com',
+  }
+
+  config.action_mailer.smtp_settings = {
+    authentication: :plain,
+    address: ENV.fetch("SMTP_SERVER_ADDRESS"),
+    domain: ENV.fetch("SMTP_DOMAIN"),
+    user_name: ENV.fetch("SMTP_USERNAME"),
+    password: ENV.fetch("SMTP_PASSWORD"),
+    enable_starttls_auto: true,
+    port: 587
+  }
+
+  config.action_mailer.default_url_options = 'homebus.local'
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
