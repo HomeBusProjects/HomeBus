@@ -5,6 +5,11 @@ set :application, 'HomeBus'
 set :repo_url, 'git@github.com:romkey/HomeBus.git'
 set :rbenv_ruby, '2.5.1'
 
+current_branch = `git rev-parse --abbrev-ref HEAD`.strip
+
+# use the branch specified as a param, then use the current branch. If all fails use master branch
+set :branch, ENV['branch'] || current_branch || "master" 
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
@@ -24,6 +29,7 @@ set :format, :airbrussh
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
 append :linked_files, 'config/master.key'
+append :linked_files, '.env'
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", '.bundle'
