@@ -20,7 +20,7 @@ PIN number <%= @provision_request.pin %> - you may find the PIN printed on the d
 <% end %>
 
 <ul>
-<% @provison_request.devices.each do |device| %>
+<% @provision_request.devices.each do |device| %>
 <li>Device <%= device.friendly_name %>, <%= device.friendly_location %></li>
 <% end %>
 </ul>
