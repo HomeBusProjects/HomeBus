@@ -11,7 +11,7 @@ A new device, <%= @provision_request.friendly_name %> - <%= @provision_request.f
 PIN number <%= @provision_request.pin %> - you may find the PIN printed on the device or displayed, if it has a display.
 <% end %>
 
-<% @provison_request.devices.each do |device| %>
+<% @provision_request.devices.each do |device| %>
 - Device <%= device.friendly_name %>, <%= device.friendly_location %></li>
 <% end %>
 
