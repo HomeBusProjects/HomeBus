@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_28_202619) do
+ActiveRecord::Schema.define(version: 2018_06_04_043408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -33,12 +33,12 @@ ActiveRecord::Schema.define(version: 2018_05_28_202619) do
     t.index ["provision_request_id"], name: "index_devices_on_provision_request_id"
   end
 
-  create_table "mosquitto_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "mosquitto_accounts", force: :cascade do |t|
     t.string "password", null: false
     t.boolean "superuser", null: false
-    t.bigint "provision_request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "provision_request_id"
     t.index ["provision_request_id"], name: "index_mosquitto_accounts_on_provision_request_id"
   end
 
@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(version: 2018_05_28_202619) do
     t.string "username", null: false
     t.string "topic", null: false
     t.boolean "rw", null: false
-    t.bigint "provision_request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "provision_request_id"
     t.index ["provision_request_id"], name: "index_mosquitto_acls_on_provision_request_id"
     t.index ["username"], name: "index_mosquitto_acls_on_username"
   end
