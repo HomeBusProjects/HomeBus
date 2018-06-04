@@ -28,7 +28,9 @@ class MosquittoAclsController < ApplicationController
 
     respond_to do |format|
       if @mosquitto_acl.save
-        format.html { redirect_to @mosquitto_acl, notice: 'Mosquitto acl was successfully created.' }
+        flash_message 'success', 'Mosquitto acl was successfully created.'
+
+        format.html { redirect_to @mosquitto_acl }
         format.json { render :show, status: :created, location: @mosquitto_acl }
       else
         format.html { render :new }
@@ -42,7 +44,9 @@ class MosquittoAclsController < ApplicationController
   def update
     respond_to do |format|
       if @mosquitto_acl.update(mosquitto_acl_params)
-        format.html { redirect_to @mosquitto_acl, notice: 'Mosquitto acl was successfully updated.' }
+        flash_message 'success', 'Mosquitto acl was successfully updated.'
+
+        format.html { redirect_to @mosquitto_acl }
         format.json { render :show, status: :ok, location: @mosquitto_acl }
       else
         format.html { render :edit }
@@ -56,7 +60,9 @@ class MosquittoAclsController < ApplicationController
   def destroy
     @mosquitto_acl.destroy
     respond_to do |format|
-      format.html { redirect_to mosquitto_acls_url, notice: 'Mosquitto acl was successfully destroyed.' }
+      flash_message 'danger', 'Mosquitto acl was successfully destroyed.'
+
+      format.html { redirect_to mosquitto_acls_url }
       format.json { head :no_content }
     end
   end

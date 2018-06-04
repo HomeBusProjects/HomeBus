@@ -7,7 +7,9 @@ class ProvisionRequestsController < ApplicationController
 
     respond_to do |format|
       if @provision_request.save
-        format.html { redirect_to @provision_request, notice: 'Provision request was successfully accepted.' }
+        flash_message 'success', 'Provision request was successfully accepted.'
+
+        format.html { redirect_to @provision_request }
         format.json { render :show, status: :created, location: @provision_request }
       else
         format.html { render :new }
@@ -24,7 +26,9 @@ class ProvisionRequestsController < ApplicationController
 
     respond_to do |format|
       if @provision_request.save
-        format.html { redirect_to @provision_request, notice: 'Provision request was successfully denied.' }
+        flash_message 'warning', 'Provision request was successfully denied.'
+
+        format.html { redirect_to @provision_request }
         format.json { render :show, status: :created, location: @provision_request }
       else
         format.html { render :new }
@@ -41,7 +45,9 @@ class ProvisionRequestsController < ApplicationController
 
     respond_to do |format|
       if @provision_request.save
-        format.html { redirect_to @provision_request, notice: 'Provision request was successfully revoked.' }
+        flash_message 'danger', 'Provision request was successfully revoked.'
+
+        format.html { redirect_to @provision_request }
         format.json { render :show, status: :created, location: @provision_request }
       else
         format.html { render :new }
@@ -77,7 +83,9 @@ class ProvisionRequestsController < ApplicationController
 
     respond_to do |format|
       if @provision_request.save
-        format.html { redirect_to @provision_request, notice: 'Provision request was successfully created.' }
+        flash_message 'success', 'Provision request was successfully created.'
+
+        format.html { redirect_to @provision_request }
         format.json { render :show, status: :created, location: @provision_request }
       else
         format.html { render :new }
@@ -91,7 +99,9 @@ class ProvisionRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @provision_request.update(provision_request_params)
-        format.html { redirect_to @provision_request, notice: 'Provision request was successfully updated.' }
+        flash_message 'success', 'Provision request was successfully updated.'
+
+        format.html { redirect_to @provision_request }
         format.json { render :show, status: :ok, location: @provision_request }
       else
         format.html { render :edit }
@@ -105,7 +115,9 @@ class ProvisionRequestsController < ApplicationController
   def destroy
     @provision_request.destroy
     respond_to do |format|
-      format.html { redirect_to provision_requests_url, notice: 'Provision request was successfully destroyed.' }
+      flash_message 'danger', 'Provision request was successfully destroyed.'
+
+      format.html { redirect_to provision_requests_url }
       format.json { head :no_content }
     end
   end

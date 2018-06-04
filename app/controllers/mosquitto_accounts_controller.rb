@@ -28,7 +28,9 @@ class MosquittoAccountsController < ApplicationController
 
     respond_to do |format|
       if @mosquitto_account.save
-        format.html { redirect_to @mosquitto_account, notice: 'Mosquitto account was successfully created.' }
+        flash_message 'success', 'Mosquitto account was successfully created.'
+        
+        format.html { redirect_to @mosquitto_account }
         format.json { render :show, status: :created, location: @mosquitto_account }
       else
         format.html { render :new }
@@ -42,7 +44,9 @@ class MosquittoAccountsController < ApplicationController
   def update
     respond_to do |format|
       if @mosquitto_account.update(mosquitto_account_params)
-        format.html { redirect_to @mosquitto_account, notice: 'Mosquitto account was successfully updated.' }
+        flash_message 'success', 'Mosquitto account was successfully updated.'
+
+        format.html { redirect_to @mosquitto_account }
         format.json { render :show, status: :ok, location: @mosquitto_account }
       else
         format.html { render :edit }
@@ -56,7 +60,9 @@ class MosquittoAccountsController < ApplicationController
   def destroy
     @mosquitto_account.destroy
     respond_to do |format|
-      format.html { redirect_to mosquitto_accounts_url, notice: 'Mosquitto account was successfully destroyed.' }
+      flash_message 'danger', 'Mosquitto account was successfully destroyed.'
+
+      format.html { redirect_to mosquitto_accounts_url }
       format.json { head :no_content }
     end
   end
