@@ -17,7 +17,7 @@
         <td><%= mosquitto_account.id %></td>
         <td><%= mosquitto_account.password %></td>
         <td><%= mosquitto_account.superuser %></td>
-        <td><%= mosquitto_account.provision_request %></td>
+        <td><%= link_to mosquitto_account.provision_request.friendly_name, mosquitto_account.provision_request %></td>
         <td><%= link_to 'Show', mosquitto_account %></td>
         <td><%= link_to 'Edit', edit_mosquitto_account_path(mosquitto_account) %></td>
         <td><%= link_to 'Destroy', mosquitto_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
