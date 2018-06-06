@@ -25,7 +25,7 @@
         <td><%= device.accuracy %></td>
         <td><%= device.precision %></td>
         <td><%= device.update_frequency %></td>
-        <td><%= device.provision_request %></td>
+        <td><%= link_to device.provision_request.friendly_name, device.provision_request %></td>
         <td><%= link_to 'Show', device %></td>
         <td><%= link_to 'Edit', edit_device_path(device) %></td>
         <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
