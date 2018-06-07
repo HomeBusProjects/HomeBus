@@ -29,3 +29,18 @@
     group: homebus
     mode: 0400
 
+- name: create homebus systemd config
+  copy:
+    src: files/homebus.service
+    dest: /etc/systemd/system/homebus.service
+    owner: root
+    group: root
+    mode: 0440
+
+- name: reload systemd config
+  systemd: daemon_reload=yes
+
+- name: enable homebus 
+  systemd:
+    name: homebus
+    enabled: yes

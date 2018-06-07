@@ -1,0 +1,36 @@
+[Unit]
+Description=HomeBus HTTP Server
+After=network.target
+
+# Uncomment for socket activation
+# Requires=puma.socket
+
+[Service]
+Type=forking
+
+# Preferably configure a non-privileged user
+User=homebus
+
+# The path to the puma application root
+# Also replace the "<WD>" place holders below with this path.
+WorkingDirectory=/home/homebus/HomeBus/current
+
+# Helpful for debugging socket activation, etc.
+# Environment=PUMA_DEBUG=1
+Environment=RAILS_ENV=production
+
+ExecStart=/home/homebus/.rbenv/bin/rbenv exec bundle exec puma  -C /home/homebus/HomeBus/shared/puma.rb --daemon
+ExecStop=/home/homebus/.rbenv/bin/rbenv exec bundle exec pumactl -S /home/homebus/HomeBus/shared/tmp/pids/puma.state stop
+ExecRestart=/home/homebus/.rbenv/bin/rbenv exec bundle exec pumactl -S /home/homebus/HomeBus/shared/tmp/pids/puma.state phased-restart --daemon
+TimeoutSec=30
+
+PIDFile=/home/homebus/HomeBus/shared/tmp/pids/puma.pid
+
+# Variant: Use config file with `bind` directives instead:
+# ExecStart=<WD>/sbin/puma -C config.rb
+# Variant: Use `bundle exec --keep-file-descriptors puma` instead of binstub
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
