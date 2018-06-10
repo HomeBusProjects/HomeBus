@@ -32,3 +32,20 @@
     - forever
 
 #        - node-red-weatherunderground 
+
+- name: install systemd script for node-red
+  copy:
+    src: files/node-red.service
+    dest: /etc/systemd/system/node-red.service
+    owner: root
+    group: root
+    mode: 0440
+
+- name: reload systemd config
+  systemd: daemon_reload=yes
+
+- name: enable node-red
+  systemd:
+    name: node-red
+    enabled: yes
+    state: started 
