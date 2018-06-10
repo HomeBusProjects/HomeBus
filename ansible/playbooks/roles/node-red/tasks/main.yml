@@ -33,14 +33,6 @@
 
 #        - node-red-weatherunderground 
 
-- name: install startup script for node-red
-  copy:
-    src: files/startup.sh
-    dest: /home/nodered/startup.sh
-    owner: nodered
-    group: nodered
-    mode: 0555
-
 - name: install systemd script for node-red
   copy:
     src: files/node-red.service
