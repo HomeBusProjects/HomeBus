@@ -24,12 +24,16 @@ class ProvisionController < ApplicationController
       if pr.accepted?
         password = pr.mosquitto_account.generate_password!
 
+        devices = pr.devices.map { |device| device.slice(:id, :index) }
+        devices.each { |device| device[:uuid] = device.delete(:id) }
+
         response = { uuid: pr.id,
                      status: 'provisioned',
                      mqtt_hostname: 'homebus',
                      mqtt_port: 1883,
                      mqtt_username: pr.mosquitto_account.id,
-                     mqtt_password: password
+                     mqtt_password: password,
+                     devices: devices
                    }
       else
         response = { uuid: pr.id,
@@ -48,7 +52,9 @@ class ProvisionController < ApplicationController
         end
       end
 
-      NotifyRequestMailer.with(provision_request: pr).new_provisioning_request.deliver_now
+      if Rails.env != 'development'
+        NotifyRequestMailer.with(provision_request: pr).new_provisioning_request.deliver_now
+      end
 
       response = { uuid: pr.id,
                    status: 'waiting',
