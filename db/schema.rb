@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_04_043408) do
+ActiveRecord::Schema.define(version: 2018_06_15_140538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -27,13 +27,13 @@ ActiveRecord::Schema.define(version: 2018_06_04_043408) do
     t.string "ro_topics", default: [], array: true
     t.string "rw_topics", default: [], array: true
     t.uuid "provision_request_id"
-    t.integer "index", default: 0, null: false
+    t.string "index", default: "0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provision_request_id"], name: "index_devices_on_provision_request_id"
   end
 
-  create_table "mosquitto_accounts", force: :cascade do |t|
+  create_table "mosquitto_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "password", null: false
     t.boolean "superuser", null: false
     t.datetime "created_at", null: false
