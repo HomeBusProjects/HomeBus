@@ -29,7 +29,7 @@
         <td><%= provision_request.model %></td>
         <td><%= provision_request.serial_number %></td>
         <td><%= provision_request.status %></td>
-	<td><%= provision_request.devices.count %></td>
+	<td><%= link_to provision_request.devices.count, "/devices?provision_id=#{provision_request.id}" %></td>
         <td><%= link_to 'Show', provision_request %></td>
         <td><%= link_to 'Edit', edit_provision_request_path(provision_request) %></td>
         <td><%= link_to 'Destroy', provision_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
