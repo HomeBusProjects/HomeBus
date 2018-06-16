@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :spaces
   resources :devices
   resources :mosquitto_accounts
   resources :mosquitto_acls

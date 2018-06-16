@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Friendly name:</strong>
+  <%= @space.friendly_name %>
+</p>
+
+<p>
+  <strong>Interior:</strong>
+  <%= @space.interior %>
+</p>
+
+<%= link_to 'Edit', edit_space_path(@space) %> |
+<%= link_to 'Back', spaces_path %>
