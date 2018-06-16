@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_15_140538) do
+ActiveRecord::Schema.define(version: 2018_06_16_145812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(version: 2018_06_15_140538) do
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
     t.index ["manufacturer"], name: "index_provision_requests_on_manufacturer"
     t.index ["model"], name: "index_provision_requests_on_model"
+  end
+
+  create_table "spaces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "friendly_name"
+    t.boolean "interior"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "devices", "provision_requests"
