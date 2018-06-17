@@ -37,6 +37,11 @@
 	    <li class="nav-item">
 	      <a class="nav-link" href="<%= mosquitto_acls_path %>">Mosquitto ACLs</a>
 	    </li>
+	  <% if Rails.env == 'development' %>
+	    <li class="nav-item">
+	      <a class="nav-link" href="/cleardb">ClearDB</a>
+	    </li>
+	  <% end %>
 	  </ul>
 	  <form class="form-inline my-2 my-lg-0">
 	    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
