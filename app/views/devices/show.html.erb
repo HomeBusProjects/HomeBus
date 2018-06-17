@@ -37,5 +37,32 @@
   <strong><%= link_to "Provision request", @device.provision_request %></strong>
 </p>
 
+<p>
+  <strong>Write-only topics</strong>
+  <ul>
+    <% @device.wo_topics.each do |topic| %>
+      <%= topic %>
+    <% end %>
+  </ul>
+</p>
+
+<p>
+  <strong>Read-only topics</strong>
+  <ul>
+    <% @device.ro_topics.each do |topic| %>
+      <%= topic %>
+    <% end %>
+  </ul>
+</p>
+
+<p>
+  <strong>Read-Write topics</strong>
+  <ul>
+    <% @device.rw_topics.each do |topic| %>
+      <%= topic %>
+    <% end %>
+  </ul>
+</p>
+
 <%= link_to 'Edit', edit_device_path(@device) %> |
 <%= link_to 'Back', devices_path %>

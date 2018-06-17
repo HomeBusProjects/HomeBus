@@ -4,7 +4,7 @@ class ProvisionController < ApplicationController
   protect_from_forgery except: ['index']
 
   def index
-    p = params.require(:provision).permit(:uuid, :friendly_name, :friendly_location, :manufacturer, :model, :serial_number, :pin, devices: [ :uuid, :friendly_name, :friendly_location, :update_frequency, :accuracy, :precision, :index, :wo_topics, :ro_topics, :rw_topics ])
+    p = params.require(:provision).permit(:uuid, :friendly_name, :friendly_location, :manufacturer, :model, :serial_number, :pin, devices: [ :uuid, :friendly_name, :friendly_location, :update_frequency, :accuracy, :precision, :index, wo_topics: [], ro_topics: [], rw_topics: [] ])
 
     args = { ip_address: request.remote_ip, status: :unanswered }.merge p
     requested_devices = args["devices"]
