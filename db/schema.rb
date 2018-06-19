@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_16_153242) do
+ActiveRecord::Schema.define(version: 2018_06_19_145306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2018_06_16_153242) do
     t.string "index", default: "0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "calibrated", default: false, null: false
     t.index ["provision_request_id"], name: "index_devices_on_provision_request_id"
   end
 
