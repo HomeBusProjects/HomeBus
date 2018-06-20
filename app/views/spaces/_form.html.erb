@@ -21,6 +21,12 @@
     <%= form.check_box :interior %>
   </div>
 
+  <div class="field">
+    <%= form.label :devices %>
+    <%= form.collection_select :device_ids, Device.all, :id, :friendly_name_and_location, {}, { multiple: true } %> 
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>
