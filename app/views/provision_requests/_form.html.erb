@@ -52,7 +52,7 @@
 
    <div class="field">
     <%= form.label :status %>
-    <%= form.select :status, options_for_select([:unanswered, :accepted, :denied]) %>
+    <%= form.select :status, options_for_select([:unanswered, :accepted, :denied], selected: form.object.status) %>
   </div>
 
   <div class="actions">
