@@ -4,12 +4,18 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-    p = params.permit(:provision_id)
-    if p[:provision_id]
-      @devices = Device.where(provision_request_id: p[:provision_id])
-    else
-      @devices = Device.all
+    p = params.permit(:provision_id, :space_id)
+
+    @devices = Device.all
+
+    if p[:space_id]
+      @devices = Space.find(p[:space_id]).devices
     end
+
+    if p[:provision_id]
+      @devices = @devices.where(provision_request_id: p[:provision_id])
+    end
+
   end
 
   # GET /devices/1

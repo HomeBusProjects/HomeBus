@@ -13,14 +13,14 @@
       <th>Serial Number</th>
       <th>Status</th>
       <th>Devices</th>
-      <th colspan="3"></th>
+      <th colspan="10"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @provision_requests.each do |provision_request| %>
       <tr>
-	<td><%= provision_request.id %></td>
+	<td><%= link_to provision_request.id, provision_request %></td>
         <td><%= provision_request.pin %></td>
         <td><%= provision_request.ip_address %></td>
         <td><%= provision_request.friendly_name %></td>
@@ -30,7 +30,7 @@
         <td><%= provision_request.serial_number %></td>
         <td><%= provision_request.status %></td>
 	<td><%= link_to provision_request.devices.count, "/devices?provision_id=#{provision_request.id}" %></td>
-        <td><%= link_to 'Show', provision_request %></td>
+
         <td><%= link_to 'Edit', edit_provision_request_path(provision_request) %></td>
         <td><%= link_to 'Destroy', provision_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
