@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Friendly name:</strong>
   <%= @space.friendly_name %>
@@ -8,6 +6,15 @@
 <p>
   <strong>Interior:</strong>
   <%= @space.interior %>
+</p>
+
+<p>
+  <strong>Devices:</strong>
+  <ul>
+  <% @space.devices.each do |device| %>
+    <li><%= link_to device.friendly_name, device %></li>
+  <% end %>
+  </ul>
 </p>
 
 <%= link_to 'Edit', edit_space_path(@space) %> |

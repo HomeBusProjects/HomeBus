@@ -29,7 +29,7 @@
 </p>
 
 <p>
-  <strong>Calibrated::</strong>
+  <strong>Calibrated:</strong>
   <%= @device.calibrated? %>
 </p>
 
@@ -40,6 +40,15 @@
 
 <p>
   <strong><%= link_to "Provision request", @device.provision_request %></strong>
+</p>
+
+<p>
+  <strong>Spaces:</strong>
+  <ul>
+  <% @device.spaces.each do |space| %>
+    <li><%= link_to space.friendly_name, space %>
+  <% end %>
+  </ul>
 </p>
 
 <p>

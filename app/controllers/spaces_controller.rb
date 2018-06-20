@@ -75,6 +75,6 @@ class SpacesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def space_params
-      params.require(:space).permit(:friendly_name, :interior)
+      params.require(:space).permit(:friendly_name, :interior, device_ids: [] )
     end
 end

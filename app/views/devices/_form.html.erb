@@ -42,8 +42,18 @@
   </div>
 
   <div class="field">
+    <%= form.label :calibrated %>
+    <%= form.check_box :calibrated %>
+  </div>
+
+  <div class="field">
     <%= form.label :provision_request_id %>
     <%= form.text_field :provision_request_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :spaces %>
+    <%= form.collection_select :space_ids, Space.all, :id, :friendly_name, {}, { multiple: true } %> 
   </div>
 
   <div class="actions">
