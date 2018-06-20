@@ -11,32 +11,51 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :pin %>
-    <%= form.text_field :pin %>
+  <div class="row">
+    <div class="col">
+      <%= form.label :friendly_name, "Name" %>
+      <%= form.text_field :friendly_name, { class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :friendly_location, "Location" %>
+      <%= form.text_field :friendly_location,  {class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :pin, 'PIN' %>
+      <%= form.text_field :pin,  { class: "form-control" }  %>
+    </div>
   </div>
 
+  <div class="row">
+    <div class="col">
+      <%= form.label :manufacturer %>
+      <%= form.text_field :manufacturer, { class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :model %>
+      <%= form.text_field :model,  {class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :serial_number %>
+      <%= form.text_field :serial_number,  { class: "form-control" }  %>
+    </div>
+  </div>
+    
   <div class="field">
-    <%= form.label :ip_adress %>
-    <%= form.text_field :ip_adress %>
+    <%= form.label :ip_address, 'IP Address' %>
+    <%= form.text_field :ip_address,  { readonly: true, class: "form-control" }  %>
   </div>
 
-  <div class="field">
-    <%= form.label :wo_topics %>
-    <%= form.text_field :wo_topics %>
-  </div>
-
-  <div class="field">
-    <%= form.label :ro_topics %>
-    <%= form.text_field :ro_topics %>
-  </div>
-
-  <div class="field">
+   <div class="field">
     <%= form.label :status %>
-    <%= form.text_field :status %>
+    <%= form.select :status, options_for_select([:unanswered, :accepted, :denied], selected: form.object.status) %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Update Provision Request", class: "btn btn-primary" %>
   </div>
 <% end %>

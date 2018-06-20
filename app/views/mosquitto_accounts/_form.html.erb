@@ -11,22 +11,28 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
+    <%= form.label :id, 'UUID' %>
+    <%= form.text_field :id,  { class: 'form-control', readonly: true } %>
+  </div>
+
+  <div class="field form-group">
     <%= form.label :password %>
-    <%= form.text_field :password %>
+    <%= form.text_field :password,  { class: 'form-control' } %>
   </div>
 
-  <div class="field">
+
+  <div class="field form-group">
     <%= form.label :superuser %>
-    <%= form.check_box :superuser %>
+    <%= form.check_box :superuser, { class: 'form-check form-check-inline' } %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :provision_request_id %>
-    <%= form.text_field :provision_request_id %>
+    <%= form.collection_select :provision_request_id, ProvisionRequest.all, :id, :friendly_name, {}, { class: 'form-control' } %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>

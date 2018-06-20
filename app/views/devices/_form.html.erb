@@ -11,52 +11,86 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :provisioned %>
-    <%= form.check_box :provisioned %>
+  <div class="field form-group">
+    <%= form.label :id, 'UUID' %>
+    <%= form.text_field :id,  { class: 'form-control', readonly: true } %>
   </div>
 
-  <div class="field">
-    <%= form.label :friendly_name %>
-    <%= form.text_field :friendly_name %>
+  <div class="row">
+    <div class="col">
+      <%= form.label :friendly_name, "Name" %>
+      <%= form.text_field :friendly_name, { class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :friendly_location, "Location" %>
+      <%= form.text_field :friendly_location,  {class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :index %>
+      <%= form.text_field :index,  {class: "form-control" } %>
+    </div>
+ </div>
+
+  <div class="row">
+    <div class="col">
+      <%= form.label :accuracy %>
+      <%= form.number_field :accuracy,  { class: "form-control" }  %>
+    </div>
+
+    <div class="col">
+      <%= form.label :precision %>
+      <%= form.number_field :precision,  { class: "form-control" }  %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :friendly_location %>
-    <%= form.text_field :friendly_location %>
-  </div>
-
-  <div class="field">
-    <%= form.label :accuracy %>
-    <%= form.number_field :accuracy %>
-  </div>
-
-  <div class="field">
-    <%= form.label :precision %>
-    <%= form.number_field :precision %>
-  </div>
-
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :update_frequency %>
-    <%= form.number_field :update_frequency %>
+    <%= form.number_field :update_frequency,  { class: "form-control" }  %>
   </div>
 
-  <div class="field">
-    <%= form.label :calibrated %>
-    <%= form.check_box :calibrated %>
+  <div class="row">
+    <div class="col">
+      <%= form.label :provisioned %>
+      <%= form.check_box :provisioned, class: 'form-check form-check-inline' %>
+    </div>
+
+    <div class="col">
+      <%= form.label :calibrated %>
+      <%= form.check_box :calibrated, { class: 'form-check form-check-inline' } %>
+    </div>
   </div>
 
-  <div class="field">
+   <div class="row">
+    <div class="col">
+      <%= form.label :wo_topics, 'Write-only topics' %>
+      <%= form.text_field :wo_topics,  { multiple: true, class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :ro_topics, 'Read-only topics' %>
+      <%= form.text_field :ro_topics,  { multiple: true, class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :rw_topics, 'Read-write topics' %>
+      <%= form.text_field :rw_topics,  { multiple: true, class: "form-control" }  %>
+    </div>
+  </div>
+
+
+  <div class="field form-group">
     <%= form.label :provision_request_id %>
-    <%= form.text_field :provision_request_id %>
+    <%= form.collection_select :provision_request_id, ProvisionRequest.all, :id, :friendly_name, {}, { class: 'form-control', readonly: true } %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :spaces %>
-    <%= form.collection_select :space_ids, Space.all, :id, :friendly_name, {}, { multiple: true } %> 
+    <%= form.collection_select :space_ids, Space.all, :id, :friendly_name, {}, { multiple: true, class: "form-control" } %> 
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Update Device", class: "btn btn-primary" %>
   </div>
 <% end %>
