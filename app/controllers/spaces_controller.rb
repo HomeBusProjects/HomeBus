@@ -4,7 +4,13 @@ class SpacesController < ApplicationController
   # GET /spaces
   # GET /spaces.json
   def index
+    p = params.permit(:device_id)
+
     @spaces = Space.all
+
+    if p[:device_id]
+      @spaces = Device.find(p[:device_id]).spaces
+    end
   end
 
   # GET /spaces/1
