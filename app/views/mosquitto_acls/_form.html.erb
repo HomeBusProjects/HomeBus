@@ -13,25 +13,25 @@
 
   <div class="field">
     <%= form.label :username %>
-    <%= form.text_field :username %>
+    <%= form.text_field :username, { class: 'form-control' } %>
   </div>
 
   <div class="field">
     <%= form.label :topic %>
-    <%= form.text_field :topic %>
+    <%= form.text_field :topic, { class: 'form-control' } %>
   </div>
 
   <div class="field">
-    <%= form.label :rw %>
+    <%= form.label :rw, "Read/Write?" %>
     <%= form.check_box :rw %>
   </div>
 
-  <div class="field">
-    <%= form.label :provision_request %>
-    <%= form.text_field :provision_request %>
+  <div class="field form-group">
+    <%= form.label :provision_request_id %>
+    <%= form.collection_select :provision_request_id, ProvisionRequest.all, :id, :friendly_name, {}, { class: 'form-control', readonly: true } %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Update Mosquitto ACL", class: "btn btn-primary" %>
   </div>
 <% end %>
