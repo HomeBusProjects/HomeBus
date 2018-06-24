@@ -1,0 +1,46 @@
+<table class='table'>
+  <thead>
+    <tr>
+      <th>UUID</th>
+      <th>Provisioned</th>
+      <th>Friendly name</th>
+      <th>Friendly Location</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Calibrated?</th>
+      <th>Update frequency</th>
+      <th>Provision request</th>
+      <th>Spaces</th>
+      <th colspan="10"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @devices.each do |device| %>
+      <tr>
+	<td><%= link_to device.id, device %></td>
+        <td><%= device.provisioned ? 'Y' : 'n'  %></td>
+        <td><%= device.friendly_name %></td>
+        <td><%= device.friendly_location %></td>
+        <td><%= device.accuracy %></td>
+        <td><%= device.precision %></td>
+	<td><%= device.calibrated? %></td>
+        <td><%= device.update_frequency %></td>
+        <td><%= link_to device.provision_request.friendly_name, device.provision_request %></td>
+
+	<td>
+	  <% if device.spaces.count == 0 %>
+	    0
+	  <% elsif device.spaces.count == 1 %>
+	    <%= link_to device.spaces.first.friendly_name, device.spaces.first %>
+	  <% else %>
+  	    <%= link_to device.spaces.count, "/spaces?device_id=#{device.id}" %>
+	  <% end %>
+	</td>
+
+        <td><%= link_to 'Edit', edit_device_path(device) %></td>
+        <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

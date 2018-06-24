@@ -1,0 +1,32 @@
+<h1>Search Results for '<%= params[:q] %>'</h1>
+
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active<%= @devices.count > 0 ? '' : ' disabled' %>" data-toggle="tab" role="tab" id="devices-tab" href="#devices" aria-controls="devices" aria-selected="true">Devices (<%= @devices.count %>)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link<%= @provision_requests.count > 0 ? '' : ' disabled' %>" data-toggle="tab" role="tab"  id="provision-requests-tab" href="#provision-requests" aria-controls="provision-requests">Provision Requests (<%= @provision_requests.count %>)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link<%= @spaces.count > 0 ? '' : ' disabled' %>" data-toggle="tab" role="tab"  id="spaces=tab" href="#spaces" aria-controls="spaces">Spaces (<%= @spaces.count %>)</a>
+  </li>
+</ul>
+
+
+<div class="tab-content" id="search_tabs">
+  <div class="tab-pane fade show active" id="devices" role="tabpanel" aria-labelledby="devices-tab">
+    <%= render "devices/index" %>
+  </div>
+
+  <div class="tab-pane fade" id="provision-requests" role="tabpanel" aria-labelledby="provision-requests-tab">
+    <%= render "provision_requests/index" %>
+  </div>
+
+  <div class="tab-pane fade" id="spaces" role="tabpanel" aria-labelledby="spaces-tab">
+    <%= render "spaces/index" %>
+  </div>
+</div>
+
+
+
