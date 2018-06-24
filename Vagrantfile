@@ -29,11 +29,8 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
 
-  # couchdb
-  config.vm.network "forwarded_port", guest: 5984, host: 5984, host_ip: "127.0.0.1"
-
-  # rabbitmq
-  config.vm.network "forwarded_port", guest: 15672, host: 15672, host_ip: "127.0.0.1"
+  # homebus rails server
+  config.vm.network "forwarded_port", guest: 3000, host: 3000, host_ip: "127.0.0.1"
 
   # mqtt
   config.vm.network "forwarded_port", guest: 1883, host: 1883, host_ip: "127.0.0.1"
