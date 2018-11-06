@@ -63,8 +63,6 @@ class ProvisionController < ApplicationController
     end
 
     respond_to do |format|
-      pp format
-      
       if pr
         pp response
 
