@@ -1,6 +1,6 @@
 #FROM ubuntu:16.04
 
-FROM ruby:2.5.1
+FROM ruby:2.6.1
 RUN apt-get update && apt-get install -y \ 
   build-essential \ 
   nodejs \
