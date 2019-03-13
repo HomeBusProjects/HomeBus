@@ -11,5 +11,6 @@ galaxy_info:
       versions:
         - trusty
         - xenial
+        - bionic
   categories:
     - development

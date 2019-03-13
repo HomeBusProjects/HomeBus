@@ -6,15 +6,15 @@ Installs Node.js on RHEL/CentOS or Debian/Ubuntu.
 
 ## Requirements
 
-Requires the EPEL repository on RedHat/CentOS (you can install it by simply adding the `geerlingguy.repo-epel` role to your playbook).
+None.
 
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    nodejs_version: "6.x"
+    nodejs_version: "10.x"
 
-The Node.js version to install. "6.x" is the default and works on most supported OSes. Other versions such as "0.12", "4.x", "5.x", "6.x", etc. should work on the latest versions of Debian/Ubuntu and RHEL/CentOS.
+The Node.js version to install. "10.x" is the default and works on most supported OSes. Other versions such as "0.12", "4.x", "5.x", "6.x", "8.x", "10.x" etc. should work on the latest versions of Debian/Ubuntu and RHEL/CentOS.
 
     nodejs_install_npm_user: "{{ ansible_ssh_user }}"
 
