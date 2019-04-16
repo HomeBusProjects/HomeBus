@@ -84,6 +84,9 @@
     - name: ocha.yarn
       tags: yarn
 
+    - name: pi-mosquitto
+      tags: mosquitto
+
     - name: homebus
       tags: homebus
       homebus_database: homebus_production

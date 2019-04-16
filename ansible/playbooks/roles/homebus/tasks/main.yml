@@ -29,6 +29,45 @@
     group: homebus
     mode: 0400
 
+- name: setup mosquitto config
+  template:
+    src: templates/mosquitto-auth.conf
+    dest: /etc/mosquitto/conf.d/mosquitto-auth.conf
+    owner: root
+    group: root
+    mode: 0444
+
+- name: create folders
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: 0755
+    owner: homebus
+    group: homebus
+  with_items:
+  - ["/home/homebus/HomeBus", "/home/homebus/HomeBus/shared", "/home/homebus/HomeBus/shared/log"]
+
+- name: configure nginx site
+  copy:
+    src: files/nginx-site
+    dest: /etc/nginx/sites-available/homebus.conf
+    owner: root
+    group: root
+    mode: 0444
+
+- name: enable nginx site
+  file:
+    src: /etc/nginx/sites-available/homebus.conf
+    dest: /etc/nginx/sites-enabled/homebus.conf
+    owner: root
+    group: root
+    state: link
+
+- name: reload nginx
+  systemd:
+    name: nginx
+    state: reloaded
+
 - name: create homebus systemd config
   copy:
     src: files/homebus.service
