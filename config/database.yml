@@ -7,25 +7,6 @@ default: &default
   pool: 5
 
 development:
-  <<: *default
-  database: myapp_development
-
-
-test:
-  <<: *default
-  database: myapp_test
-
-default2: &default2
-  adapter: postgresql
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  encoding: unicode
-  timeout: 5000
-  host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
-  username: <%= ENV['POSTGRESQL_USERNAME'] %>
-  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
-  port: <%= ENV['POSTGRESQL_PORT'] %>
-
-development:
   adapter: postgresql
   encoding: unicode
   host: homebus-postgres
@@ -41,10 +22,13 @@ test:
   <<: *default
   database: homebus_test
 
-staging:
-  <<: *default2
-  database: homebus_staging
-
 production:
-  <<: *default2
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  encoding: unicode
+  timeout: 5000
+  host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
+  username: <%= ENV['POSTGRESQL_USERNAME'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+  port: <%= ENV['POSTGRESQL_PORT'] %>
   database: homebus_production
