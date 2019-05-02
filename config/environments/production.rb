@@ -1,3 +1,5 @@
+require 'socket'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -80,7 +82,7 @@ Rails.application.configure do
     port: 587
   }
 
-  config.action_mailer.default_url_options = { host: 'homebus.local' }
+  config.action_mailer.default_url_options = { host: Socket.gethostname }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
