@@ -3,7 +3,7 @@ lock "~> 3.11.0"
 
 set :application, 'HomeBus'
 set :repo_url, 'git@github.com:romkey/HomeBus.git'
-set :rbenv_ruby, '2.6.1'
+set :rbenv_ruby, '2.6.2'
 
 current_branch = `git rev-parse --abbrev-ref HEAD`.strip
 

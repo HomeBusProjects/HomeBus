@@ -8,8 +8,7 @@ gem 'pg'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'mini_racer'
-# gem 'mini_racer', platforms: :ruby
+
 # gem 'therubyracer'
 
 gem "railties", ">= 5.2.2.1"
@@ -31,6 +30,7 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'mini_racer'
 end
 
 group :test do
