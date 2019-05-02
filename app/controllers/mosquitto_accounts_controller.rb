@@ -1,4 +1,5 @@
 class MosquittoAccountsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_mosquitto_account, only: [:show, :edit, :update, :destroy]
 
   # GET /mosquitto_accounts

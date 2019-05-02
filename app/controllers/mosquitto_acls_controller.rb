@@ -1,4 +1,5 @@
 class MosquittoAclsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_mosquitto_acl, only: [:show, :edit, :update, :destroy]
 
   # GET /mosquitto_acls

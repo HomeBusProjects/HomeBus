@@ -1,4 +1,5 @@
 class ProvisionRequestsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
 
   def accept

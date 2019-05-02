@@ -1,14 +1,16 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.1'
+ruby '2.6.2'
 
 gem 'rails', '~> 5.2.0'
 gem 'pg'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'mini_racer'
 # gem 'mini_racer', platforms: :ruby
+# gem 'therubyracer'
 
 gem "railties", ">= 5.2.2.1"
 gem "actionview", ">= 5.2.2.1"
@@ -36,6 +38,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
 end
+
+gem 'devise'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 

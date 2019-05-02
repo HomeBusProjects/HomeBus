@@ -1,5 +1,22 @@
 default: &default
   adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password:
+  pool: 5
+
+development:
+  <<: *default
+  database: myapp_development
+
+
+test:
+  <<: *default
+  database: myapp_test
+
+default2: &default2
+  adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   encoding: unicode
   timeout: 5000
@@ -24,6 +41,10 @@ test:
   <<: *default
   database: homebus_test
 
+staging:
+  <<: *default2
+  database: homebus_staging
+
 production:
-  <<: *default
+  <<: *default2
   database: homebus_production

@@ -51,9 +51,18 @@
 	</nav>
 
 	<% flash.each do |type, messages| %>
-	  <% messages.each do |msg| %>
+	  <% if messages.class == 'Array' %>
+	    <% messages.each do |msg| %>
 	    <div class="alert <%= flash_class(type) %> alert-dismissible fade show" role="alert">
   	      <%= msg %>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    <% end %>
+	   <% else %>
+	    <div class="alert <%= flash_class(type) %> alert-dismissible fade show" role="alert">
+  	      <%= messages %>
 	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	        <span aria-hidden="true">&times;</span>
 	      </button>
