@@ -1,22 +1,11 @@
 # HomeBus Is
 
-HomeBus is a prototype system that provides a standardized interface for publishing, accessing and sharing data collected by
-sensors located around a home.
+HomeBus is a prototype system that provides a uniform interface for publishing, accessing and sharing data collected by
+sensors located around a home, business or region. HomeBus is a provisioning system that allows devices to find and publish data to brokers, and allows brokers to connect to external services.
 
-## HomeBus Is Authentication
+HomeBus allows you to control your data and grant access to your devices to other devices and services. 
 
-## HomeBus Is Authorization
-
-## HomeBus Is Privacy
-
-## HomeBus Is Data Exchange
-
-## HomeBus Is Your Home
-
-## HomeBus Is The Cloud
-
-Allow HomeBus to mediate access to your devices from cloud-based
-services. 
+HomeBus is *not* ready for prime time. This is an experimental prototype; we have a lot to learn from the system and it needs to mature substantially  before suggesting that anyone else use it.
 
 ## Installation
 
@@ -33,6 +22,8 @@ vagrant up
 ```
 
 in the root of the HomeBus repo.
+
+### Docker
 
 ### Raspberry Pi
 
