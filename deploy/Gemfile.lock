@@ -22,6 +22,7 @@ GEM
       capistrano (~> 3.7)
       capistrano-bundler
       puma (~> 3.4)
+    chronic (0.10.2)
     concurrent-ruby (1.1.5)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
@@ -33,6 +34,8 @@ GEM
     sshkit (1.18.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    whenever (0.11.0)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -43,6 +46,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rbenv
   capistrano3-puma
+  whenever
 
 BUNDLED WITH
    1.17.2
