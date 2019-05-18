@@ -28,4 +28,4 @@ task :update_backup_symlink do
   end
 end
 
-before :whenever:update_crontab, :update_backup_symlink
+before 'whenever:update_crontab', :update_backup_symlink
