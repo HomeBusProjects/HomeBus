@@ -8,7 +8,7 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 set :stage, :production
-server "ctrlh.homebus.io", user: "homebus", roles: %w{web app db}
+server "ctlh", user: "homebus", roles: %w{web app db}
 
 # role-based syntax
 # ==================
