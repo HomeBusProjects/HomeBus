@@ -60,7 +60,7 @@ class ProvisionRequestsController < ApplicationController
   # GET /provision_requests
   # GET /provision_requests.json
   def index
-    @provision_requests = ProvisionRequest.all.order(status: :asc)
+    @provision_requests = ProvisionRequest.all.order(status: :asc, created_at: :desc)
   end
 
   # GET /provision_requests/1
