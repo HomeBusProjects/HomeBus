@@ -39,6 +39,8 @@ group :test do
   gem 'chromedriver-helper'
 end
 
+# bcrypt 3.1.13 doesn't build properly on ARM architectures
+gem 'bcrypt', '3.1.12'
 gem 'devise', '>= 4.7.1'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
