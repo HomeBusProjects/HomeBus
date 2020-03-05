@@ -20,7 +20,7 @@ class ProvisionRequestsControllerTest < ActionDispatch::IntegrationTest
   test "should create provision_request" do
     assert_difference('ProvisionRequest.count', 0) do
 #    assert_difference('ProvisionRequest.count') do
-      post provision_requests_url, params: { provision_request: { ip_address: @provision_request.ip_address, friendly_name: @provision_rquest.friendly_name, friendly_location: @provision_request.friendly_location, manufacturer: @provision_request.manufacturer, model: @provision_request.model, serial_number: @provision_request.serial_number, pin: @provision_request.pin, status: @provision_request.status } }
+      post provision_requests_url, params: { provision_request: { ip_address: @provision_request.ip_address, friendly_name: @provision_request.friendly_name, friendly_location: @provision_request.friendly_location, manufacturer: @provision_request.manufacturer, model: @provision_request.model, serial_number: @provision_request.serial_number, pin: @provision_request.pin, status: @provision_request.status } }
     end
 
     assert_redirected_to new_user_session_url
@@ -40,7 +40,7 @@ class ProvisionRequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update provision_request" do
-    patch provision_request_url(@provision_request), params: { provision_request: { ip_address: @provision_request.ip_address, friendly_name: @provision_rquest.friendly_name, friendly_location: @provision_request.friendly_location, manufacturer: @provision_request.manufacturer, model: @provision_request.model, serial_number: @provision_request.serial_number, pin: @provision_request.pin, status: @provision_request.status } }
+    patch provision_request_url(@provision_request), params: { provision_request: { ip_address: @provision_request.ip_address, friendly_name: @provision_request.friendly_name, friendly_location: @provision_request.friendly_location, manufacturer: @provision_request.manufacturer, model: @provision_request.model, serial_number: @provision_request.serial_number, pin: @provision_request.pin, status: @provision_request.status } }
     assert_redirected_to new_user_session_url
 #    assert_redirected_to provision_request_url(@provision_request)
   end
