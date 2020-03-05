@@ -3,23 +3,15 @@
 one:
   provisioned: false
   friendly_name: MyString
-  manufacturer: MyString
-  model_number: MyString
-  serial_number: MyString
   accuracy: 1
   precision: 1
   update_frequency: 1
-  bridge: false
   provision_request: one
 
 two:
-  provisioned: false
+  provisioned: true
   friendly_name: MyString
-  manufacturer: MyString
-  model_number: MyString
-  serial_number: MyString
   accuracy: 1
   precision: 1
   update_frequency: 1
-  bridge: false
   provision_request: two
