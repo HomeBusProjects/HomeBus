@@ -7,12 +7,14 @@ class MosquittoAccountsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get mosquitto_accounts_url
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should get new" do
     get new_mosquitto_account_url
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should create mosquitto_account" do
@@ -20,22 +22,26 @@ class MosquittoAccountsControllerTest < ActionDispatch::IntegrationTest
       post mosquitto_accounts_url, params: { mosquitto_account: { password: @mosquitto_account.password, provision_request_id: @mosquitto_account.provision_request_id, superuser: @mosquitto_account.superuser } }
     end
 
-    assert_redirected_to mosquitto_account_url(MosquittoAccount.last)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to mosquitto_account_url(MosquittoAccount.last)
   end
 
   test "should show mosquitto_account" do
     get mosquitto_account_url(@mosquitto_account)
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should get edit" do
     get edit_mosquitto_account_url(@mosquitto_account)
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should update mosquitto_account" do
     patch mosquitto_account_url(@mosquitto_account), params: { mosquitto_account: { password: @mosquitto_account.password, provision_request_id: @mosquitto_account.provision_request_id, superuser: @mosquitto_account.superuser } }
-    assert_redirected_to mosquitto_account_url(@mosquitto_account)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to mosquitto_account_url(@mosquitto_account)
   end
 
   test "should destroy mosquitto_account" do
@@ -43,6 +49,7 @@ class MosquittoAccountsControllerTest < ActionDispatch::IntegrationTest
       delete mosquitto_account_url(@mosquitto_account)
     end
 
-    assert_redirected_to mosquitto_accounts_url
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to mosquitto_accounts_url
   end
 end

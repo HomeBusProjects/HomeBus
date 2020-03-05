@@ -7,7 +7,8 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get devices_url
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should get new" do
@@ -20,22 +21,26 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
       post devices_url, params: { device: { accuracy: @device.accuracy, bridge: @device.bridge, friendly_name: @device.friendly_name, manufacturer: @device.manufacturer, model_number: @device.model_number, precision: @device.precision, provision_request_id: @device.provision_request_id, provisioned: @device.provisioned, serial_number: @device.serial_number, update_frequency: @device.update_frequency } }
     end
 
-    assert_redirected_to device_url(Device.last)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to device_url(Device.last)
   end
 
   test "should show device" do
     get device_url(@device)
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should get edit" do
     get edit_device_url(@device)
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should update device" do
     patch device_url(@device), params: { device: { accuracy: @device.accuracy, bridge: @device.bridge, friendly_name: @device.friendly_name, manufacturer: @device.manufacturer, model_number: @device.model_number, precision: @device.precision, provision_request_id: @device.provision_request_id, provisioned: @device.provisioned, serial_number: @device.serial_number, update_frequency: @device.update_frequency } }
-    assert_redirected_to device_url(@device)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to device_url(@device)
   end
 
   test "should destroy device" do
@@ -43,6 +48,7 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
       delete device_url(@device)
     end
 
-    assert_redirected_to devices_url
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to devices_url
   end
 end
