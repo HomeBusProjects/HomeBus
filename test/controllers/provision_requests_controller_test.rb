@@ -18,8 +18,9 @@ class ProvisionRequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create provision_request" do
-    assert_difference('ProvisionRequest.count') do
-      post provision_requests_url, params: { provision_request: { ip_adress: @provision_request.ip_adress, pin: @provision_request.pin, ro_topics: @provision_request.ro_topics, status: @provision_request.status, wo_topics: @provision_request.wo_topics } }
+    assert_difference('ProvisionRequest.count', 0) do
+#    assert_difference('ProvisionRequest.count') do
+      post provision_requests_url, params: { provision_request: { ip_address: @provision_request.ip_address, pin: @provision_request.pin, ro_topics: @provision_request.ro_topics, status: @provision_request.status, wo_topics: @provision_request.wo_topics } }
     end
 
     assert_redirected_to new_user_session_url
@@ -39,13 +40,14 @@ class ProvisionRequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update provision_request" do
-    patch provision_request_url(@provision_request), params: { provision_request: { ip_adress: @provision_request.ip_adress, pin: @provision_request.pin, ro_topics: @provision_request.ro_topics, status: @provision_request.status, wo_topics: @provision_request.wo_topics } }
+    patch provision_request_url(@provision_request), params: { provision_request: { ip_address: @provision_request.ip_address, pin: @provision_request.pin, ro_topics: @provision_request.ro_topics, status: @provision_request.status, wo_topics: @provision_request.wo_topics } }
     assert_redirected_to new_user_session_url
 #    assert_redirected_to provision_request_url(@provision_request)
   end
 
   test "should destroy provision_request" do
-    assert_difference('ProvisionRequest.count', -1) do
+    assert_difference('ProvisionRequest.count', 0) do
+#    assert_difference('ProvisionRequest.count', -1) do
       delete provision_request_url(@provision_request)
     end
 
