@@ -14,7 +14,7 @@ class ProvisionRequestsTest < ApplicationSystemTestCase
     visit provision_requests_url
     click_on "New Provision Request"
 
-    fill_in "Ip Adress", with: @provision_request.ip_adress
+    fill_in "Ip Address", with: @provision_request.ip_address
     fill_in "Pin", with: @provision_request.pin
     fill_in "Ro Topics", with: @provision_request.ro_topics
     fill_in "Status", with: @provision_request.status
@@ -29,7 +29,7 @@ class ProvisionRequestsTest < ApplicationSystemTestCase
     visit provision_requests_url
     click_on "Edit", match: :first
 
-    fill_in "Ip Adress", with: @provision_request.ip_adress
+    fill_in "Ip Address", with: @provision_request.ip_address
     fill_in "Pin", with: @provision_request.pin
     fill_in "Ro Topics", with: @provision_request.ro_topics
     fill_in "Status", with: @provision_request.status
