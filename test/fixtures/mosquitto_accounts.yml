@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  username: MyString
+  uuid: "aaaabbbb-cccc-dddd-eeee-ffff00001111"
   password: MyString
   superuser: false
   provision_request: one
 
 two:
-  username: MyString
+  uuid: "aaaabbbb-cccc-dddd-eeee-ffff00002222"
   password: MyString
   superuser: false
   provision_request: two
