@@ -17,7 +17,7 @@ class MosquittoAccountsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create mosquitto_account" do
     assert_difference('MosquittoAccount.count') do
-      post mosquitto_accounts_url, params: { mosquitto_account: { password: @mosquitto_account.password, provision_request_id: @mosquitto_account.provision_request_id, superuser: @mosquitto_account.superuser, username: @mosquitto_account.username } }
+      post mosquitto_accounts_url, params: { mosquitto_account: { password: @mosquitto_account.password, provision_request_id: @mosquitto_account.provision_request_id, superuser: @mosquitto_account.superuser } }
     end
 
     assert_redirected_to mosquitto_account_url(MosquittoAccount.last)
@@ -34,7 +34,7 @@ class MosquittoAccountsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update mosquitto_account" do
-    patch mosquitto_account_url(@mosquitto_account), params: { mosquitto_account: { password: @mosquitto_account.password, provision_request_id: @mosquitto_account.provision_request_id, superuser: @mosquitto_account.superuser, username: @mosquitto_account.username } }
+    patch mosquitto_account_url(@mosquitto_account), params: { mosquitto_account: { password: @mosquitto_account.password, provision_request_id: @mosquitto_account.provision_request_id, superuser: @mosquitto_account.superuser } }
     assert_redirected_to mosquitto_account_url(@mosquitto_account)
   end
 

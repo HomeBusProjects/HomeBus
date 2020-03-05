@@ -17,7 +17,6 @@ class MosquittoAccountsTest < ApplicationSystemTestCase
     fill_in "Password", with: @mosquitto_account.password
     fill_in "Provision Request", with: @mosquitto_account.provision_request_id
     fill_in "Superuser", with: @mosquitto_account.superuser
-    fill_in "Username", with: @mosquitto_account.username
     click_on "Create Mosquitto account"
 
     assert_text "Mosquitto account was successfully created"
@@ -31,7 +30,6 @@ class MosquittoAccountsTest < ApplicationSystemTestCase
     fill_in "Password", with: @mosquitto_account.password
     fill_in "Provision Request", with: @mosquitto_account.provision_request_id
     fill_in "Superuser", with: @mosquitto_account.superuser
-    fill_in "Username", with: @mosquitto_account.username
     click_on "Update Mosquitto account"
 
     assert_text "Mosquitto account was successfully updated"
