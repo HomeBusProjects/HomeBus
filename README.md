@@ -1,6 +1,6 @@
 # HomeBus Is
 
-[![Build Status](https://travis-ci.com/HomeBusProjects/homebus-recorder.svg?branch=master)](https://travis-ci.com/HomeBusProjects/homebus-recorder)
+[![Build Status](https://travis-ci.com/HomeBusProjects/homebus.svg?branch=master)](https://travis-ci.com/HomeBusProjects/homebus)
 
 HomeBus is a prototype system that provides a uniform interface for publishing, accessing and sharing data collected by
 sensors located around a home, business or region. HomeBus is a provisioning system that allows devices to find and publish data to brokers, and allows brokers to connect to external services.
