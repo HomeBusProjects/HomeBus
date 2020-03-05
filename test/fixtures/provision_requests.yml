@@ -3,15 +3,19 @@
 one:
   pin: MyString
   ip_address:  '10.0.1.2'
+  friendly_name: MyString
+  friendly_location: MyString
   manufacturer: MyString
   model: MyString
   serial_number: MyString
-  status: 
+  status: 1
 
 two:
   pin: MyString
   ip_address: '192.168.1.2'
+  friendly_name: MyString
+  friendly_location: MyString
   manufacturer: MyString
   model: MyString
   serial_number: MyString
-  status: 
+  status: 2

@@ -3,11 +3,11 @@
 one:
   username: MyString
   topic: MyString
-  rw: false
-  provision_request: 
+  rw: true
+  provision_request: 1
 
 two:
   username: MyString
   topic: MyString
   rw: false
-  provision_request: 
+  provision_request: 2

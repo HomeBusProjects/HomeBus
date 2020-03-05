@@ -3,9 +3,11 @@
 one:
   provisioned: false
   friendly_name: MyString
+  friendly_location: MyString
   accuracy: 1
   precision: 1
-  update_frequency: 1
+  calibrated: false
+  update_frequency: 60
   wo_topics: [ MyString ]
   ro_topics: [ MyString ]
   provision_request: one
@@ -13,9 +15,11 @@ one:
 two:
   provisioned: true
   friendly_name: MyString
+  friendly_location: MyString
   accuracy: 1
   precision: 1
-  update_frequency: 1
+  calibrated: false
+  update_frequency: 0
   wo_topics: [ MyString ]
   ro_topics: [ MyString ]
   provision_request: two
