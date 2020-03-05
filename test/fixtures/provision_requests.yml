@@ -2,20 +2,16 @@
 
 one:
   pin: MyString
-  ip_adress:  '10.0.1.2'
+  ip_address:  '10.0.1.2'
   manufacturer: MyString
-  model_number: MyString
+  model: MyString
   serial_number: MyString
-  wo_topics: MyString
-  ro_topics: MyString
   status: 
 
 two:
   pin: MyString
-  ip_adress: '192.168.1.2'
+  ip_address: '192.168.1.2'
   manufacturer: MyString
-  model_number: MyString
+  model: MyString
   serial_number: MyString
-  wo_topics: MyString
-  ro_topics: MyString
   status: 

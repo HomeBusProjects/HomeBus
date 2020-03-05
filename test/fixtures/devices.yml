@@ -6,6 +6,8 @@ one:
   accuracy: 1
   precision: 1
   update_frequency: 1
+  wo_topics: [ MyString ]
+  ro_topics: [ MyString ]
   provision_request: one
 
 two:
@@ -14,4 +16,6 @@ two:
   accuracy: 1
   precision: 1
   update_frequency: 1
+  wo_topics: [ MyString ]
+  ro_topics: [ MyString ]
   provision_request: two
