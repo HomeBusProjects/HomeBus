@@ -1,4 +1,4 @@
-lock "~> 3.11.0"
+lock "~> 3.12.0"
 
 set :application, 'HomeBus'
 set :repo_url, 'git@github.com:romkey/HomeBus.git'
