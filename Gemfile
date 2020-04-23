@@ -12,7 +12,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer'
 
 gem "railties", ">= 5.2.2.1"
-gem "actionview", ">= 5.2.2.1"
+gem "actionview", ">= 5.2.4.2"
 
 gem 'dotenv-rails'
 
