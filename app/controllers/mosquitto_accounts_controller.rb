@@ -43,11 +43,14 @@ class MosquittoAccountsController < ApplicationController
   # PATCH/PUT /mosquitto_accounts/1
   # PATCH/PUT /mosquitto_accounts/1.json
   def update
-    params.delete :provision_request_id
-    params.delete :password
+    p = mosquitto_account_params
+    p.delete :provision_request_id
+    p.delete :password
+
+    pp p
 
     respond_to do |format|
-      if @mosquitto_account.update(mosquitto_account_params)
+      if @mosquitto_account.update(p)
         flash_message 'success', 'Mosquitto account was successfully updated.'
 
         format.html { redirect_to @mosquitto_account }
