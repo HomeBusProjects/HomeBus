@@ -15,7 +15,7 @@
 
 <p>
   <strong>Provision request:</strong>
-  <%= @mosquitto_account.provision_request %>
+  <%= link_to @mosquitto_account.provision_request.friendly_name, @mosquitto_account.provision_request %>
 </p>
 
 <%= link_to 'Edit', edit_mosquitto_account_path(@mosquitto_account) %> |
