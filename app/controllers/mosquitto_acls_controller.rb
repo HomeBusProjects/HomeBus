@@ -43,7 +43,7 @@ class MosquittoAclsController < ApplicationController
   # PATCH/PUT /mosquitto_acls/1
   # PATCH/PUT /mosquitto_acls/1.json
   def update
-    p = mosquitto_account_params
+    p = mosquitto_acl_params
     p.delete :provision_request_id, :username
 
     pp p
