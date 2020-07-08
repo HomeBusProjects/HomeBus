@@ -29,7 +29,7 @@
 
   <div class="field form-group">
     <%= form.label :provision_request_id %>
-    <%= form.text_field :provision_request_id,  { class: 'form-control', readonly: true, value: mosquitto_account.friendly_name } %>
+    <%= form.text_field :provision_request_id,  { class: 'form-control', readonly: true, value: mosquitto_account.provision_request.friendly_name } %>
   </div>
 
   <div class="actions">
