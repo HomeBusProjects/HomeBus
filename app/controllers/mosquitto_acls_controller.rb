@@ -43,8 +43,13 @@ class MosquittoAclsController < ApplicationController
   # PATCH/PUT /mosquitto_acls/1
   # PATCH/PUT /mosquitto_acls/1.json
   def update
+    p = mosquitto_account_params
+    p.delete :provision_request_id, :username
+
+    pp p
+
     respond_to do |format|
-      if @mosquitto_acl.update(mosquitto_acl_params)
+      if @mosquitto_acl.update(p)
         flash_message 'success', 'Mosquitto acl was successfully updated.'
 
         format.html { redirect_to @mosquitto_acl }
