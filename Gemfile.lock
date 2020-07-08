@@ -234,7 +234,11 @@ GEM
       nokogiri (~> 1.8)
 
 PLATFORMS
+  java
   ruby
+  x64-mingw32
+  x86-mingw32
+  x86-mswin32
 
 DEPENDENCIES
   actionview (>= 5.2.4.2)
@@ -270,4 +274,4 @@ RUBY VERSION
    ruby 2.6.2p47
 
 BUNDLED WITH
-   2.1.2
+   2.2.0.rc.1
