@@ -5,7 +5,9 @@
     <tr>
       <th>Username</th>
       <th>Topic</th>
-      <th>RW</th>
+      <th>Read</th>
+      <th>Write</th>
+      <th>Subscribe</th>
       <th>Provision request</th>
       <th colspan="3"></th>
     </tr>
@@ -16,7 +18,9 @@
       <tr>
         <td><%= mosquitto_acl.username %></td>
         <td><%= mosquitto_acl.topic %></td>
-        <td><%= mosquitto_acl.rw %></td>
+        <td><%= mosquitto_acl.read? %></td>
+        <td><%= mosquitto_acl.write? %></td>
+        <td><%= mosquitto_acl.subscribe? %></td>
         <td><%= link_to mosquitto_acl.provision_request.friendly_name, mosquitto_acl.provision_request %></td>
         <td><%= link_to 'Show', mosquitto_acl %></td>
         <td><%= link_to 'Edit', edit_mosquitto_acl_path(mosquitto_acl) %></td>
