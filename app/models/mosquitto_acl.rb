@@ -3,5 +3,5 @@ class MosquittoAcl < ApplicationRecord
 
   belongs_to :provision_request
 
-  bitfield :permissions, read: 1, write: 2, subscribe: 4
+  bitfield :permissions, 1: :read, 2: :write, 4: :subscribe
 end
