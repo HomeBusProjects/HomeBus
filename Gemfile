@@ -51,3 +51,5 @@ gem 'jquery-rails'
 
 gem 'whenever', require: false
 gem 'backup', require: false
+
+gem 'bitfields'

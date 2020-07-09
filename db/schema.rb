@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_02_151250) do
+ActiveRecord::Schema.define(version: 2020_07_09_004811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -53,10 +53,10 @@ ActiveRecord::Schema.define(version: 2019_05_02_151250) do
   create_table "mosquitto_acls", force: :cascade do |t|
     t.string "username", null: false
     t.string "topic", null: false
-    t.boolean "rw", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "provision_request_id"
+    t.integer "permissions", default: 7, null: false
     t.index ["provision_request_id"], name: "index_mosquitto_acls_on_provision_request_id"
     t.index ["username"], name: "index_mosquitto_acls_on_username"
   end
