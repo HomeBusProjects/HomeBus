@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Username/ID</th>
-      <th>Password</th>
       <th>Superuser</th>
       <th>Provision request</th>
       <th colspan="3"></th>
@@ -15,7 +14,6 @@
     <% @mosquitto_accounts.each do |mosquitto_account| %>
       <tr>
         <td><%= link_to mosquitto_account.id, mosquitto_account %></td>
-        <td><%= mosquitto_account.password %></td>
         <td><%= mosquitto_account.superuser %></td>
         <td><%= link_to mosquitto_account.provision_request.friendly_name, mosquitto_account.provision_request %></td>
         <td><%= link_to 'Delete', mosquitto_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
