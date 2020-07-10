@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_09_004811) do
+ActiveRecord::Schema.define(version: 2020_07_10_171759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -34,13 +34,6 @@ ActiveRecord::Schema.define(version: 2020_07_09_004811) do
     t.index ["provision_request_id"], name: "index_devices_on_provision_request_id"
   end
 
-  create_table "devices_spaces", id: false, force: :cascade do |t|
-    t.uuid "device_id"
-    t.uuid "space_id"
-    t.index ["device_id"], name: "index_devices_spaces_on_device_id"
-    t.index ["space_id"], name: "index_devices_spaces_on_space_id"
-  end
-
   create_table "mosquitto_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "password", null: false
     t.boolean "superuser", null: false
@@ -56,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_07_09_004811) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "provision_request_id"
-    t.integer "permissions", default: 7, null: false
+    t.integer "permissions", default: 0, null: false
     t.index ["provision_request_id"], name: "index_mosquitto_acls_on_provision_request_id"
     t.index ["username"], name: "index_mosquitto_acls_on_username"
   end
@@ -75,13 +68,6 @@ ActiveRecord::Schema.define(version: 2020_07_09_004811) do
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
     t.index ["manufacturer"], name: "index_provision_requests_on_manufacturer"
     t.index ["model"], name: "index_provision_requests_on_model"
-  end
-
-  create_table "spaces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "friendly_name"
-    t.boolean "interior"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
