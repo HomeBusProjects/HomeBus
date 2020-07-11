@@ -117,6 +117,7 @@ class ProvisionRequestsController < ApplicationController
   def destroy
     @provision_request.mosquitto_account.delete
     @provision_request.mosquitto_acl.delete_all
+    @provision_request.device.delete_all
 
     @provision_request.destroy
     respond_to do |format|
