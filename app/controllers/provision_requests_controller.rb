@@ -80,7 +80,8 @@ class ProvisionRequestsController < ApplicationController
   # POST /provision_requests
   # POST /provision_requests.json
   def create
-    @provision_request = ProvisionRequest.new(args)
+    @provision_request = ProvisionRequest.new(provision_request_params)
+    @provision_request.ip_address = request.remote_ip
 
     respond_to do |format|
       if @provision_request.save
@@ -131,6 +132,6 @@ class ProvisionRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provision_request_params
-      params.require(:provision).permit(:pin, :ip_adress, :wo_topics, :ro_topics, :rw_topics, :status)
+      params.require(:provision_request).permit(:pin, :manufacturer, :model, :serial_number, :wo_topics, :ro_topics, :rw_topics, :status)
     end
 end

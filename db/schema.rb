@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_07_10_171759) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "provision_request_id"
-    t.integer "permissions", default: 0, null: false
+    t.integer "permissions", default: 7, null: false
     t.index ["provision_request_id"], name: "index_mosquitto_acls_on_provision_request_id"
     t.index ["username"], name: "index_mosquitto_acls_on_username"
   end
