@@ -29,7 +29,7 @@
 <% if @provision_request.mosquitto_account %>
 <p>
   <strong>Mosquitto Account</strong>
-  <%= link_to @provision_request.mosquitto_account.username, @provision_request.mosquitto_account %><br>
+  <%= link_to @provision_request.mosquitto_account.id, @provision_request.mosquitto_account %><br>
   Superuser? <% @provision_request.mosquitto_account.superuser? %>
 </p>
 <% end %>
