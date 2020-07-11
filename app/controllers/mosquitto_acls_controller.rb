@@ -26,6 +26,7 @@ class MosquittoAclsController < ApplicationController
   # POST /mosquitto_acls.json
   def create
     @mosquitto_acl = MosquittoAcl.new(mosquitto_acl_params)
+    @mosquitto_acl.username = @mosquitto_acl.provision_request.mosquitto_account.id
 
     respond_to do |format|
       if @mosquitto_acl.save
@@ -81,6 +82,6 @@ class MosquittoAclsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def mosquitto_acl_params
-      params.require(:mosquitto_acl).permit(:username, :topic, :rw, :provision_request)
+      params.require(:mosquitto_acl).permit(:topic, :permissions, :read, :write, :subscribe, :provision_request)
     end
 end

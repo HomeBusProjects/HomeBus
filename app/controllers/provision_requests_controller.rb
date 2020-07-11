@@ -115,6 +115,9 @@ class ProvisionRequestsController < ApplicationController
   # DELETE /provision_requests/1
   # DELETE /provision_requests/1.json
   def destroy
+    @provision_request.mosquitto_account.delete
+    @provision_request.mosquitto_acl.delete_all
+
     @provision_request.destroy
     respond_to do |format|
       flash_message 'danger', 'Provision request was successfully destroyed.'
