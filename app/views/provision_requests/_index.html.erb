@@ -1,14 +1,13 @@
 <table class='table'>
   <thead>
     <tr>
-      <th>UUID</th>
-      <th>Pin</th>
-      <th>IP Address</th>
       <th>Friendly Name</th>
       <th>Friendly Location</th>
       <th>Manufacturer</th>
       <th>Model</th>
       <th>Serial Number</th>
+      <th>UUID</th>
+      <th>Pin</th>
       <th>Status</th>
       <th>Devices</th>
       <th colspan="10"></th>
@@ -18,14 +17,13 @@
   <tbody>
     <% @provision_requests.each do |provision_request| %>
       <tr>
-	<td><%= link_to provision_request.id, provision_request %></td>
-        <td><%= provision_request.pin %></td>
-        <td><%= provision_request.ip_address %></td>
-        <td><%= provision_request.friendly_name %></td>
+        <td><%= link_to provision_request.friendly_name, provision_request %></td>
         <td><%= provision_request.friendly_location %></td>
         <td><%= provision_request.manufacturer %></td>
         <td><%= provision_request.model %></td>
         <td><%= provision_request.serial_number %></td>
+	<td><%= link_to provision_request.id, provision_request %></td>
+        <td><%= provision_request.pin %></td>
         <td><%= provision_request.status %></td>
 	<td><%= link_to provision_request.devices.count, "/devices?provision_id=#{provision_request.id}" %></td>
 	
