@@ -61,6 +61,11 @@ class ProvisionRequestsController < ApplicationController
   # GET /provision_requests.json
   def index
     @provision_requests = ProvisionRequest.all.order(status: :asc, created_at: :desc)
+
+    if params[:q]
+      query = params[:q]
+      @provision_requests = @provision_requests.where("friendly_name ILIKE '%#{query}%' OR friendly_location ILIKE '%#{query}%' OR manufacturer ILIKE '%#{query}%' OR model ILIKE '%#{query}%' OR serial_number ILIKE '%#{query}%'")
+    end
   end
 
   # GET /provision_requests/1
@@ -115,7 +120,10 @@ class ProvisionRequestsController < ApplicationController
   # DELETE /provision_requests/1
   # DELETE /provision_requests/1.json
   def destroy
-    @provision_request.mosquitto_account.delete
+    if @provision_request.mosquitto_account
+      @provision_request.mosquitto_account.delete
+    end
+
     @provision_request.mosquitto_acl.delete_all
     @provision_request.devices.delete_all
 
