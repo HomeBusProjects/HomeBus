@@ -45,11 +45,6 @@
     </div>
   </div>
     
-  <div class="field">
-    <%= form.label :ip_address, 'IP Address' %>
-    <%= form.text_field :ip_address,  { readonly: true, class: "form-control" }  %>
-  </div>
-
    <div class="field">
     <%= form.label :status %>
     <%= form.select :status, options_for_select([:unanswered, :accepted, :denied], selected: form.object.status) %>
