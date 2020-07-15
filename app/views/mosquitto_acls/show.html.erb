@@ -25,7 +25,7 @@
 
 <p>
   <strong>Provision request:</strong>
-  <%= @mosquitto_acl.provision_request.friendly_name %>
+  <%= if mosquitto_acl.provision_request then @mosquitto_acl.provision_request.friendly_name end %>
 </p>
 
 <%= link_to 'Edit', edit_mosquitto_acl_path(@mosquitto_acl) %> |

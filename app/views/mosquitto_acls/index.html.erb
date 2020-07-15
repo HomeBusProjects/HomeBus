@@ -21,7 +21,7 @@
         <td><%= mosquitto_acl.read? %></td>
         <td><%= mosquitto_acl.write? %></td>
         <td><%= mosquitto_acl.subscribe? %></td>
-        <td><%=  if mosquitto_acl.provision_rquest then link_to(mosquitto_acl.provision_request.friendly_name, mosquitto_acl.provision_request) end %></td>
+        <td><%=  if mosquitto_acl.provision_request then link_to(mosquitto_acl.provision_request.friendly_name, mosquitto_acl.provision_request) end %></td>
         <td><%= link_to 'Show', mosquitto_acl %></td>
         <td><%= link_to 'Edit', edit_mosquitto_acl_path(mosquitto_acl) %></td>
         <td><%= link_to 'Destroy', mosquitto_acl, method: :delete, data: { confirm: 'Are you sure?' } %></td>
