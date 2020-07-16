@@ -65,7 +65,7 @@ class ProvisionRequestsController < ApplicationController
 
     if params[:q]
       query = params[:q]
-      @provision_requests = @provision_requests.where("friendly_name ILIKE '%#{query}%' OR friendly_location ILIKE '%#{query}%' OR manufacturer ILIKE '%#{query}%' OR model ILIKE '%#{query}%' OR serial_number ILIKE '%#{query}%'")
+      @provision_requests = @provision_requests.where("id ILIKE '%#{query}%' OR friendly_name ILIKE '%#{query}%' OR friendly_location ILIKE '%#{query}%' OR manufacturer ILIKE '%#{query}%' OR model ILIKE '%#{query}%' OR serial_number ILIKE '%#{query}%'")
     end
   end
 
