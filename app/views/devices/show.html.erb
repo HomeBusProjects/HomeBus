@@ -43,15 +43,6 @@
 </p>
 
 <p>
-  <strong>Spaces:</strong>
-  <ul>
-  <% @device.spaces.each do |space| %>
-    <li><%= link_to space.friendly_name, space %>
-  <% end %>
-  </ul>
-</p>
-
-<p>
   <strong>Write-only topics</strong>
   <ul>
     <% @device.wo_topics.each do |topic| %>

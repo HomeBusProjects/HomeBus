@@ -89,6 +89,8 @@ class ProvisionRequestsController < ApplicationController
     @provision_request = ProvisionRequest.new(provision_request_params)
     @provision_request.ip_address = request.remote_ip
 
+    arrayize_ddcs
+
     respond_to do |format|
       if @provision_request.save
         flash_message 'success', 'Provision request was successfully created.'
@@ -105,6 +107,8 @@ class ProvisionRequestsController < ApplicationController
   # PATCH/PUT /provision_requests/1
   # PATCH/PUT /provision_requests/1.json
   def update
+    arrayize_ddcs
+
     respond_to do |format|
       if @provision_request.update(provision_request_params)
         flash_message 'success', 'Provision request was successfully updated.'
@@ -145,6 +149,27 @@ class ProvisionRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provision_request_params
-      params.require(:provision_request).permit(:pin, :manufacturer, :model, :serial_number, :wo_topics, :ro_topics, :rw_topics, :status)
+      params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :uuids)
     end
+
+    def arrayize_ddcs
+      p = provision_request_params
+
+      wo_ddcs = p[:wo_ddcs]
+      if wo_ddcs.present?
+        @provision_request.wo_ddcs = wo_ddcs.split
+      end
+
+      ro_ddcs = p[:ro_ddcs]
+      if ro_ddcs.present?
+        @provision_request.ro_ddcs = ro_ddcs.split
+      end
+
+      rw_ddcs = p[:rw_ddcs]
+      if rw_ddcs.present?
+        @provision_request.rw_ddcs = rw_ddcs.split
+      end
+    end
+
+
 end

@@ -1,16 +1,13 @@
-<p>
-  <%= @provision_request.friendly_name %><br/>
-  <%= @provision_request.friendly_location %><br/>
+  <h2><%= @provision_request.friendly_name %></h2>
   <%= @provision_request.manufacturer %>, <%= @provision_request.model %><br />
-  <b>serial number:</b> <%= @provision_request.serial_number %>
-</p>
+  <h3>serial number:</h3> <%= @provision_request.serial_number %>
+  <h3>Pin:</h3>
 <p>
-  <strong>Pin:</strong>
   <%= @provision_request.pin %>
 </p>
 
+  <h3>IP Address:</h3>
 <p>
-  <strong>IP Address:</strong>
   <%= @provision_request.ip_address %>
 </p>
 
@@ -19,23 +16,44 @@
 <% end %>
 
 <% if @provision_request.accepted? %>
-<strong>Accepted</strong>
+<h3>Accepted</h3>
 <% end %>
 
 <% if @provision_request.denied? %>
-<strong>Denied</strong>
+<h3>Denied</h3>
 <% end %>
+
+<h3>Write-only DDCs</h3>
+<ul>
+  <% @provision_request.wo_ddcs.each do |ddc| %>
+    <li><%= ddc %></li>
+  <% end %>
+</ul>
+
+<h3>Read-only DDCs</h3>
+<ul>
+  <% @provision_request.ro_ddcs.each do |ddc| %>
+    <li><%= ddc %></li>
+  <% end %>
+</ul>
+
+<h3>Read-Write DDCs</h3>
+<ul>
+  <% @provision_request.rw_ddcs.each do |ddc| %>
+    <li><%= ddc %></li>
+  <% end %>
+</ul>
 
 <% if @provision_request.mosquitto_account %>
 <p>
-  <strong>Mosquitto Account</strong>
+  <h3>Mosquitto Account</h3>
   <%= link_to @provision_request.mosquitto_account.id, @provision_request.mosquitto_account %><br>
   Superuser? <% @provision_request.mosquitto_account.superuser? %>
 </p>
 <% end %>
 
 <p>
-  <strong>Mosquitto ACLs</strong>
+  <h3>Mosquitto ACLs</h3>
   <ul>
 <% @provision_request.mosquitto_acl.find_each do |acl| %>
       <li><%= link_to acl.topic, acl %></li>

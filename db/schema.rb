@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_10_171759) do
+ActiveRecord::Schema.define(version: 2020_08_15_171004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_07_10_171759) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "provision_request_id"
-    t.integer "permissions", default: 7, null: false
+    t.integer "permissions", default: 0, null: false
     t.index ["provision_request_id"], name: "index_mosquitto_acls_on_provision_request_id"
     t.index ["username"], name: "index_mosquitto_acls_on_username"
   end
@@ -65,9 +65,18 @@ ActiveRecord::Schema.define(version: 2020_07_10_171759) do
     t.integer "status", limit: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ro_ddcs", default: [], null: false, array: true
+    t.string "wo_ddcs", default: [], null: false, array: true
+    t.string "rw_ddcs", default: [], null: false, array: true
+    t.uuid "allocated_uuids", default: [], null: false, array: true
+    t.integer "requestsed_uuid_count", default: 1, null: false
+    t.index ["allocated_uuids"], name: "index_provision_requests_on_allocated_uuids", using: :gin
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
     t.index ["manufacturer"], name: "index_provision_requests_on_manufacturer"
     t.index ["model"], name: "index_provision_requests_on_model"
+    t.index ["ro_ddcs"], name: "index_provision_requests_on_ro_ddcs", using: :gin
+    t.index ["rw_ddcs"], name: "index_provision_requests_on_rw_ddcs", using: :gin
+    t.index ["wo_ddcs"], name: "index_provision_requests_on_wo_ddcs", using: :gin
   end
 
   create_table "users", force: :cascade do |t|

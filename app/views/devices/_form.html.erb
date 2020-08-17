@@ -85,11 +85,6 @@
     <%= form.collection_select :provision_request_id, ProvisionRequest.all, :id, :friendly_name, {}, { class: 'form-control', readonly: true } %>
   </div>
 
-  <div class="field form-group">
-    <%= form.label :spaces %>
-    <%= form.collection_select :space_ids, Space.all, :id, :friendly_name, {}, { multiple: true, class: "form-control" } %> 
-  </div>
-
   <div class="actions">
     <%= form.submit "Update Device", class: "btn btn-primary" %>
   </div>

@@ -13,18 +13,8 @@
 
   <div class="row">
     <div class="col">
-      <%= form.label :friendly_name, "Name" %>
+      <%= form.label :friendly_name, "Given Name" %>
       <%= form.text_field :friendly_name, { class: "form-control" } %>
-    </div>
-
-    <div class="col">
-      <%= form.label :friendly_location, "Location" %>
-      <%= form.text_field :friendly_location,  {class: "form-control" } %>
-    </div>
-
-    <div class="col">
-      <%= form.label :pin, 'PIN' %>
-      <%= form.text_field :pin,  { class: "form-control" }  %>
     </div>
   </div>
 
@@ -44,12 +34,38 @@
       <%= form.text_field :serial_number,  { class: "form-control" }  %>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col">
+      <%= form.label :pin, 'PIN' %>
+      <%= form.text_field :pin,  { class: "form-control" }  %>
+    </div>
+  </div>
     
+  <div class="row">
    <div class="field">
     <%= form.label :status %>
     <%= form.select :status, options_for_select([:unanswered, :accepted, :denied], selected: form.object.status) %>
   </div>
+  </div>
 
+  <div class="row">
+    <div class="col">
+      <%= form.label "Write-only DDCs" %>
+      <%= form.text_area :wo_ddcs, { class: "form-control", value: @provision_request.wo_ddcs.join("\r\n") } %>
+    </div>
+
+    <div class="col">
+      <%= form.label "Read-only DDCs" %>
+      <%= form.text_area :ro_ddcs, { class: "form-control", value: @provision_request.ro_ddcs.join("\r\n") }  %>
+    </div>
+
+    <div class="col">
+      <%= form.label "Read-write DDCs" %>
+      <%= form.text_area :rw_ddcs, { class: "form-control", value: @provision_request.rw_ddcs.join("\r\n") }  %>
+    </div>
+  </div>
+   
   <div class="actions">
     <%= form.submit "Update Provision Request", class: "btn btn-primary" %>
   </div>
