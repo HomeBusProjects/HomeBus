@@ -33,7 +33,7 @@
 <div class='row'>
   <div class='col'>
     <h3>Write-only DDCs</h3>
-    <ul class='list-group'>
+    <ul class='list-group-flush'>
       <% @provision_request.wo_ddcs.each do |ddc| %>
       <li class='list-group-item'><%= ddc %></li>
       <% end %>
@@ -42,7 +42,7 @@
 
   <div class='col'>
     <h3>Read-only DDCs</h3>
-    <ul class='list-group'>
+    <ul class='list-group-flush'>
 <% @provision_request.ro_ddcs.each do |ddc| %>
       <li class='list-group-item'><%= ddc %></li>
 <% end %>
@@ -51,7 +51,7 @@
 
   <div class='col'>
     <h3>Read-Write DDCs</h3>
-    <ul class='list-group'>
+    <ul class='list-group-flush'>
 <% @provision_request.rw_ddcs.each do |ddc| %>
       <li class='list-group-item'><%= ddc %></li>
 <% end %>
