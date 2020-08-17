@@ -1,8 +1,9 @@
+<div class='row'>
+  <div class='col'>
   <h2><%= @provision_request.friendly_name %></h2>
   <%= @provision_request.manufacturer %>, <%= @provision_request.model %><br />
   <h3>serial number:</h3> <%= @provision_request.serial_number %>
   <h3>Pin:</h3>
-<p>
   <%= @provision_request.pin %>
 </p>
 
@@ -10,7 +11,11 @@
 <p>
   <%= @provision_request.ip_address %>
 </p>
+</div>
+</div>
 
+<div class='row'>
+  <div class='col'>
 <% if @provision_request.unanswered? %>
 <a href='<%= accept_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-success">Accept</button></a><a href='<%= deny_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-danger">Deny</button></a>
 <% end %>
@@ -22,27 +27,37 @@
 <% if @provision_request.denied? %>
 <h3>Denied</h3>
 <% end %>
+  </div>
+  </div>
 
-<h3>Write-only DDCs</h3>
-<ul>
-  <% @provision_request.wo_ddcs.each do |ddc| %>
-    <li><%= ddc %></li>
-  <% end %>
-</ul>
+<div class='row'>
+  <div class='col'>
+    <h3>Write-only DDCs</h3>
+    <ul class='list-group'>
+      <% @provision_request.wo_ddcs.each do |ddc| %>
+      <li class='list-group-item'><%= ddc %></li>
+      <% end %>
+    </ul>
+  </div>
 
-<h3>Read-only DDCs</h3>
-<ul>
-  <% @provision_request.ro_ddcs.each do |ddc| %>
-    <li><%= ddc %></li>
-  <% end %>
-</ul>
+  <div class='col'>
+    <h3>Read-only DDCs</h3>
+    <ul class='list-group'>
+<% @provision_request.ro_ddcs.each do |ddc| %>
+      <li class='list-group-item'><%= ddc %></li>
+<% end %>
+    </ul>
+  </div>
 
-<h3>Read-Write DDCs</h3>
-<ul>
-  <% @provision_request.rw_ddcs.each do |ddc| %>
-    <li><%= ddc %></li>
-  <% end %>
-</ul>
+  <div class='col'>
+    <h3>Read-Write DDCs</h3>
+    <ul class='list-group'>
+<% @provision_request.rw_ddcs.each do |ddc| %>
+      <li class='list-group-item'><%= ddc %></li>
+<% end %>
+    </ul>
+  </div>
+</div>
 
 <% if @provision_request.mosquitto_account %>
 <p>
