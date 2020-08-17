@@ -86,10 +86,8 @@ class ProvisionRequestsController < ApplicationController
   # POST /provision_requests
   # POST /provision_requests.json
   def create
-    @provision_request = ProvisionRequest.new(provision_request_params)
+    @provision_request = ProvisionRequest.new(arrayized_ddcs)
     @provision_request.ip_address = request.remote_ip
-
-    arrayize_ddcs
 
     respond_to do |format|
       if @provision_request.save
@@ -107,10 +105,8 @@ class ProvisionRequestsController < ApplicationController
   # PATCH/PUT /provision_requests/1
   # PATCH/PUT /provision_requests/1.json
   def update
-    arrayize_ddcs
-
     respond_to do |format|
-      if @provision_request.update(provision_request_params)
+      if @provision_request.update(arrayized_ddcs)
         flash_message 'success', 'Provision request was successfully updated.'
 
         format.html { redirect_to @provision_request }
@@ -152,24 +148,29 @@ class ProvisionRequestsController < ApplicationController
       params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :uuids)
     end
 
-    def arrayize_ddcs
+    def arrayized_ddcs
       p = provision_request_params
 
       wo_ddcs = p[:wo_ddcs]
       if wo_ddcs.present?
-        @provision_request.wo_ddcs = wo_ddcs.split
+        p.merge!({ wo_ddcs: wo_ddcs.split })
       end
 
       ro_ddcs = p[:ro_ddcs]
       if ro_ddcs.present?
-        @provision_request.ro_ddcs = ro_ddcs.split
+        p.merge!({ ro_ddcs: ro_ddcs.split })
       end
 
       rw_ddcs = p[:rw_ddcs]
       if rw_ddcs.present?
-        @provision_request.rw_ddcs = rw_ddcs.split
+        p.merge!({ rw_ddcs: rw_ddcs.split })
       end
+
+      uuids = p[:uuids]
+      if uuids.present?
+        p.merge!({ uuids: uuids.split })
+      end
+
+      p
     end
-
-
 end
