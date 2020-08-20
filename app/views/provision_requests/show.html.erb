@@ -20,15 +20,11 @@
 <a href='<%= accept_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-success">Accept</button></a><a href='<%= deny_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-danger">Deny</button></a>
 <% end %>
 
-<% if @provision_request.accepted? %>
-<h3>Accepted</h3>
-<% end %>
-
-<% if @provision_request.denied? %>
-<h3>Denied</h3>
+<% if %>
+    <h3><%= @provision_request.status.capitalize %></h3>
 <% end %>
   </div>
-  </div>
+</div>
 
 <div class='row'>
   <div class='col'>
@@ -59,6 +55,32 @@
   </div>
 </div>
 
+<div class='row'>
+  <div class='col'>
+    <h3>Proposed ACLs</h3>
+    <ul class='list-group-flush'>
+<% @provision_request._generate_acls.each do |acl| %>
+      <li class='list-group-item'><%= acl %></li>
+<% end %>
+    </ul>
+
+  </div>
+</div>
+
+
+<div class='row'>
+  <div class='col'>
+    <h3>UUIDs</h3>
+    <ul class='list-group-flush'>
+      <% @provision_request.allocated_uuids.each do |uuid| %>
+      <li class='list-group-item'><%= uuids %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<hr>
+<h2>Mosquitto</h2>
 <% if @provision_request.mosquitto_account %>
 <p>
   <h3>Mosquitto Account</h3>
