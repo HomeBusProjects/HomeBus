@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_15_171004) do
+ActiveRecord::Schema.define(version: 2020_08_22_163418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2020_08_15_171004) do
     t.string "wo_ddcs", default: [], null: false, array: true
     t.string "rw_ddcs", default: [], null: false, array: true
     t.uuid "allocated_uuids", default: [], null: false, array: true
-    t.integer "requestsed_uuid_count", default: 1, null: false
+    t.integer "requested_uuid_count", default: 1, null: false
     t.index ["allocated_uuids"], name: "index_provision_requests_on_allocated_uuids", using: :gin
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
     t.index ["manufacturer"], name: "index_provision_requests_on_manufacturer"

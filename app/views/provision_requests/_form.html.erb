@@ -66,6 +66,18 @@
     </div>
   </div>
    
+  <div class="row">
+    <div class="col">
+      <%= form.label :requested_uuid_count, 'Requested UUID count' %>
+      <%= form.number_field :requested_uuid_count,  { class: "form-control" }  %>
+    </div>
+      
+    <div class="col">
+      <%= form.label "UUIDs" %>
+      <%= form.text_area :allocated_uuids, { class: "form-control", value: @provision_request.allocated_uuids.join("\r\n") }  %>
+    </div>
+  </div>
+
   <div class="actions">
     <%= form.submit "Update Provision Request", class: "btn btn-primary" %>
   </div>
