@@ -71,9 +71,10 @@
 <div class='row'>
   <div class='col'>
     <h3>UUIDs</h3>
+    Requested: <%= @provision_request.requested_uuid_count %>
     <ul class='list-group-flush'>
       <% @provision_request.allocated_uuids.each do |uuid| %>
-      <li class='list-group-item'><%= uuids %></li>
+      <li class='list-group-item'><%= uuid %></li>
       <% end %>
     </ul>
   </div>
