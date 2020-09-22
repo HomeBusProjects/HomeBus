@@ -31,7 +31,7 @@
 	    <li class="nav-item">
 	      <a class="nav-link" href="<%= provision_requests_path %>">Requests</a>
 	    </li>
-<% if can :manage, :all %>
+<% if can? :manage, :all %>
 	    <li class="nav-item">
 	      <a class="nav-link" href="<%= mosquitto_accounts_path %>">Mosquitto Accounts</a>
 	    </li>
