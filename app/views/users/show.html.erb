@@ -1,0 +1,24 @@
+<h1>Welcome back, <%= @user.name %></h1>
+
+<h2>Your networks</h2>
+<%= link_to 'Add a network', new_network_path, class: 'btn btn-info' %>
+<ul>
+<% @user.networks.each do |network| %>
+  <li><%= link_to network.name, network %></li>
+<% end %>
+</ul>
+
+<h2>Your Requests</h2>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

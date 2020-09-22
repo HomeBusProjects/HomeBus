@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  resources :networks
   devise_for :users
   root to: 'devices#index'
 
   resources :devices
+  resources :users
   resources :mosquitto_accounts
   resources :mosquitto_acls
   resources :provision_requests do

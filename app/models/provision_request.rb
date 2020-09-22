@@ -1,8 +1,13 @@
 class ProvisionRequest < ApplicationRecord
   enum status: [ :unanswered, :accepted, :denied ]
+
   has_many :devices
+
   has_one :mosquitto_account
   has_many :mosquitto_acl
+
+  has_many :networks_provision_requests, dependent: :destroy
+  has_many :networks, through: :networks_provision_requests
 
   def _generate_acls
     wo_ddcs.push('org.homebus.experimental.error').flat_map do |ddc|

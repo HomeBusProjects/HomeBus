@@ -39,6 +39,9 @@
 	      <a class="nav-link" href="/cleardb">ClearDB</a>
 	    </li>
 	  <% end %>
+	  <% if user_signed_in? %>
+	    <%= link_to current_user.email, current_user, class: 'nav-item' %>
+	  <% end %>
 	  </ul>
 	  <form class="form-inline my-2 my-lg-0">
 	    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='q'>
