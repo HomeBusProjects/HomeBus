@@ -26,14 +26,19 @@
 	      <a class="nav-link" href="<%= devices_path %>">Devices</a>
 	    </li>
 	    <li class="nav-item">
-	      <a class="nav-link" href="<%= provision_requests_path %>">Provision Requests</a>
+	      <a class="nav-link" href="<%= networks_path %>">Nevices</a>
 	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="<%= provision_requests_path %>">Requests</a>
+	    </li>
+<% if can :manage, :all %>
 	    <li class="nav-item">
 	      <a class="nav-link" href="<%= mosquitto_accounts_path %>">Mosquitto Accounts</a>
 	    </li>
 	    <li class="nav-item">
 	      <a class="nav-link" href="<%= mosquitto_acls_path %>">Mosquitto ACLs</a>
 	    </li>
+<% end %>
 	  <% if Rails.env == 'development' %>
 	    <li class="nav-item">
 	      <a class="nav-link" href="/cleardb">ClearDB</a>
