@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @network.name %>
@@ -15,5 +13,5 @@
   <%= @network.token %>
 </p>
 
-<%= link_to 'Edit', edit_network_path(@network) %> |
-<%= link_to 'Back', networks_path %>
+<%= link_to 'Edit', edit_network_path(@network), class: 'btn btn-info' %> |
+<%= link_to 'List', networks_path %>
