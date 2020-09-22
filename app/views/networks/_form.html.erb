@@ -13,20 +13,15 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :count_of_users %>
-    <%= form.number_field :count_of_users %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :token %>
-    <%= form.text_field :token %>
+    <%= form.text_field :token, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit, class: 'btn btn-info' %>
   </div>
 <% end %>
