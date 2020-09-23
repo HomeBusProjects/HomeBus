@@ -1,16 +1,22 @@
-<p>
-  <strong>Name:</strong>
-  <%= @network.name %>
-</p>
+<h1><strong>Network</strong>  <%= @network.name %></h1>
 
-<p>
-  <strong>Count of users:</strong>
-  <%= @network.count_of_users %>
-</p>
+<h2>Has  <%= @network.count_of_users %> owners</h2>
+<ul>
+  <% @network.users.each do |user| %>
+  <li><%= link_to user.name, user %></li>
+  <% end %>
+</ul>
 
+<h2>Authentication Token</h2>
+
+<p>Copy this token into src/config.h</p>
+<p><a href='#' onclick="if($('#auth_token_code').is(':visible')) { $('#auth_token_code').hide(); } else { $('#auth_token_code').show(); } return false;">Click to reveal authentication token</a></p>
+<pre id='auth_token_code' style="display: none;">
+#define HOMEBUS_AUTHENTICATION_TOKEN "<%= @network.token %>"
+#define HOMEBUS_SERVER "api.homebus.io"
+</pre>
 <p>
-  <strong>Token:</strong>
-  <%= @network.token %>
+  Eventually this secret will be shared via an app that configures the furball.
 </p>
 
 <%= link_to 'Edit', edit_network_path(@network), class: 'btn btn-info' %> |

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_060903) do
+ActiveRecord::Schema.define(version: 2020_09_22_223842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2020_09_22_060903) do
     t.integer "count_of_users", default: 0, null: false
     t.integer "device_counter", default: 0, null: false
     t.string "token", null: false
+    t.string "entropy", null: false
     t.index ["name"], name: "index_networks_on_name"
   end
 
@@ -112,6 +113,7 @@ ActiveRecord::Schema.define(version: 2020_09_22_060903) do
     t.datetime "updated_at", null: false
     t.integer "networks_count", default: 0, null: false
     t.string "name", default: "", null: false
+    t.boolean "site_admin", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
