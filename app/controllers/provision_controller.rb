@@ -5,26 +5,23 @@ class ProvisionController < ApplicationController
 
   def index
     pp 'PROVISION REQUEST'
-    params.permit!
+#    params.permit!
     pp params
     pp '>>> AUTH', request.headers['Authorization']
+    pp JsonWebToken.decode(request.headers['Authorization']);
 
 #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [], 'read-write': [] ])
     p = params
 
-
     args = { ip_address: request.remote_ip, status: :unanswered }.merge p
-    requested_devices = args["devices"]
-    args.except!("devices")
-
     if args["uuid"]
       puts "trying to find uuid #{args["uuid"]}"
       pr = ProvisionRequest.find args["uuid"]
     else
       puts "trying to find serial number #{args["serial_number"]} manufacturer #{args["manufacturer"]} model #{args["model"]}"
-      pr = ProvisionRequest.find_by(serial_number: args["serial_number"],
-                                    manufacturer: args["manufacturer"],
-                                    model: args["model"])
+      pr = ProvisionRequest.find_by(serial_number: args["identity"]["serial_number"],
+                                    manufacturer: args["manufacturer"]["manufacturer"],
+                                    model: args["model"]["model"])
     end
 
     if pr
