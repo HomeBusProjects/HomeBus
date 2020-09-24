@@ -1,14 +1,7 @@
 <table class='table'>
   <thead>
     <tr>
-      <th>UUID</th>
-      <th>Provisioned</th>
-      <th>Friendly name</th>
-      <th>Friendly Location</th>
-      <th>Accuracy</th>
-      <th>Precision</th>
-      <th>Calibrated?</th>
-      <th>Update frequency</th>
+      <th>Name</th>
       <th>Provision request</th>
       <th colspan="10"></th>
     </tr>
@@ -17,7 +10,7 @@
   <tbody>
     <% @devices.each do |device| %>
       <tr>
-	<td><%= link_to device.id, device %></td>
+	<td><%= link_to device.name, device %></td>
         <td><%= device.provisioned ? 'Y' : 'n'  %></td>
         <td><%= device.friendly_name %></td>
         <td><%= device.friendly_location %></td>
