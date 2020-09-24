@@ -11,8 +11,6 @@
     <% @devices.each do |device| %>
       <tr>
 	<td><%= link_to device.name, device %></td>
-        <td><%= device.provisioned ? 'Y' : 'n'  %></td>
-        <td><%= device.friendly_name %></td>
         <td><%= device.friendly_location %></td>
         <td><%= device.accuracy %></td>
         <td><%= device.precision %></td>

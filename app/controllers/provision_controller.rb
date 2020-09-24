@@ -6,7 +6,7 @@ class ProvisionController < ApplicationController
   def index
     pp 'PROVISION REQUEST'
     pp params
-    pp request.headers
+    pp '>>> AUTH', request.headers['Authorization']
 
     p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [], 'read-write': [] ])
 
