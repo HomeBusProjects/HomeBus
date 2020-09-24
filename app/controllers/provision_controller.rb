@@ -5,7 +5,7 @@ class ProvisionController < ApplicationController
 
   def index
     pp 'PROVISION REQUEST'
-    p = params.require(:provision).permit!
+    p = params.permit!
     pp p
     pp '>>> AUTH', request.headers['Authorization']
     pp JsonWebToken.decode(request.headers['Authorization']);
