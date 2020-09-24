@@ -12,6 +12,11 @@ class ProvisionController < ApplicationController
 
 #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [], 'read-write': [] ])
 
+    pp p[:identity]
+    pp 'SERIAL ', p[:identity][:serial_number]
+    pp 'DDCS ', p[:ddcs]
+    pp p[:ddcs][:'write-only']
+
     args = { ip_address: request.remote_ip, status: :unanswered }.merge p
     if args["uuid"]
       puts "trying to find uuid #{args["uuid"]}"
