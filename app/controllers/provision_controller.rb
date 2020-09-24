@@ -8,7 +8,9 @@ class ProvisionController < ApplicationController
     pp params
     pp '>>> AUTH', request.headers['Authorization']
 
-    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [], 'read-write': [] ])
+#    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [], 'read-write': [] ])
+    p = params
+
 
     args = { ip_address: request.remote_ip, status: :unanswered }.merge p
     requested_devices = args["devices"]
