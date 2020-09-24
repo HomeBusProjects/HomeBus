@@ -5,13 +5,12 @@ class ProvisionController < ApplicationController
 
   def index
     pp 'PROVISION REQUEST'
-#    params.permit!
-    pp params
+    p = params.require(:provision).permit!
+    pp p
     pp '>>> AUTH', request.headers['Authorization']
     pp JsonWebToken.decode(request.headers['Authorization']);
 
 #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [], 'read-write': [] ])
-    p = params
 
     args = { ip_address: request.remote_ip, status: :unanswered }.merge p
     if args["uuid"]

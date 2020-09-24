@@ -35,5 +35,9 @@ class Network < ApplicationRecord
     }
 
     self.token = JsonWebToken.encode(info)
+    puts "network token is #{self.token}"
+    reverse = JsonWebToken.decode(self.token)
+    puts "reverse is "
+    puts reverse
   end
 end
