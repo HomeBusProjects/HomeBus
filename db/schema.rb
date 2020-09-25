@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_25_042114) do
+ActiveRecord::Schema.define(version: 2020_09_25_203947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -54,13 +54,6 @@ ActiveRecord::Schema.define(version: 2020_09_25_042114) do
     t.index ["name"], name: "index_networks_on_name"
   end
 
-  create_table "networks_provision_requests", force: :cascade do |t|
-    t.bigint "network_id"
-    t.bigint "provision_request_id"
-    t.index ["network_id"], name: "index_networks_provision_requests_on_network_id"
-    t.index ["provision_request_id"], name: "index_networks_provision_requests_on_provision_request_id"
-  end
-
   create_table "networks_users", force: :cascade do |t|
     t.bigint "network_id"
     t.bigint "user_id"
@@ -84,10 +77,12 @@ ActiveRecord::Schema.define(version: 2020_09_25_042114) do
     t.uuid "allocated_uuids", default: [], null: false, array: true
     t.integer "requested_uuid_count", default: 1, null: false
     t.integer "networks_counter", default: 0, null: false
+    t.bigint "network_id"
     t.index ["allocated_uuids"], name: "index_provision_requests_on_allocated_uuids", using: :gin
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
     t.index ["manufacturer"], name: "index_provision_requests_on_manufacturer"
     t.index ["model"], name: "index_provision_requests_on_model"
+    t.index ["network_id"], name: "index_provision_requests_on_network_id"
     t.index ["ro_ddcs"], name: "index_provision_requests_on_ro_ddcs", using: :gin
     t.index ["rw_ddcs"], name: "index_provision_requests_on_rw_ddcs", using: :gin
     t.index ["wo_ddcs"], name: "index_provision_requests_on_wo_ddcs", using: :gin

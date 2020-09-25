@@ -1,6 +1,8 @@
-<h1>Provision Requests</h1>
+<h1>Requests</h1>
 
 <%= render "index" %>
 <br>
 
+<% if can? :manage, :all %>
 <%= link_to 'New Provision Request', new_provision_request_path, class: 'btn btn-info' %>
+<% end %>

@@ -46,8 +46,11 @@ class ProvisionController < ApplicationController
       if pr.accepted?
         password = pr.mosquitto_account.generate_password!
 
-        devices = pr.devices.map { |device| device.slice(:id, :index) }
-        devices.each { |device| device[:uuid] = device.delete(:id) }
+        i = 0
+        pr.requested_uuid_count.times do
+          device = pr.create_device friendly_name: "#{pr.friendly_name}-#{i}"
+          i += 1
+        end
 
         response = { uuid: pr.id,
                      status: 'provisioned',
@@ -55,7 +58,6 @@ class ProvisionController < ApplicationController
                      mqtt_port: 1883,
                      mqtt_username: pr.mosquitto_account.id,
                      mqtt_password: password,
-                     devices: devices
                    }
       else
         response = { uuid: pr.id,

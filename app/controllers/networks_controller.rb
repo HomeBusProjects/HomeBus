@@ -10,6 +10,7 @@ class NetworksController < ApplicationController
   # GET /networks/1
   # GET /networks/1.json
   def show
+    @network.token = @network.get_auth_token(current_user)
   end
 
   # GET /networks/new
