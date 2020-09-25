@@ -31,8 +31,6 @@ class ProvisionController < ApplicationController
     args[:wo_ddcs] = p[:provision][:ddcs][:'write-only']
     args[:rw_ddcs] = p[:provision][:ddcs][:'read-write']
 
-    args[:requested_uuids] = 1
-    
     pp 'ARGS', args
     if args["uuid"]
       puts "trying to find uuid #{args["uuid"]}"
@@ -126,6 +124,8 @@ class ProvisionController < ApplicationController
     ddcs[:'read-only'] ||= []
     ddcs[:'write-only'] ||= []
     ddcs[:'read-write'] ||= []
+
+    p[:requested_uuid_count] ||= 1
 
     return true
   end
