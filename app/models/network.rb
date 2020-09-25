@@ -26,7 +26,7 @@ class Network < ApplicationRecord
   def create_auth_token
     reset_entropy
 
-    info = {
+    payload = {
       network: {
         name: name,
         id: id
@@ -34,7 +34,7 @@ class Network < ApplicationRecord
       entropy: entropy
     }
 
-    self.token = JsonWebToken.encode(info)
+    self.token = JsonWebToken.encode(payload)
     puts "network token is #{self.token}"
     reverse = JsonWebToken.decode(self.token)
     puts "reverse is "

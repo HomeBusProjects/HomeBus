@@ -10,24 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_223842) do
+ActiveRecord::Schema.define(version: 2020_09_25_042114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.boolean "provisioned", default: false, null: false
     t.string "friendly_name", default: "", null: false
-    t.string "friendly_location", default: "", null: false
-    t.integer "accuracy", null: false
-    t.integer "precision", null: false
-    t.integer "update_frequency", null: false
-    t.string "wo_topics", default: [], array: true
-    t.string "ro_topics", default: [], array: true
-    t.string "rw_topics", default: [], array: true
     t.uuid "provision_request_id"
-    t.string "index", default: "0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "calibrated", default: false, null: false
@@ -81,7 +72,6 @@ ActiveRecord::Schema.define(version: 2020_09_22_223842) do
     t.string "pin", default: "", null: false
     t.inet "ip_address", null: false
     t.string "friendly_name", default: "", null: false
-    t.string "friendly_location", default: "", null: false
     t.string "manufacturer", default: "", null: false
     t.string "model", default: "", null: false
     t.string "serial_number", default: "", null: false
