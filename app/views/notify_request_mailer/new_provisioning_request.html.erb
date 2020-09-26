@@ -4,10 +4,10 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-<h1>Hello from HomeBus</h1>
+<h1>Hello from Homebus</h1>
 
 <p>
-A new request, <%= @provision_request.friendly_name %> - <%= @provision_request.friendly_location %>, would like to access your HomeBus.
+A new device <%= @provision_request.friendly_name %> would like to join your Homebus network <%= @provision_request.network.name %>.
 </p>
 
 <ul>
@@ -19,11 +19,32 @@ A new request, <%= @provision_request.friendly_name %> - <%= @provision_request.
 PIN number <%= @provision_request.pin %> - you may find the PIN printed on the device or displayed, if it has a display.
 <% end %>
 
-Devices:
+<% if @provision_request.wo_ddcs.length > 0 %>
+This device would like to write the following:
 <ul>
-<% @provision_request.devices.each do |device| %>
-<li>Device <%= device.friendly_name %>, <%= device.friendly_location %></li>
-<% end %>
+  <% @provision_request.wo_ddcs.each do |ddc| %>
+  <li><%= ddc %></li>
+  <% end %>
 </ul>
+<% end %>
+
+<% if @provision_request.ro_ddcs.length > 0 %>
+This device would like to read the following:
+<ul>
+  <% @provision_request.ro_ddcs.each do |ddc| %>
+  <li><%= ddc %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<% if @provision_request.rw_ddcs.length > 0 %>
+This device would like to read and write the following:
+<ul>
+  <% @provision_request.rw_ddcs.each do |ddc| %>
+  <li><%= ddc %></li>
+  <% end %>
+</ul>
+<% end %>
+
 
 Please <%= link_to "accept or deny the request", @provision_request %>.

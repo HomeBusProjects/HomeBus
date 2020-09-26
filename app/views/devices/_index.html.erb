@@ -3,22 +3,16 @@
     <tr>
       <th>Name</th>
       <th>Provision request</th>
-      <th colspan="10"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @devices.each do |device| %>
       <tr>
-	<td><%= link_to device.name, device %></td>
-        <td><%= device.friendly_location %></td>
-        <td><%= device.accuracy %></td>
-        <td><%= device.precision %></td>
-	<td><%= device.calibrated? %></td>
-        <td><%= device.update_frequency %></td>
+	<td><%= link_to device.friendly_name, device %></td>
         <td><%= link_to device.provision_request.friendly_name, device.provision_request %></td>
 
-        <td><%= link_to 'Edit', edit_device_path(device) %></td>
         <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

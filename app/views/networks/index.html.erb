@@ -5,6 +5,8 @@
     <tr>
       <th>Name</th>
       <th>Users</th>
+      <th>Devices</th>
+      <th>Requests</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,6 +16,8 @@
       <tr>
         <td><%= link_to network.name, network %></td>
         <td><%= network.count_of_users %></td>
+        <td><%= network.devices.count %></td>
+        <td><%= network.provision_requests.count %></td>
         <td><%= link_to 'Delete', network, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

@@ -11,6 +11,11 @@ class ProvisionController < ApplicationController
     pp '>>> AUTH', request.headers['Authorization']
     pp JsonWebToken.decode(request.headers['Authorization']);
 
+    network = Network.find_from_auth_token request.headers['Authorization']
+    unless network
+      raise ActionController::InvalidAuthenticityToken
+    end
+
 #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [], 'read-write': [] ])
 
     pp p[:provision][:identity]
@@ -46,12 +51,6 @@ class ProvisionController < ApplicationController
       if pr.accepted?
         password = pr.mosquitto_account.generate_password!
 
-        i = 0
-        pr.requested_uuid_count.times do
-          device = pr.create_device friendly_name: "#{pr.friendly_name}-#{i}"
-          i += 1
-        end
-
         response = { uuid: pr.id,
                      status: 'provisioned',
                      mqtt_hostname: Socket.gethostname,
@@ -66,19 +65,16 @@ class ProvisionController < ApplicationController
                    }
       end
     else
+      args[:network] = network
       pr = ProvisionRequest.create args
       pr.save
 
       if pr
         ma = pr.create_mosquitto_account(superuser: true, password: '')
         ma.generate_password!
-
-        requested_devices.each do |device|
-          dev = pr.devices.create device
-        end
       end
 
-      NotifyRequestMailer.with(provision_request: pr).new_provisioning_request.deliver_now
+      NotifyRequestMailer.with(provision_request: pr, user: current_user).new_provisioning_request.deliver_now
 
       response = { uuid: pr.id,
                    status: 'waiting',

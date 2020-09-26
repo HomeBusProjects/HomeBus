@@ -12,7 +12,7 @@
 <p>Copy this token into src/config.h</p>
 <p><a href='#' onclick="if($('#auth_token_code').is(':visible')) { $('#auth_token_code').hide(); } else { $('#auth_token_code').show(); } return false;">Click to reveal authentication token</a></p>
 <pre id='auth_token_code' style="display: none;">
-#define HOMEBUS_AUTHENTICATION_TOKEN "<%= @network.token %>"
+#define HOMEBUS_AUTHENTICATION_TOKEN "<%= @token %>"
 #define HOMEBUS_SERVER "api.homebus.io"
 </pre>
 <p>

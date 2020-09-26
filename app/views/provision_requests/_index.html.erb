@@ -16,7 +16,7 @@
         <td><%= provision_request.status %></td>
         <td><%= link_to provision_request.friendly_name, provision_request %></td>
         <td><%= provision_request.manufacturer %> /<%= provision_request.model %> / <%= provision_request.serial_number %></td>
-	<td><%= link_to provision_request.networks.name, provision_request.networks %></td>
+	<td><%= link_to provision_request.network.name, provision_request.network %></td>
 	<td><%= link_to provision_request.id, provision_request %></td>
 
         <td><%= link_to 'Delete', provision_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -28,7 +28,7 @@
         <td><%= provision_request.status %></td>
         <td><%= link_to provision_request.friendly_name, provision_request %></td>
         <td><%= provision_request.manufacturer %> /<%= provision_request.model %> / <%= provision_request.serial_number %></td>
-	<td><%= link_to provision_request.networks.first.name, provision_request.networks.first %></td>
+	<td><%= link_to provision_request.network.name, provision_request.network %></td>
 	<td><%= link_to provision_request.id, provision_request %></td>
 	
         <td><%= link_to 'Delete', provision_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -6,7 +6,7 @@ class ProvisionRequest < ApplicationRecord
   has_one :mosquitto_account
   has_many :mosquitto_acl
 
-  has_one :network
+  belongs_to :network
 
   def _generate_acls
     wo_ddcs.push('org.homebus.experimental.error').flat_map do |ddc|
