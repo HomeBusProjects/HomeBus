@@ -67,7 +67,6 @@ class ProvisionController < ApplicationController
     else
       args[:network] = network
       pr = ProvisionRequest.create args
-      pr.save
 
       if pr
         ma = pr.create_mosquitto_account(superuser: true, password: '')
@@ -103,7 +102,6 @@ class ProvisionController < ApplicationController
     unless p
       return false
     end
-
 
     unless p[:identity] && p[:ddcs]
       return false
