@@ -13,7 +13,7 @@ class Network < ApplicationRecord
 
   has_one :broker
 
-  validates :name, :entropy, presence: true
+  validates :name, presence: true
 
   def get_auth_token(user)
     payload = {

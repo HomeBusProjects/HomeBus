@@ -33,6 +33,9 @@
 	    </li>
 <% if can? :manage, :all %>
 	    <li class="nav-item">
+	      <a class="nav-link" href="<%= brokers_path %>">Brokers</a>
+	    </li>
+	    <li class="nav-item">
 	      <a class="nav-link" href="<%= mosquitto_accounts_path %>">Mosquitto Accounts</a>
 	    </li>
 	    <li class="nav-item">
@@ -45,7 +48,9 @@
 	    </li>
 	  <% end %>
 	  <% if user_signed_in? %>
-	    <%= link_to current_user.email, current_user, class: 'nav-item' %>
+	    <li class="nav-item">
+  	      <%= link_to current_user.email, current_user, class: 'nav-item' %>
+	    </li>
 	  <% end %>
 	  </ul>
 	  <form class="form-inline my-2 my-lg-0">
