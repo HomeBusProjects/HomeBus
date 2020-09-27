@@ -11,7 +11,7 @@ class Network < ApplicationRecord
 
   has_many :provision_requests
 
-  has_one :broker
+  belongs_to :broker, counter_cache: true, 
 
   validates :name, presence: true
 

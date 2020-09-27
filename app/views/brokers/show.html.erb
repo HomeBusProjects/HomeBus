@@ -4,7 +4,7 @@
 </p>
 
 <p>
-  <strong>Networks (<%= broker.networks_count %>):</strong>
+  <strong>Networks (<%= @broker.networks_count %>):</strong>
   <ul>
     <% @broker.networks.each do |network| %>
       <li><% link_to network.name, network %></li>
@@ -13,6 +13,8 @@
 </p>
 
 <p>
+  <strong>Devices:</strong>
+  <%= @broker.devices_count %>
 </p>
 
 <p>
