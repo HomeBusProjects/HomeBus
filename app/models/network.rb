@@ -33,6 +33,10 @@ class Network < ApplicationRecord
     begin
       request = JsonWebToken.decode(token)
 
+      if Time.now.to_i > request["exp"]
+        return nil
+      end
+
       Network.find request["network"]["id"]
     rescue
       nil

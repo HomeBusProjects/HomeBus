@@ -26,7 +26,7 @@ class ProvisionRequestsController < ApplicationController
 
   def deny
     @provision_request.devices.update_all(provisioned: false)
-    @provision_request.dened!
+    @provision_request.denied!
 
     @provision_request.mosquitto_account.generate_password!
 

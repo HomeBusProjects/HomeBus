@@ -5,7 +5,6 @@ class ProvisionController < ApplicationController
 
   def index
     pp 'PROVISION REQUEST'
-#    p = params.permit!
     p = params.permit!.to_h
     pp p
     pp '>>> AUTH', request.headers['Authorization']
