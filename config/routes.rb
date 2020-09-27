@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :brokers
   resources :networks
   devise_for :users
   root to: 'devices#index'

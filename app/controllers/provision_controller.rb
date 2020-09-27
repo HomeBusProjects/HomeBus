@@ -33,7 +33,6 @@ class ProvisionController < ApplicationController
     args[:pin] = p[:provision][:identity][:pin]
     args[:ro_ddcs] = p[:provision][:ddcs][:'read-only']
     args[:wo_ddcs] = p[:provision][:ddcs][:'write-only']
-    args[:rw_ddcs] = p[:provision][:ddcs][:'read-write']
 
     pp 'ARGS', args
     if args["uuid"]
@@ -82,15 +81,11 @@ class ProvisionController < ApplicationController
 
     respond_to do |format|
       if pr
-        pp response
-
         format.json { render json: response, status: :created }
       else
         format.json { render json: provision_request.errors, status: :unprocessable_entity }
       end
     end
-
-
   end
 
   private
@@ -118,7 +113,6 @@ class ProvisionController < ApplicationController
     ddcs = p[:ddcs]
     ddcs[:'read-only'] ||= []
     ddcs[:'write-only'] ||= []
-    ddcs[:'read-write'] ||= []
 
     p[:requested_uuid_count] ||= 1
 

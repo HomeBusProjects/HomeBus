@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Brokers</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Networks</th>
+      <th>Devices</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @brokers.each do |broker| %>
+      <tr>
+        <td><%= link_to broker.name, broker %></td>
+        <td><%= broker.networks_count %></td>
+        <td><%= broker.devices_count %></td>
+        <td><%= link_to 'Delete', broker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Broker', new_broker_path, class: 'btn btn-info' %>

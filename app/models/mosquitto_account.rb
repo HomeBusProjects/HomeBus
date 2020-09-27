@@ -1,7 +1,19 @@
+require 'securerandom'
+require 'base64'
+
 class MosquittoAccount < ApplicationRecord
   belongs_to :provision_request
 
   def generate_password!
+    unencoded_password = SecureRandom.base64(36)
+    salt = SecureRandom.base64(12)
+    iterations = 10000
+
+    encoded = Base64.encode64(OpenSSL::PKCS5::pbkdf2_hmac(unencoded_password, salt, iterations, 24, OpenSSL::Digest::SHA512.new)).chomp
+
+    password = "PBKDF2$sha512$#{iteractions}$#{salt}$#{encoded}"
+
+
     unencoded_password = _get_random_string(32)
 
     hashed_password = ''

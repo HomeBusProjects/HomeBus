@@ -1,0 +1,27 @@
+<%= form_with(model: broker, local: true) do |form| %>
+  <% if broker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(broker.errors.count, "error") %> prohibited this broker from being saved:</h2>
+
+      <ul>
+      <% broker.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :auth_token %>
+    <%= form.text_field :auth_token, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-info' %>
+  </div>
+<% end %>
