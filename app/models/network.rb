@@ -11,6 +11,8 @@ class Network < ApplicationRecord
 
   has_many :provision_requests
 
+  has_one :broker
+
   validates :name, :entropy, presence: true
 
   def get_auth_token(user)
