@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_27_171924) do
+ActiveRecord::Schema.define(version: 2020_09_27_234607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,9 +23,7 @@ ActiveRecord::Schema.define(version: 2020_09_27_171924) do
     t.integer "devices_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "network_id"
     t.index ["name"], name: "index_brokers_on_name", unique: true
-    t.index ["network_id"], name: "index_brokers_on_network_id"
   end
 
   create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -68,6 +66,8 @@ ActiveRecord::Schema.define(version: 2020_09_27_171924) do
     t.string "name", null: false
     t.integer "count_of_users", default: 0, null: false
     t.integer "device_counter", default: 0, null: false
+    t.bigint "broker_id"
+    t.index ["broker_id"], name: "index_networks_on_broker_id"
     t.index ["name"], name: "index_networks_on_name"
   end
 
