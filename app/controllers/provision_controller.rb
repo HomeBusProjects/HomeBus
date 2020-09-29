@@ -47,6 +47,7 @@ class ProvisionController < ApplicationController
 
     if pr
       if pr.accepted?
+        # generating a password is the only time we have it in plain text to return to the client
         password = pr.mosquitto_account.generate_password!
 
         response = { uuid: pr.id,
@@ -67,8 +68,7 @@ class ProvisionController < ApplicationController
       pr = ProvisionRequest.create args
 
       if pr
-        ma = pr.create_mosquitto_account(superuser: true, password: '')
-        ma.generate_password!
+        ma = pr.create_mosquitto_account(superuser: true, password: '', enabled: false)
       end
 
       NotifyRequestMailer.with(provision_request: pr, user: current_user).new_provisioning_request.deliver_now

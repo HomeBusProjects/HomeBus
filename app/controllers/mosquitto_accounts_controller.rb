@@ -82,6 +82,6 @@ class MosquittoAccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def mosquitto_account_params
-      params.require(:mosquitto_account).permit(:password, :superuser, :provision_request_id)
+      params.require(:mosquitto_account).permit(:password, :superuser, :provision_request_id, :enabled)
     end
 end

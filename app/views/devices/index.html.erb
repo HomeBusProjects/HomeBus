@@ -1,6 +1,25 @@
 <h1>Devices</h1>
 
-<%= render "index" %>
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Provision request</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @devices.each do |device| %>
+      <tr>
+	<td><%= link_to device.friendly_name, device %></td>
+        <td><%= link_to device.provision_request.friendly_name, device.provision_request %></td>
+
+        <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <br>
 

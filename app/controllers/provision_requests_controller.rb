@@ -3,13 +3,13 @@ class ProvisionRequestsController < ApplicationController
   before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
 
   def accept
-    i = 0
     @provision_request.requested_uuid_count.times do
       device = @provision_request.devices.create friendly_name: "#{@provision_request.friendly_name}-#{i}"
       i += 1
     end
 
     @provision_request.accepted!
+    @provision_request.mosquitto_account.enabled = true
 
     respond_to do |format|
       if @provision_request.save
@@ -28,7 +28,7 @@ class ProvisionRequestsController < ApplicationController
     @provision_request.devices.update_all(provisioned: false)
     @provision_request.denied!
 
-    @provision_request.mosquitto_account.generate_password!
+    @provision_request.mosquitto_account.enabled = false
 
     respond_to do |format|
       if @provision_request.save
@@ -47,7 +47,7 @@ class ProvisionRequestsController < ApplicationController
     @provision_request.devices.update_all(provisioned: false)
     @provision_request.revoked!
 
-    @provision_request.mosquitto_account.generate_password!
+    @provision_request.mosquitto_account.enabled = false
 
     respond_to do |format|
       if @provision_request.save
@@ -70,7 +70,7 @@ class ProvisionRequestsController < ApplicationController
 
     if params[:q]
       query = params[:q]
-      @provision_requests = @provision_requests.where("id::text ILIKE '%#{query}%' OR friendly_name ILIKE '%#{query}%' OR friendly_location ILIKE '%#{query}%' OR manufacturer ILIKE '%#{query}%' OR model ILIKE '%#{query}%' OR serial_number ILIKE '%#{query}%'")
+      @provision_requests = @provision_requests.where("id::text ILIKE '%#{query}%' OR friendly_name ILIKE '%#{query}%' OR manufacturer ILIKE '%#{query}%' OR model ILIKE '%#{query}%' OR serial_number ILIKE '%#{query}%'")
     end
   end
 
@@ -165,17 +165,5 @@ class ProvisionRequestsController < ApplicationController
       if ro_ddcs.present?
         p.merge!({ ro_ddcs: ro_ddcs.split })
       end
-
-      rw_ddcs = p[:rw_ddcs]
-      if rw_ddcs.present?
-        p.merge!({ rw_ddcs: rw_ddcs.split })
-      end
-
-      uuids = p[:uuids]
-      if uuids.present?
-        p.merge!({ uuids: uuids.split })
-      end
-
-      p
     end
 end
