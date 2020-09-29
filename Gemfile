@@ -55,3 +55,4 @@ gem 'whenever', require: false
 gem 'backup', require: false
 
 gem 'bitfields'
+gem 'net-ssh-gateway'

@@ -81,3 +81,19 @@ Each item with a UUID is assigned its own topic: `homebus/devices/UUID` to which
 
 For instance, an ESP8266 with temperature, humidity, barometric pressure and light sensors would be a trunk with four leaves. Each leaf as a UUID. 
 
+
+# Heroku
+
+## autossh
+
+Requires a persistent ssh connection through which it can tunnel PostgreSQL to the MQTT brokers.
+
+https://elements.heroku.com/buildpacks/quinde/heroku-buildpack-ssh-tunnel
+
+
+```
+heroku create --buildpack https://github.com/quinde/heroku-buildpack-ssh-tunnel.git
+heroku config:set SSH_PUBLIC_KEY="`cat path/to/public/key`"
+heroku config:set SSH_PRIVATE_KEY="`cat path/to/private/key`"
+heroku config:set SSH_TUNNELS="user@ssh-server:ssh-port|127.0.0.1:local-port:target-host:remote-port"
+```

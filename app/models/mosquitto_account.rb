@@ -1,7 +1,7 @@
 require 'securerandom'
 require 'base64'
 
-class MosquittoAccount < ApplicationRecord
+class MosquittoAccount < MosquittoRecord
   belongs_to :provision_request
 
   def generate_password!

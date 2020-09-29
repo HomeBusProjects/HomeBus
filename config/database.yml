@@ -23,12 +23,25 @@ test:
   database: homebus_test
 
 production:
-  adapter: postgresql
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  encoding: unicode
-  timeout: 5000
-  host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
-  username: <%= ENV['POSTGRESQL_USERNAME'] %>
-  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
-  port: <%= ENV['POSTGRESQL_PORT'] %>
-  database: homebus_production
+  primary:
+    adapter: postgresql
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    encoding: unicode
+    timeout: 5000
+    host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
+    username: <%= ENV['POSTGRESQL_USERNAME'] %>
+    password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+    port: <%= ENV['POSTGRESQL_PORT'] %>
+    database: homebus_production
+  mqtt0:
+    migrations_path: db/mosquitto_migrate
+    adapter: postgresql
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    encoding: unicode
+    timeout: 5000
+    # ssh tunnel to mqtt0.homebus.io
+    host: 127.0.0.1
+    username: <%= ENV['POSTGRESQL_USERNAME'] %>
+    password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+    port: 6000
+    database: homebus_mosquitto

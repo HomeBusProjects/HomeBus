@@ -1,4 +1,4 @@
-class MosquittoAcl < ApplicationRecord
+class MosquittoAcl < MosquittoRecord
   include Bitfields
 
   belongs_to :provision_request

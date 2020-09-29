@@ -12,6 +12,7 @@ module Homebus
     config.load_defaults 5.2
 
     config.autoload_paths << Rails.root.join('lib')
+    require 'remote_connection_manager'
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
