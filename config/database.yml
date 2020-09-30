@@ -41,7 +41,7 @@ production:
     timeout: 5000
     # ssh tunnel to mqtt0.homebus.io
     host: 127.0.0.1
-    username: <%= ENV['POSTGRESQL_USERNAME'] %>
-    password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+    username: <%= ENV['MOSQUITTO_POSTGRESQL_USERNAME'] %>
+    password: <%= ENV['MOSQUITTO_POSTGRESQL_PASSWORD'] %>
     port: 6000
     database: homebus_mosquitto
