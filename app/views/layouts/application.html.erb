@@ -32,15 +32,17 @@
 	      <a class="nav-link" href="<%= provision_requests_path %>">Requests</a>
 	    </li>
 <% if can? :manage, :all %>
-	    <li class="nav-item">
-	      <a class="nav-link" href="<%= brokers_path %>">Brokers</a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link" href="<%= mosquitto_accounts_path %>">Mosquitto Accounts</a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link" href="<%= mosquitto_acls_path %>">Mosquitto ACLs</a>
-	    </li>
+	    <li class="nav-item dropdown">
+	      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	        Admin
+	      </a>
+	      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<%= link_to 'Brokers', brokers_path, class: 'dropdown-item' %>
+		<%= link_to 'Users', users_path, class: 'dropdown-item' %>
+		<%= link_to 'Broker Accounts', mosquitto_accounts, class: 'dropdown-item' %>
+		<%= link_to 'Broker ACLs', mosquitto_acls, class: 'dropdown-item' %>
+              </div>
+            </li>
 <% end %>
 	  <% if Rails.env == 'development' %>
 	    <li class="nav-item">

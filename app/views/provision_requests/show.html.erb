@@ -57,19 +57,6 @@
 
 <div class='row'>
   <div class='col'>
-    <h3>Proposed ACLs</h3>
-    <ul class='list-group-flush'>
-<% @provision_request._generate_acls.each do |acl| %>
-      <li class='list-group-item'><%= acl %></li>
-<% end %>
-    </ul>
-
-  </div>
-</div>
-
-
-<div class='row'>
-  <div class='col'>
     <h3>UUIDs</h3>
     Requested: <%= @provision_request.requested_uuid_count %>
     <ul class='list-group-flush'>
