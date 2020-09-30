@@ -1,18 +1,13 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
-  username: postgres
-  password:
   pool: 5
 
 development:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   host: homebus-postgres
   username: postgres
   password:
-  pool: 5
   database: homebus_development
 
 # Warning: The database defined as "test" will be erased and
@@ -24,9 +19,8 @@ test:
 
 production:
   primary:
-    adapter: postgresql
+    <<: *default
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    encoding: unicode
     timeout: 5000
     host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
     username: <%= ENV['POSTGRESQL_USERNAME'] %>
@@ -34,10 +28,9 @@ production:
     port: <%= ENV['POSTGRESQL_PORT'] %>
     database: homebus_production
   mqtt0:
-    migrations_path: db/mosquitto_migrate
-    adapter: postgresql
+    <<: *default
+    migrations_paths: db/mosquitto_migrate
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    encoding: unicode
     timeout: 5000
     # ssh tunnel to mqtt0.homebus.io
     host: 127.0.0.1
