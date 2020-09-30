@@ -4,11 +4,19 @@ default: &default
   pool: 5
 
 development:
-  <<: *default
-  host: homebus-postgres
-  username: postgres
-  password:
-  database: homebus_development
+  primary:
+    <<: *default
+    host: homebus-postgres
+    username: postgres
+    password:
+    database: homebus_development
+  mqtt0:
+    <<: *default
+    migrations_paths: db/mosquitto_migrate
+    host: homebus-postgres
+    username: postgres
+    password:
+    database: homebus_development_mosquitto
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

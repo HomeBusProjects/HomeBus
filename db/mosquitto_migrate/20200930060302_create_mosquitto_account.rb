@@ -1,6 +1,8 @@
 class CreateMosquittoAccount < ActiveRecord::Migration[6.0]
   def change
-    create_table :mosquitto_accounts id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    enable_extension 'pgcrypto'
+
+    create_table :mosquitto_accounts, id: :uuid do |t|
       t.string :password, null: false
       t.boolean :superuser, null: false, default: false
       t.uuid :provision_request_id, null: false
