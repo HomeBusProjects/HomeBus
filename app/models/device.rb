@@ -4,5 +4,6 @@ class Device < ApplicationRecord
 #  has_many :devices_networks
 #  has_many :networks, through: :devices_networks
 
-  has_and_belongs_to_many :devices
+  has_and_belongs_to_many :networks
+  has_and_belongs_to_many :users
 end

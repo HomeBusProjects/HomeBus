@@ -31,6 +31,11 @@ class ProvisionController < ApplicationController
     args[:model] = p[:provision][:identity][:model]
     args[:serial_number] = p[:provision][:identity][:serial_number]
     args[:pin] = p[:provision][:identity][:pin]
+
+    args[:friendly_name] = "#{args[:manufacturer]}-#{args[:model]}-#{args[:serial_number]}"
+
+    args[:requested_uuid_count] = p[:provision][:requested_uuid_count]
+
     args[:ro_ddcs] = p[:provision][:ddcs][:'read-only']
     args[:wo_ddcs] = p[:provision][:ddcs][:'write-only']
 
@@ -52,15 +57,21 @@ class ProvisionController < ApplicationController
 
         response = { uuid: pr.id,
                      status: 'provisioned',
-                     mqtt_hostname: Socket.gethostname,
-                     mqtt_port: 1883,
-                     mqtt_username: pr.mosquitto_account.id,
-                     mqtt_password: password,
+                     credentials: {
+                       mqtt_username: pr.mosquitto_account.id,
+                       mqtt_password: password,
+                     },
+                     broker: {
+                       mqtt_hostname: Socket.gethostname,
+                       mqtt_port: 1883
+                     },
+                     uuids: pr.devices.map { |d| d.id },
+                     refresh_token: pr.get_refresh_token
                    }
       else
         response = { uuid: pr.id,
                      status: 'waiting',
-                     retry_time: '60'
+                     retry_time: 60
                    }
       end
     else
@@ -75,7 +86,7 @@ class ProvisionController < ApplicationController
 
       response = { uuid: pr.id,
                    status: 'waiting',
-                   retry_time: '60'
+                   retry_time: 60
                  }
     end
 
@@ -117,5 +128,9 @@ class ProvisionController < ApplicationController
     p[:requested_uuid_count] ||= 1
 
     return true
+  end
+
+  def refresh_token
+    
   end
 end

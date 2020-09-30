@@ -16,8 +16,7 @@
 #define HOMEBUS_SERVER "api.homebus.io"
 </pre>
 <p>
-  Eventually this secret will be shared via an app that configures the furball.
+  This token is good for 24 hours (until <%= Time.now + 24.hours %>). Refresh the page to generate a new token.
 </p>
 
-<%= link_to 'Edit', edit_network_path(@network), class: 'btn btn-info' %> |
-<%= link_to 'List', networks_path %>
+<%= link_to 'Edit', edit_network_path(@network), class: 'btn btn-info' %>

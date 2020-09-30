@@ -1,6 +1,6 @@
 <div class='row'>
   <div class='col'>
-  <h2><%= @provision_request.friendly_name %></h2>
+  <h1><%= @provision_request.friendly_name %></h1>
   <%= @provision_request.manufacturer %>, <%= @provision_request.model %><br />
   <h3>serial number:</h3> <%= @provision_request.serial_number %>
   <h3>Pin:</h3>
@@ -16,13 +16,13 @@
 
 <div class='row'>
   <div class='col'>
+<% if %>
+    <h3><%= @provision_request.status.capitalize %></h3>
+<% end %>
 <% if @provision_request.unanswered? %>
 <a href='<%= accept_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-success">Accept</button></a><a href='<%= deny_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-danger">Deny</button></a>
 <% end %>
 
-<% if %>
-    <h3><%= @provision_request.status.capitalize %></h3>
-<% end %>
   </div>
 </div>
 
@@ -40,15 +40,6 @@
     <h3>Read-only DDCs</h3>
     <ul class='list-group-flush'>
 <% @provision_request.ro_ddcs.each do |ddc| %>
-      <li class='list-group-item'><%= ddc %></li>
-<% end %>
-    </ul>
-  </div>
-
-  <div class='col'>
-    <h3>Read-Write DDCs</h3>
-    <ul class='list-group-flush'>
-<% @provision_request.rw_ddcs.each do |ddc| %>
       <li class='list-group-item'><%= ddc %></li>
 <% end %>
     </ul>

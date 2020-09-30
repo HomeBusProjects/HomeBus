@@ -3,6 +3,8 @@ class ProvisionRequestsController < ApplicationController
   before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
 
   def accept
+    i = 0
+
     @provision_request.requested_uuid_count.times do
       device = @provision_request.devices.create friendly_name: "#{@provision_request.friendly_name}-#{i}"
       i += 1

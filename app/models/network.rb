@@ -26,8 +26,6 @@ class Network < ApplicationRecord
       }
     }
 
-    pp ENV['NETWORK_AUTH_KEY']
-
     JsonWebToken.encode(payload)
   end
 
