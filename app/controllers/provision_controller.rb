@@ -81,7 +81,7 @@ class ProvisionController < ApplicationController
       args[:network] = network
       pr = ProvisionRequest.create args
 
-      NotifyRequestMailer.with(provision_request: pr, pr.network.users.first).new_provisioning_request.deliver_now
+      NotifyRequestMailer.with(provision_request: pr, user: pr.network.users.first).new_provisioning_request.deliver_now
 
       response = { uuid: pr.id,
                    status: 'waiting',
