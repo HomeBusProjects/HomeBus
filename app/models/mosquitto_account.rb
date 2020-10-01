@@ -11,7 +11,7 @@ class MosquittoAccount < MosquittoRecord
 
     encoded = Base64.encode64(OpenSSL::PKCS5::pbkdf2_hmac(unencoded_password, salt, iterations, 24, OpenSSL::Digest::SHA512.new)).chomp
 
-    hashed_password = "PBKDF2$sha512$#{iteractions}$#{salt}$#{encoded}"
+    hashed_password = "PBKDF2$sha512$#{iterations}$#{salt}$#{encoded}"
 
     puts "unencoded password for device is #{unencoded_password}"
     puts "encoded password for device is #{hashed_password}"
