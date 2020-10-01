@@ -1,10 +1,27 @@
 require 'securerandom'
 require 'base64'
+require 'bcrypt'
 
 class MosquittoAccount < MosquittoRecord
   belongs_to :provision_request
 
   def generate_password!
+    unencoded_password = SecureRandom.base64(40)
+    cost = 12
+
+    BCrypt::Engine.cost = 12
+
+    encoded = BCrypt::Password.create unencoded_password
+
+    puts "unencoded password for device is #{unencoded_password}"
+    puts "encoded password for device is #{hashed_password}"
+    self.password = hashed_password
+    self.save
+
+    return unencoded_password
+  end
+
+  def generate_pbkdf2_password!
     unencoded_password = SecureRandom.base64(40)
     salt = SecureRandom.base64(16)
     iterations = 100000
@@ -21,4 +38,5 @@ class MosquittoAccount < MosquittoRecord
 
     return unencoded_password
   end
+
 end
