@@ -6,8 +6,8 @@ class MosquittoAccount < MosquittoRecord
 
   def generate_password!
     unencoded_password = SecureRandom.base64(36)
-    salt = SecureRandom.base64(12)
-    iterations = 10000
+    salt = SecureRandom.base64(16)
+    iterations = 100000
 
     encoded = Base64.encode64(OpenSSL::PKCS5::pbkdf2_hmac(unencoded_password, salt, iterations, 24, OpenSSL::Digest::SHA512.new)).chomp
 
