@@ -72,7 +72,7 @@ class ProvisionController < ApplicationController
           refresh_token: pr.get_refresh_token
         }
       else
-        response = { refresh_token: pr.get_refresh_token,
+        response = { refresh_token: pr.get_refresh_token(@current_user),
                      status: 'waiting',
                      retry_time: 60
                    }
