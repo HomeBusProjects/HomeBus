@@ -69,7 +69,7 @@ class ProvisionController < ApplicationController
             secure_mqtt_port: 8883
           },
           uuids: pr.devices.map { |d| d.id },
-          refresh_token: pr.get_refresh_token
+          refresh_token: pr.get_refresh_token(pr.network.users.first)
         }
       else
         response = { refresh_token: pr.get_refresh_token(pr.network.users.first),
