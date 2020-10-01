@@ -11,7 +11,7 @@ class MosquittoAccount < MosquittoRecord
 
     BCrypt::Engine.cost = 12
 
-    encoded = BCrypt::Password.create unencoded_password
+    hashed_password = BCrypt::Password.create unencoded_password
 
     puts "unencoded password for device is #{unencoded_password}"
     puts "encoded password for device is #{hashed_password}"
