@@ -8,8 +8,9 @@ class MosquittoAccount < MosquittoRecord
     unencoded_password = SecureRandom.base64(36)
     salt = SecureRandom.base64(16)
     iterations = 100000
+    key_length = 64
 
-    encoded = Base64.encode64(OpenSSL::PKCS5::pbkdf2_hmac(unencoded_password, salt, iterations, 24, OpenSSL::Digest::SHA512.new)).chomp
+    encoded = Base64.encode64(OpenSSL::PKCS5::pbkdf2_hmac(unencoded_password, salt, iterations, key_length, OpenSSL::Digest::SHA512.new)).chomp
 
     hashed_password = "PBKDF2$sha512$#{iterations}$#{salt}$#{encoded}"
 
