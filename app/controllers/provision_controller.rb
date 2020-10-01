@@ -72,7 +72,7 @@ class ProvisionController < ApplicationController
           refresh_token: pr.get_refresh_token
         }
       else
-        response = { refresh_token: pr.get_refresh_token(@current_user),
+        response = { refresh_token: pr.get_refresh_token(pr.network.users.first),
                      status: 'waiting',
                      retry_time: 60
                    }
@@ -81,7 +81,7 @@ class ProvisionController < ApplicationController
       args[:network] = network
       pr = ProvisionRequest.create args
 
-      NotifyRequestMailer.with(provision_request: pr, user: current_user).new_provisioning_request.deliver_now
+      NotifyRequestMailer.with(provision_request: pr, pr.network.users.first).new_provisioning_request.deliver_now
 
       response = { uuid: pr.id,
                    status: 'waiting',
