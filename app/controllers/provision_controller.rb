@@ -55,21 +55,24 @@ class ProvisionController < ApplicationController
         # generating a password is the only time we have it in plain text to return to the client
         password = pr.mosquitto_account.generate_password!
 
-        response = { uuid: pr.id,
-                     status: 'provisioned',
-                     credentials: {
-                       mqtt_username: pr.mosquitto_account.id,
-                       mqtt_password: password,
-                     },
-                     broker: {
-                       mqtt_hostname: Socket.gethostname,
-                       mqtt_port: 1883
-                     },
-                     uuids: pr.devices.map { |d| d.id },
-                     refresh_token: pr.get_refresh_token
-                   }
+        broker = Broker.first
+
+        response = {
+          status: 'provisioned',
+          credentials: {
+            mqtt_username: pr.mosquitto_account.id,
+            mqtt_password: password,
+          },
+          broker: {
+            mqtt_hostname: broker.name,
+            insecure_mqtt_port: 1883,
+            secure_mqtt_port: 8883
+          },
+          uuids: pr.devices.map { |d| d.id },
+          refresh_token: pr.get_refresh_token
+        }
       else
-        response = { uuid: pr.id,
+        response = { refresh_token: pr.get_refresh_token,
                      status: 'waiting',
                      retry_time: 60
                    }
@@ -77,10 +80,6 @@ class ProvisionController < ApplicationController
     else
       args[:network] = network
       pr = ProvisionRequest.create args
-
-      if pr
-        ma = pr.create_mosquitto_account(superuser: true, password: '', enabled: false)
-      end
 
       NotifyRequestMailer.with(provision_request: pr, user: current_user).new_provisioning_request.deliver_now
 

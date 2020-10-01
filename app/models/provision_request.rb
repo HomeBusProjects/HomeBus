@@ -21,4 +21,19 @@ class ProvisionRequest < ApplicationRecord
 
     JsonWebToken.encode(payload, Time.now + 1.year)
   end
+
+  def self.find_from_refresh_token(token)
+    begin
+      request = JsonWebToken.decode(token)
+
+      if Time.now.to_i > request["exp"]
+        return nil
+      end
+
+      ProvisionRequest.find request["provision_request"]["id"]
+    rescue
+      nil
+    end
+  end
+
 end

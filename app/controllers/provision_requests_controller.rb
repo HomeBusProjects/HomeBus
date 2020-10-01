@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class ProvisionRequestsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
@@ -11,7 +13,7 @@ class ProvisionRequestsController < ApplicationController
     end
 
     @provision_request.accepted!
-    @provision_request.mosquitto_account.enabled = true
+    @provision_request.create_mosquitto_account(superuser: true, password: SecureRandom.base64(32), enabled: true)
 
     respond_to do |format|
       if @provision_request.save

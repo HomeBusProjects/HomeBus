@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_30_200107) do
+ActiveRecord::Schema.define(version: 2020_10_01_033502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -18,11 +18,12 @@ ActiveRecord::Schema.define(version: 2020_09_30_200107) do
 
   create_table "brokers", force: :cascade do |t|
     t.string "name", null: false
-    t.string "auth_token", null: false
     t.integer "networks_count", default: 0, null: false
     t.integer "devices_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "secure_port", default: 1883, null: false
+    t.integer "insecure_port", default: 8883, null: false
     t.index ["name"], name: "index_brokers_on_name", unique: true
   end
 

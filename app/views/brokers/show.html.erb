@@ -4,6 +4,20 @@
 </p>
 
 <p>
+  <strong>Insecure Port</strong>
+</p>
+<p>
+  <%= @broker.insecure_port %>
+</p>
+
+<p>
+  <strong>Secure Port</strong>
+</p>
+<p>
+  <%= @broker.secure_port %>
+</p>
+
+<p>
   <strong>Networks (<%= @broker.networks_count %>):</strong>
   <ul>
     <% @broker.networks.each do |network| %>
@@ -17,13 +31,4 @@
   <%= @broker.devices_count %>
 </p>
 
-<p>
-  <strong>Auth token:</strong>
-  <a href='#' onclick="if($('#auth_token_code').is(':visible')) { $('#auth_token_code').hide(); } else { $('#auth_token_code').show(); } return false;">Click to reveal authentication token</a>
-</p>
-<pre id='auth_token_code' style="display: none;">
-<%= @broker.auth_token %>
-</pre>
-
-<%= link_to 'Edit', edit_broker_path(@broker), class: 'btn btn-info'  %> |
-<%= link_to 'Back', brokers_path %>
+<%= link_to 'Edit', edit_broker_path(@broker), class: 'btn btn-info'  %>
