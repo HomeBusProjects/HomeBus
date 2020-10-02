@@ -1,4 +1,5 @@
 class CreateMosquittoAcl < ActiveRecord::Migration[6.0]
+if false
   def change
     create_table :mosquitto_acls do |t|
       t.uuid :username, null: false
@@ -10,7 +11,8 @@ class CreateMosquittoAcl < ActiveRecord::Migration[6.0]
     end
 
     add_index :mosquitto_acls, :username
-    add_index :mosquitto_acls, :topic
     add_index :mosquitto_acls, :provision_request_id
+end
+    add_index :mosquitto_acls, :topic
   end
 end
