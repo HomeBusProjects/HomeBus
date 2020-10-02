@@ -2,7 +2,7 @@ lock "~> 3.14.0"
 
 set :application, 'HomeBus'
 set :repo_url, 'git@github.com:romkey/HomeBus.git'
-set :rbenv_ruby, '2.6.2'
+set :rbenv_ruby, '2.6.6'
 
 set :whenever_roles, -> { [ :db ] }
 
