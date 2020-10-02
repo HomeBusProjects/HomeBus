@@ -45,4 +45,4 @@ production:
     username: <%= ENV['MOSQUITTO_POSTGRESQL_USERNAME'] %>
     password: <%= ENV['MOSQUITTO_POSTGRESQL_PASSWORD'] %>
     port: <%= ENV['MOSQUITTO_POSTGRESQL_PORT'] || 6000 %>
-    database: homebus_mosquitto
+    database: <%= ENV['MOSQUITTO_POSTGRESQL_DATABASE'] %>
