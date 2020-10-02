@@ -11,6 +11,9 @@ class NetworksController < ApplicationController
   # GET /networks/1.json
   def show
     @token = @network.get_auth_token(current_user)
+
+    @wo_ddcs = @network.provision_requests.pluck(:wo_ddcs).flatten.uniq.sort
+    @ro_ddcs = @network.provision_requests.pluck(:ro_ddcs).flatten.uniq.sort
   end
 
   # GET /networks/new

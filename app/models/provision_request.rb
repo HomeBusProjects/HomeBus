@@ -10,6 +10,7 @@ class ProvisionRequest < ApplicationRecord
 
   def get_refresh_token(user)
     payload = {
+      kind: 'refresh',
       provision_request: {
         name: friendly_name,
         id: self.id

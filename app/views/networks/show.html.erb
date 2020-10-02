@@ -1,12 +1,38 @@
 <h1><strong>Network</strong>  <%= @network.name %></h1>
 
+<div class='row'>
+    <div class='col'>
 <h2>Has  <%= @network.count_of_users %> owners</h2>
 <ul>
   <% @network.users.each do |user| %>
   <li><%= link_to user.name, user %></li>
   <% end %>
 </ul>
+  </div>
+</div>
 
+<div class='row'>
+    <div class='col'>
+      <h2>Published DDCs</h2>
+      <ul>
+	<% @wo_ddcs.each do |ddc| %>
+	<li><%= ddc %></li>
+	<% end %>
+      </ul>
+    </div>
+    <div class='col'>
+      <h2>Writable DDCs</h2>
+      <ul>
+	<% @ro_ddcs.each do |ddc| %>
+	<li><%= ddc %></li>
+	<% end %>
+      </ul>
+    </div>
+</div>
+
+
+<div class='row'>
+    <div class='col'>
 <h2>Authentication Token</h2>
 
 <p>Copy this token into src/config.h</p>
@@ -18,5 +44,7 @@
 <p>
   This token is good for 24 hours (until <%= Time.now + 24.hours %>). Refresh the page to generate a new token.
 </p>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_network_path(@network), class: 'btn btn-info' %>

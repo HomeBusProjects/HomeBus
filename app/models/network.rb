@@ -17,6 +17,7 @@ class Network < ApplicationRecord
 
   def get_auth_token(user)
     payload = {
+      kind: 'auth',
       network: {
         name: name,
         id: id
