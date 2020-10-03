@@ -95,7 +95,9 @@ class ProvisionRequestsController < ApplicationController
   # POST /provision_requests
   # POST /provision_requests.json
   def create
-    @provision_request = ProvisionRequest.new(arrayized_ddcs)
+    arrayize_ddcs!
+
+    @provision_request = ProvisionRequest.new(p)
     @provision_request.ip_address = request.remote_ip
 
     respond_to do |format|
@@ -114,8 +116,10 @@ class ProvisionRequestsController < ApplicationController
   # PATCH/PUT /provision_requests/1
   # PATCH/PUT /provision_requests/1.json
   def update
+    arrayize_ddcs!
+
     respond_to do |format|
-      if @provision_request.update(arrayized_ddcs)
+      if @provision_request.update(p)
         flash_message 'success', 'Provision request was successfully updated.'
 
         format.html { redirect_to @provision_request }
@@ -157,7 +161,7 @@ class ProvisionRequestsController < ApplicationController
       params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :uuids)
     end
 
-    def arrayized_ddcs
+    def arrayize_ddcs!
       p = provision_request_params
 
       wo_ddcs = p[:wo_ddcs]
