@@ -1,17 +1,8 @@
 <div class='row'>
   <div class='col'>
     <p>
-      <strong>Name:</strong>
-      <%= @device.friendly_name %>
-    </p>
-  </div>
-</div>
-
-<div class='row'>
-  <div class='col'>
-    <p>
-      <strong>UUID</strong>
-      <%= @device.id %>
+      <h2><%= @device.friendly_name %></h2>
+      <h3><%= @device.id %></h3>
     </p>
   </div>
 </div>
@@ -39,11 +30,10 @@
   </div>
 </div>
 
+<div class='row'>
+  <div class='col'>
+    <h2><%= link_to "Provision request", @device.provision_request %></h2>
+  </div>
+</div>
 
-<p>
-  <strong><%= link_to "Provision request", @device.provision_request %></strong>
-</p>
-
-
-<%= link_to 'Edit', edit_device_path(@device) %> |
-<%= link_to 'Back', devices_path %>
+<%= link_to 'Edit', edit_device_path(@device), class: 'btn btn-info' %>
