@@ -161,7 +161,7 @@ class ProvisionRequestsController < ApplicationController
       arrayize_ddcs!(params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :uuids))
     end
 
-    def arrayize_ddcs!
+    def arrayize_ddcs!(p)
       wo_ddcs = p[:wo_ddcs]
       if wo_ddcs.present?
         p.merge!({ wo_ddcs: wo_ddcs.split })
