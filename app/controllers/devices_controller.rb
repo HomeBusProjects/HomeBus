@@ -5,9 +5,9 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-    p = params.permit(:provision_id, :space_id).order("provision_requests.name asc")
+    p = params.permit(:provision_id, :space_id)
 
-    @devices = Device.all
+    @devices = Device.all.order("provision_requests.name asc")
 
     if p[:space_id]
       @devices = Space.find(p[:space_id]).devices
