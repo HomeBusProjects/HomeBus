@@ -10,6 +10,12 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <style>
+      @import url("https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css") (prefers-color-scheme: light); 
+      @import url("https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/darkly/bootstrap.min.css") (prefers-color-scheme: dark); 
+    </style>
+
   </head>
 
   <body>
@@ -51,7 +57,7 @@
 	  <% end %>
 	  <% if user_signed_in? %>
 	    <li class="nav-item">
-  	      <%= link_to current_user.email, current_user, class: 'nav-item' %>
+  	      <%= link_to current_user.email, current_user, class: 'nav-link' %>
 	    </li>
 	  <% end %>
 	  </ul>

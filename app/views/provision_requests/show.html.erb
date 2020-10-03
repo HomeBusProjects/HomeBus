@@ -1,34 +1,34 @@
 <div class='row'>
   <div class='col'>
-  <h1><%= @provision_request.friendly_name %></h1>
-  <%= @provision_request.manufacturer %>, <%= @provision_request.model %><br />
-  <h3>serial number:</h3> <%= @provision_request.serial_number %>
-  <h3>Pin:</h3>
-  <%= @provision_request.pin %>
-</p>
+    <h1><%= @provision_request.friendly_name %></h1>
+    <%= @provision_request.manufacturer %>, <%= @provision_request.model %><br />
+    <h3>serial number:</h3> <%= @provision_request.serial_number %>
+    <h3>Pin:</h3>
+    <%= @provision_request.pin %>
 
-  <h3>IP Address:</h3>
-<p>
-  <%= @provision_request.ip_address %>
-</p>
-</div>
+
+    <h3>IP Address:</h3>
+    <p>
+      <%= @provision_request.ip_address %>
+    </p>
+  </div>
 </div>
 
 <div class='row'>
   <div class='col'>
-<% if %>
+    <% if %>
     <h3><%= @provision_request.status.capitalize %></h3>
-<% end %>
-<% if @provision_request.unanswered? %>
-<a href='<%= accept_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-success">Accept</button></a><a href='<%= deny_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-danger">Deny</button></a>
-<% end %>
+    <% end %>
+    <% if @provision_request.unanswered? %>
+    <a href='<%= accept_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-success">Accept</button></a><a href='<%= deny_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-danger">Deny</button></a>
+    <% end %>
 
   </div>
 </div>
 
 <div class='row'>
   <div class='col'>
-    <h3>Write-only DDCs</h3>
+    <h3>Publishes</h3>
     <ul class='list-group-flush'>
       <% @provision_request.wo_ddcs.each do |ddc| %>
       <li class='list-group-item'><%= ddc %></li>
@@ -37,11 +37,11 @@
   </div>
 
   <div class='col'>
-    <h3>Read-only DDCs</h3>
+    <h3>Consumes</h3>
     <ul class='list-group-flush'>
-<% @provision_request.ro_ddcs.each do |ddc| %>
+      <% @provision_request.ro_ddcs.each do |ddc| %>
       <li class='list-group-item'><%= ddc %></li>
-<% end %>
+      <% end %>
     </ul>
   </div>
 </div>
@@ -71,12 +71,12 @@
 <p>
   <h3>Mosquitto ACLs</h3>
   <ul>
-<% @provision_request.mosquitto_acl.find_each do |acl| %>
-      <li><%= link_to acl.topic, acl %></li>
-<% end %>    
+    <% @provision_request.mosquitto_acl.find_each do |acl| %>
+    <li><%= link_to acl.topic, acl %></li>
+    <% end %>    
   </ul>
 </p>
 
 <p>
-<%= link_to 'Edit', edit_provision_request_path(@provision_request), class: 'btn btn-info' %>
+  <%= link_to 'Edit', edit_provision_request_path(@provision_request), class: 'btn btn-info' %>
 </p>
