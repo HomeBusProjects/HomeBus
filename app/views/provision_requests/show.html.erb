@@ -51,7 +51,7 @@
     <h3>UUIDs</h3>
     Requested: <%= @provision_request.requested_uuid_count %>
     <ul class='list-group-flush'>
-      <% @provision_request.devices.pluck(:uuid).each do |uuid| %>
+      <% @provision_request.devices.pluck(:id).each do |uuid| %>
       <li class='list-group-item'><%= uuid %></li>
       <% end %>
     </ul>
