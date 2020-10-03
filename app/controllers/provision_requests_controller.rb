@@ -97,6 +97,8 @@ class ProvisionRequestsController < ApplicationController
   def create
     arrayize_ddcs!
 
+    p = provision_request_params
+
     @provision_request = ProvisionRequest.new(p)
     @provision_request.ip_address = request.remote_ip
 
@@ -117,6 +119,8 @@ class ProvisionRequestsController < ApplicationController
   # PATCH/PUT /provision_requests/1.json
   def update
     arrayize_ddcs!
+
+    p = provision_request_params
 
     respond_to do |format|
       if @provision_request.update(p)
