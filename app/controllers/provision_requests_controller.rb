@@ -95,8 +95,6 @@ class ProvisionRequestsController < ApplicationController
   # POST /provision_requests
   # POST /provision_requests.json
   def create
-    arrayize_ddcs!
-
     p = provision_request_params
 
     @provision_request = ProvisionRequest.new(p)
@@ -118,8 +116,6 @@ class ProvisionRequestsController < ApplicationController
   # PATCH/PUT /provision_requests/1
   # PATCH/PUT /provision_requests/1.json
   def update
-    arrayize_ddcs!
-
     p = provision_request_params
 
     respond_to do |format|
@@ -162,12 +158,10 @@ class ProvisionRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provision_request_params
-      params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :uuids)
+      arrayize_ddcs!(params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :uuids))
     end
 
     def arrayize_ddcs!
-      p = provision_request_params
-
       wo_ddcs = p[:wo_ddcs]
       if wo_ddcs.present?
         p.merge!({ wo_ddcs: wo_ddcs.split })
@@ -177,5 +171,7 @@ class ProvisionRequestsController < ApplicationController
       if ro_ddcs.present?
         p.merge!({ ro_ddcs: ro_ddcs.split })
       end
+
+      p
     end
 end
