@@ -2,7 +2,7 @@
   <div class='col'>
     <p>
       <h2><%= @device.friendly_name %></h2>
-      <h3><%= @device.id %></h3>
+      <h4><%= @device.id %></h4>
     </p>
   </div>
 </div>
@@ -32,7 +32,7 @@
 
 <div class='row'>
   <div class='col'>
-    <h2><%= link_to "Provision request", @device.provision_request %></h2>
+    <h2>Request: <%= link_to @device.provision_request.friendly_name, @device.provision_request %></h2>
   </div>
 </div>
 
