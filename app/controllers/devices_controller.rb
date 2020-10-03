@@ -5,7 +5,7 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-    p = params.permit(:provision_id, :space_id)
+    p = params.permit(:provision_id, :space_id).order("provision_requests.name asc")
 
     @devices = Device.all
 
@@ -16,7 +16,6 @@ class DevicesController < ApplicationController
     if p[:provision_id]
       @devices = @devices.where(provision_request_id: p[:provision_id])
     end
-
   end
 
   # GET /devices/1
