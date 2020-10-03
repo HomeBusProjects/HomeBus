@@ -1,11 +1,44 @@
-<p>
-  <strong>UUID</strong>
-  <%= @device.id %>
-</p>
+<div class='row'>
+  <div class='col'>
+    <p>
+      <strong>Name:</strong>
+      <%= @device.friendly_name %>
+    </p>
+  </div>
+</div>
 
-  <strong>Name:</strong>
-  <%= @device.friendly_name %>
-</p>
+<div class='row'>
+  <div class='col'>
+    <p>
+      <strong>UUID</strong>
+      <%= @device.id %>
+    </p>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col'>
+    <p>
+      <h2>Publish</h2>
+      <ul>
+	<% @device.provision_request.wo_ddcs.each do |ddc| %>
+	<li><%= ddc %></li>
+	<% end %>
+      </ul>
+    </p>
+  </div>
+  <div class='col'>
+    <p>
+      <h2>Consume</h2>
+      <ul>
+	<% @device.provision_request.ro_ddcs.each do |ddc| %>
+	<li><%= ddc %></li>
+	<% end %>
+      </ul>
+    </p>
+  </div>
+</div>
+
 
 <p>
   <strong><%= link_to "Provision request", @device.provision_request %></strong>
