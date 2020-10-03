@@ -48,26 +48,46 @@
 
 <div class='row'>
   <div class='col'>
-    <h3>UUIDs</h3>
-    Requested: <%= @provision_request.requested_uuid_count %>
+    <h3>UUIDs ( <%= @provision_request.requested_uuid_count %>)</h3>
     <ul class='list-group-flush'>
       <% @provision_request.devices.pluck(:id).each do |uuid| %>
-      <li class='list-group-item'><%= uuid %></li>
+      <li class='list-group-item'><%= uuid %> - <%= link_to Device.find(uuid).friendly_name, Device.find(uuid) %></li>
       <% end %>
     </ul>
   </div>
 </div>
 
 <hr>
-<h2>Mosquitto</h2>
-<% if @provision_request.mosquitto_account %>
+<h2>Broker</h2>
 <p>
-  <h3>Mosquitto Account</h3>
-  <%= link_to @provision_request.mosquitto_account.id, @provision_request.mosquitto_account %><br>
-  Superuser? <% @provision_request.mosquitto_account.superuser? %>
-</p>
+  <h3>Broker Account</h3>
+  <table>
+    <tr>
+      <td>username</td>
+      <td><%= link_to @provision_request.mosquitto_account.id, @provision_request.mosquitto_account %></td>
+    </tr>
+<% if can? :manage, :all %>
+    <tr>
+      <td>Superuser?</td>
+      <td><% @provision_request.mosquitto_account.superuser? %></td>
+    </tr>
 <% end %>
+    <tr>
+      <td>broker</td>
+      <td><%= link_to @provision_request.network.broker.name,  @provision_request.network.broker %></td>
+    </tr>
+    <tr>
+      <td>insecure port</td>
+      <td><%= @provision_request.network.broker.insecure_port %></td>
+    </tr>
+    <tr>
+      <td>secure port</td>
+      <td><%= @provision_request.network.broker.secure_port %></td>
+    </tr>
+</table>
+</p>
 
+<% if can? :manage, :all %>
 <p>
   <h3>Mosquitto ACLs</h3>
   <ul>
@@ -76,6 +96,7 @@
     <% end %>    
   </ul>
 </p>
+<% end %>
 
 <p>
   <%= link_to 'Edit', edit_provision_request_path(@provision_request), class: 'btn btn-info' %>
