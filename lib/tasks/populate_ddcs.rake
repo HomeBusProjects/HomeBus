@@ -9,6 +9,7 @@ task populate_ddcs: :environment do
 
       perms = d.ddcs_devices.find_by(ddc: ddc)
       perms.publishable = true
+      perms.allow_publish = true
       perms.save
     end
 
@@ -20,6 +21,7 @@ task populate_ddcs: :environment do
 
       perms = d.ddcs_devices.find_by(ddc: ddc)
       perms.consumable = true
+      perms.allow_consume = true
       perms.save
     end
   end
