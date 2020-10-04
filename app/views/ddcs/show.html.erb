@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ddc.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @ddc.description %>
+</p>
+
+<p>
+  <strong>Reference url:</strong>
+  <%= @ddc.reference_url %>
+</p>
+
+<%= link_to 'Edit', edit_ddc_path(@ddc), class: 'btn btn-info' %>

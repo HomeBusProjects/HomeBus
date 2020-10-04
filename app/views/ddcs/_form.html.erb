@@ -1,0 +1,32 @@
+<%= form_with(model: ddc, local: true) do |form| %>
+  <% if ddc.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ddc.errors.count, "error") %> prohibited this ddc from being saved:</h2>
+
+      <ul>
+        <% ddc.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reference_url %>
+    <%= form.text_field :reference_url, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-info' %>
+  </div>
+<% end %>

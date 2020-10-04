@@ -21,64 +21,35 @@
       <%= form.label :friendly_name, "Name" %>
       <%= form.text_field :friendly_name, { class: "form-control" } %>
     </div>
-
-    <div class="col">
-      <%= form.label :friendly_location, "Location" %>
-      <%= form.text_field :friendly_location,  {class: "form-control" } %>
-    </div>
-
-    <div class="col">
-      <%= form.label :index %>
-      <%= form.text_field :index,  {class: "form-control" } %>
-    </div>
  </div>
-
-  <div class="row">
-    <div class="col">
-      <%= form.label :accuracy %>
-      <%= form.number_field :accuracy,  { class: "form-control" }  %>
-    </div>
-
-    <div class="col">
-      <%= form.label :precision %>
-      <%= form.number_field :precision,  { class: "form-control" }  %>
-    </div>
-  </div>
-
-  <div class="field form-group">
-    <%= form.label :update_frequency %>
-    <%= form.number_field :update_frequency,  { class: "form-control" }  %>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <%= form.label :provisioned %>
-      <%= form.check_box :provisioned, class: 'form-check form-check-inline' %>
-    </div>
-
-    <div class="col">
-      <%= form.label :calibrated %>
-      <%= form.check_box :calibrated, { class: 'form-check form-check-inline' } %>
-    </div>
-  </div>
 
    <div class="row">
     <div class="col">
-      <%= form.label :wo_topics, 'Write-only topics' %>
-      <%= form.text_field :wo_topics,  { multiple: true, class: "form-control" } %>
+      <h2>Publish</h2>
+      <table class='table'>
+	<% @device.ddcs.order(name: :asc).each do |ddc| %>
+          <% perms = @device.ddcs_devices.find_by(ddc: ddc) %>
+	<tr>
+	  <td><%= check_box_tag "wo_ddcs[]", ddc.id, perms.enabled?, class: 'form-control' %></td>
+	  <td><%= link_to ddc.name, ddc %></td>
+	</tr>
+	<% end %>
+      </table>
     </div>
 
     <div class="col">
-      <%= form.label :ro_topics, 'Read-only topics' %>
-      <%= form.text_field :ro_topics,  { multiple: true, class: "form-control" } %>
-    </div>
-
-    <div class="col">
-      <%= form.label :rw_topics, 'Read-write topics' %>
-      <%= form.text_field :rw_topics,  { multiple: true, class: "form-control" }  %>
+      <h2>Consume</h2>
+      <table class='table'>
+	<% @device.ddcs.order(name: :asc).each do |ddc| %>
+          <% perms = @device.ddcs_devices.find_by(ddc: ddc) %>
+	<tr>
+	  <td><%= check_box_tag "ro_ddcs[]", perms.id, perms.enabled?, class: 'form-control' %></td>
+	  <td><%= link_to ddc.name, ddc %></td>
+	</tr>
+	<% end %>
+      </table>
     </div>
   </div>
-
 
   <div class="field form-group">
     <%= form.label :provision_request_id %>

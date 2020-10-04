@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Ddcs</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Reference url</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ddcs.each do |ddc| %>
+      <tr>
+        <td><%= link_to ddc.name, ddc %></td>
+        <td><%= ddc.description %></td>
+        <td><%= ddc.reference_url %></td>
+        <td><%= link_to 'Destroy', ddc, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ddc', new_ddc_path, class: 'btn btn-info' %>

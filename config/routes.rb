@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :ddcs
   resources :brokers
   resources :networks
   devise_for :users

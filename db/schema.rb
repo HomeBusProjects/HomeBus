@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_033502) do
+ActiveRecord::Schema.define(version: 2020_10_04_041735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -25,6 +25,27 @@ ActiveRecord::Schema.define(version: 2020_10_01_033502) do
     t.integer "secure_port", default: 1883, null: false
     t.integer "insecure_port", default: 8883, null: false
     t.index ["name"], name: "index_brokers_on_name", unique: true
+  end
+
+  create_table "ddcs", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description", null: false
+    t.string "reference_url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_ddcs_on_name"
+  end
+
+  create_table "ddcs_devices", force: :cascade do |t|
+    t.uuid "device_id"
+    t.bigint "ddc_id"
+    t.boolean "enabled", default: true, null: false
+    t.boolean "publishable", default: false, null: false
+    t.boolean "consumable", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ddc_id"], name: "index_ddcs_devices_on_ddc_id"
+    t.index ["device_id"], name: "index_ddcs_devices_on_device_id"
   end
 
   create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
