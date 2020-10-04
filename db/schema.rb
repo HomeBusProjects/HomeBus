@@ -39,12 +39,19 @@ ActiveRecord::Schema.define(version: 2020_10_04_041735) do
   create_table "ddcs_devices", force: :cascade do |t|
     t.uuid "device_id"
     t.bigint "ddc_id"
-    t.boolean "enabled", default: true, null: false
     t.boolean "publishable", default: false, null: false
     t.boolean "consumable", default: false, null: false
+    t.boolean "allow_publish", default: false, null: false
+    t.boolean "allow_consume", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["ddc_id", "consumable"], name: "index_ddcs_devices_on_ddc_id_and_consumable"
+    t.index ["ddc_id", "publishable"], name: "index_ddcs_devices_on_ddc_id_and_publishable"
     t.index ["ddc_id"], name: "index_ddcs_devices_on_ddc_id"
+    t.index ["device_id", "allow_consume"], name: "index_ddcs_devices_on_device_id_and_allow_consume"
+    t.index ["device_id", "allow_publish"], name: "index_ddcs_devices_on_device_id_and_allow_publish"
+    t.index ["device_id", "consumable"], name: "index_ddcs_devices_on_device_id_and_consumable"
+    t.index ["device_id", "publishable"], name: "index_ddcs_devices_on_device_id_and_publishable"
     t.index ["device_id"], name: "index_ddcs_devices_on_device_id"
   end
 
