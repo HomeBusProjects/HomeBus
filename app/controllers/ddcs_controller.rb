@@ -4,7 +4,7 @@ class DdcsController < ApplicationController
   # GET /ddcs
   # GET /ddcs.json
   def index
-    @ddcs = Ddc.all
+    @ddcs = Ddc.all.order(name: :asc)
   end
 
   # GET /ddcs/1
