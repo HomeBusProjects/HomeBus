@@ -11,11 +11,19 @@ A Homebus client may request to publish or receive specific DDCs. The Homebus ne
 A Homebus client may also request to transmit a DDC to another Homebus client.
 
 
+## Tokens
 
+The Homebus Provisioning Protocol uses JWT tokens.
+
+The initial __auth token__ is used for the first communication between a device and Homebus. Auth tokens are short lived, maybe a day or a few hours. An IOT device would generally have an auth token shared with it when it's provisioned for network access. It would immediately attempt Homebus provisioning using the auth token.
+
+Homebus returns a __refresh token__ with its provisioning information. The refresh token is long lived - maybe a year. The refresh token cannot be used to provision a device but it can be used to update the device's provisioning information. It uniquely identifies the device, so the device only needs the refresh token and does not need to further identify itself. A device uses the refresh token to ask for new permissions (publish or consume a different set of DDCs), refresh its credentials or broker information, or refresh its refresh token (recommend doing this well in advance of the refresh token's expiration; it's not a costly operation so daily is fine).
+
+A refresh token cannot be used for initial provisioning.
 
 ## Homebus Provisioning Protocol
 
-This information is current as of 26 September 2020. The Homebus protocol is still in flux. You should not build anything using this.
+This information is current as of 26 September 2020. The Homebus protocol is still in flux. You should not build anything using this. It is certain to change.
 
 A Homebus client sends a provisioning request to a Homebus server over HTTP(S).
 
@@ -51,11 +59,11 @@ request:
 	},
   number_of_uuids: integer
 }
-
+```
 ->
 
 response:
-
+```
 {
   status: 
   security: {
@@ -69,17 +77,18 @@ response:
   uuids: [ uuid, ... ],
   refresh_token: string
 }
-
+```
 
 ## Homebus Network
 
 Homebus currently uses MQTT as a transport layer. However, Homebus applications should not assume they're running on top of MQTT. Homebus manages MQTT topic names in an opaque manner to the application.
 
 Homebus publishes DDCs in an envelope:
-
+```
 {
 	source: uuid,
 	timestamp: unsigned integer,
+	sequence: unsigned integer,
 	contents: {
 	    ddc:  string,
 	    payload: object
@@ -87,3 +96,5 @@ Homebus publishes DDCs in an envelope:
     security: {
 	}
 }
+```
+

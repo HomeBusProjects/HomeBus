@@ -9,7 +9,7 @@
       <th>Ports</th>
       <th>Networks</th>
       <th>Devices</th>
-      <th colspan="3"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
@@ -17,7 +17,7 @@
     <% @brokers.each do |broker| %>
       <tr>
         <td><%= link_to broker.name, broker %></td>
-	<td><% broker.insecure_port %>/<% broker.secure_port %></td>
+	<td><%= broker.insecure_port %>/<%= broker.secure_port %></td>
         <td><%= broker.networks_count %></td>
         <td><%= broker.devices_count %></td>
         <td><%= link_to 'Delete', broker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
