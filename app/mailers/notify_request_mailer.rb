@@ -1,5 +1,5 @@
 class NotifyRequestMailer < ApplicationMailer
-  default from: 'do-not-reply@homebus.io'
+  default from: 'do-not-reply@homebus.org'
 
   def new_provisioning_request
     @provision_request = params[:provision_request]

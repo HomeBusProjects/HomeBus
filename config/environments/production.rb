@@ -68,18 +68,17 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_options = {
-    from: 'homebus@romkey.com',
-    reply_to: 'no-reply@romkey.com',
+    from: 'homebus@homebus.org',
+    reply_to: 'no-reply@homebus.org'
   }
 
   config.action_mailer.smtp_settings = {
-    authentication: :plain,
-    address: ENV.fetch("SMTP_SERVER_ADDRESS"),
-    domain: ENV.fetch("SMTP_DOMAIN"),
-    user_name: ENV.fetch("SMTP_USERNAME"),
-    password: ENV.fetch("SMTP_PASSWORD"),
-    enable_starttls_auto: true,
-    port: 587
+    address: ENV['MAILGUN_SMTP_SERVER'],
+    port: ENV['MAILGUN_SMTP_PORT'],
+    domain: ENV['MAILGUN_DOMAIN'],
+    user_name: ENV['MAILGUN_SMTP_LOGIN'],
+    password: ENV['MAILGUN_SMTP_PASSWORD'],
+    authentication: ENV['plain']
   }
 
   config.action_mailer.default_url_options = { host: ENV['HOSTNAME'] }

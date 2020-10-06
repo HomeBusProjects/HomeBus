@@ -20,7 +20,7 @@ PIN number <%= @provision_request.pin %> - you may find the PIN printed on the d
 <% end %>
 
 <% if @provision_request.wo_ddcs.length > 0 %>
-This device would like to write the following:
+This device would like to publish the following:
 <ul>
   <% @provision_request.wo_ddcs.each do |ddc| %>
   <li><%= ddc %></li>
@@ -29,18 +29,9 @@ This device would like to write the following:
 <% end %>
 
 <% if @provision_request.ro_ddcs.length > 0 %>
-This device would like to read the following:
+This device would like to consume the following:
 <ul>
   <% @provision_request.ro_ddcs.each do |ddc| %>
-  <li><%= ddc %></li>
-  <% end %>
-</ul>
-<% end %>
-
-<% if @provision_request.rw_ddcs.length > 0 %>
-This device would like to read and write the following:
-<ul>
-  <% @provision_request.rw_ddcs.each do |ddc| %>
   <li><%= ddc %></li>
   <% end %>
 </ul>
