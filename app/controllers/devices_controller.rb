@@ -7,7 +7,7 @@ class DevicesController < ApplicationController
   def index
     p = params.permit(:provision_id, :space_id)
 
-    if can :manage, :devices
+    if can? :manage, :devices
       @devices = Device.includes(:provision_request).order('provision_requests.friendly_name asc, devices.friendly_name asc')
     else
       @devices = @current_user.devices.includes(:provision_request).order('provision_requests.friendly_name asc, devices.friendly_name asc')
