@@ -1,4 +1,5 @@
 class DdcsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_ddc, only: [:show, :edit, :update, :destroy]
 
   # GET /ddcs

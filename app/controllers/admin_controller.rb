@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+  before_action :authenticate_user!
+
   def clear_db
     Device.delete_all
     MosquittoAccount.delete_all
