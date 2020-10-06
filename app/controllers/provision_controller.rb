@@ -99,7 +99,48 @@ class ProvisionController < ApplicationController
     end
   end
 
+  def refresh
+    pr = validate_refresh
+    unless pr
+      raise ActionController:BadRequest
+    end
+
+    response = {
+      refresh_token: pr.get_refresh_token(pr.network.users.first),
+      status: 'provisioned'
+    }
+  end
+
+  def broker
+    pr = validate_refresh
+    unless pr
+      raise ActionController:BadRequest
+    end
+
+    response = {
+      status: 'provisioned',
+      credentials: {
+        mqtt_username: pr.mosquitto_account.id,
+        mqtt_password: password,
+      },
+      broker: {
+        mqtt_hostname: broker.name,
+        insecure_mqtt_port: 1883,
+        secure_mqtt_port: 8883
+      },
+      refresh_token: pr.get_refresh_token(pr.network.users.first)
+    }
+  end
+
+  def ddcs
+    validate_refresh
+  end
+
   private
+
+  def validate_refresh
+    ProvisionRequest.find_by_refresh_token(refresh)
+  end
 
   def validate_provision(params)
     p = params[:provision]

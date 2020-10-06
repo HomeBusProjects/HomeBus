@@ -23,7 +23,7 @@ class ProvisionRequest < ApplicationRecord
     JsonWebToken.encode(payload, Time.now + 1.year)
   end
 
-  def self.find_from_refresh_token(token)
+  def self.find_by_refresh_token(token)
     begin
       request = JsonWebToken.decode(token)
 
