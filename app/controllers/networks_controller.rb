@@ -4,7 +4,11 @@ class NetworksController < ApplicationController
   # GET /networks
   # GET /networks.json
   def index
-    @networks = Network.all
+    if can? :manage, :devices
+      @networks = Network.all
+    else
+      @networks = @current_user.networks
+    end
   end
 
   # GET /networks/1
