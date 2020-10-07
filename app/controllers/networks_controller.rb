@@ -1,5 +1,4 @@
 class NetworksController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_network, only: [:show, :edit, :update, :destroy]
 
   # GET /networks

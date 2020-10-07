@@ -1,6 +1,6 @@
 require 'pp'
 
-class ProvisionController < ApplicationController
+class ProvisionController < ActionController::Base
   protect_from_forgery except: ['index']
 
   def index
