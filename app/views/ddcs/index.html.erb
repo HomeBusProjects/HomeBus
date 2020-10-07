@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Ddcs</h1>
+<h1>DDCs</h1>
 
 <table class='table'>
   <thead>
@@ -8,7 +8,9 @@
       <th>Name</th>
       <th>Description</th>
       <th>Reference url</th>
+<% if can? :manage, :ddc %>
       <th colspan="1"></th>
+<% end %>
     </tr>
   </thead>
 
@@ -18,7 +20,9 @@
         <td><%= link_to ddc.name, ddc %></td>
         <td><%= ddc.description %></td>
         <td><%= ddc.reference_url %></td>
+<% if can? :manage, :ddc %>
         <td><%= link_to 'Destroy', ddc, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% end %>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Ddc', new_ddc_path, class: 'btn btn-info' %>
+<%= link_to 'New DDC', new_ddc_path, class: 'btn btn-info' %>
