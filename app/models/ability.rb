@@ -12,7 +12,7 @@ class Ability
       can :manage, Network, id: user.networks.pluck(:id)
       can :manage, ProvisionRequest, network_id: user.networks.pluck(:id)
       can :manage, Device, id: user.devices.pluck(:id)
-      can :read, DDC
+      can :read, Ddc
 
       # Network, Broker, User, Device, ProvisionRequest, MosquittoAccount, MosquittoAcl
 
