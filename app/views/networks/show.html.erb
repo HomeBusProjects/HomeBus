@@ -13,18 +13,18 @@
 
 <div class='row'>
     <div class='col'>
-      <h2>Published DDCs</h2>
+      <h2>Published</h2>
       <ul>
 	<% @wo_ddcs.each do |ddc| %>
-	<li><%= ddc %></li>
+	<li><%= link_to ddc.name, ddc %></li>
 	<% end %>
       </ul>
     </div>
     <div class='col'>
-      <h2>Writable DDCs</h2>
+      <h2>Consumed</h2>
       <ul>
 	<% @ro_ddcs.each do |ddc| %>
-	<li><%= ddc %></li>
+	<li><%= link_to ddc.name, ddc %></li>
 	<% end %>
       </ul>
     </div>
