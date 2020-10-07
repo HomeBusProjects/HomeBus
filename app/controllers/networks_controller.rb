@@ -32,8 +32,9 @@ class NetworksController < ApplicationController
   # POST /networks
   # POST /networks.json
   def create
-    @network = Network.new(network_params)
-    @network[:broker] = Broker.first
+    @network = Network.new(network_params.merge({ broker: Broker.first}))
+
+    pp @network
 
     respond_to do |format|
       if @network.save
