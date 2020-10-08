@@ -1,7 +1,7 @@
 class AddDeviseRequiredMissingFields < ActiveRecord::Migration[6.0]
   def change
     ## Confirmable
-    add_column :users, :confirmation_token, unique: true
+    add_column :users, :confirmation_token
     add_column :users, :confirmed_at
     add_column :users, :confirmation_sent_at
     add_column :users, :unconfirmed_email # Only if using reconfirmable
