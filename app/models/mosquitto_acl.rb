@@ -12,20 +12,20 @@ class MosquittoAcl < MosquittoRecord
       pr.mosquitto_acl.delete_all
 
       pr.devices.each do |device|
-        device.wo_ddcs.each do |ddc|
-          # only do this if permitted
-          MosquittoAcl.create username: account.username,
-                              topic: "homebus/device/#{device.id}/#{ddc}",
-                              permissions: :read,
-                              provision_request_id: pr.id
-        end
+        device.ddcs_devices.each do |ddc_device|
+          if ddc_device.publishable
+            MosquittoAcl.create username: account.username,
+                                topic: "homebus/device/#{device.id}/#{ddc}",
+                                permissions: :read,
+                                provision_request_id: pr.id
+          end
 
-        device.ro_ddcs.each do |ddc|
-          # only do this if permitted
-          MosquittoAcl.create username: account.username,
-                              topic: "homebus/device/+/#{ddc}",
-                              permissions: :write,
-                              provision_request_id: pr.id
+          if ddc_device.consumable
+            MosquittoAcl.create username: account.username,
+                                topic: "homebus/device/+/#{ddc}",
+                                permissions: :write,
+                                provision_request_id: pr.id
+          end
         end
       end
     end
