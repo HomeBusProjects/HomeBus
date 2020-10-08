@@ -38,7 +38,7 @@
     <h3>Publishes</h3>
     <ul class='list-group-flush'>
       <% @provision_request.wo_ddcs.each do |ddc| %>
-      <li class='list-group-item'><%= ddc %></li>
+      <li class='list-group-item'><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
       <% end %>
     </ul>
   </div>
@@ -47,7 +47,7 @@
     <h3>Consumes</h3>
     <ul class='list-group-flush'>
       <% @provision_request.ro_ddcs.each do |ddc| %>
-      <li class='list-group-item'><%= ddc %></li>
+      <li class='list-group-item'><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
       <% end %>
     </ul>
   </div>
