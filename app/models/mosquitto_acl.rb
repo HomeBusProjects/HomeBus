@@ -9,9 +9,11 @@ class MosquittoAcl < MosquittoRecord
     account = MosquittoAccount.find_by provision_request_id: pr.id
 
     ActiveRecord::Base.transaction do
-      pr.mosquitto_acls.delete_all
+      pr.mosquitto_acl.delete_all
+
       pr.devices.each do |device|
         device.wo_ddcs.each do |ddc|
+          # only do this if permitted
           MosquittoAcl.create username: account.username,
                               topic: "homebus/device/#{device.id}/#{ddc}",
                               permissions: :read,
@@ -19,6 +21,7 @@ class MosquittoAcl < MosquittoRecord
         end
 
         device.ro_ddcs.each do |ddc|
+          # only do this if permitted
           MosquittoAcl.create username: account.username,
                               topic: "homebus/device/+/#{ddc}",
                               permissions: :write,
