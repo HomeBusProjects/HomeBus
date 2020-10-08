@@ -8,14 +8,14 @@ development:
     <<: *default
     host: homebus-postgres
     username: postgres
-    password:
+    password: homebus-development
     database: homebus_development
   mqtt0:
     <<: *default
     migrations_paths: db/mosquitto_migrate
     host: homebus-postgres
     username: postgres
-    password:
+    password: homebus-development
     database: homebus_development_mosquitto
 
 # Warning: The database defined as "test" will be erased and

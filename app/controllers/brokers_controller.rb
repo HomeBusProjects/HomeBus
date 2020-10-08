@@ -1,4 +1,7 @@
 class BrokersController < ApplicationController
+  load_and_authorize_resource
+  check_authorization
+  
   before_action :authenticate_user!
   load_and_authorize_resource
 

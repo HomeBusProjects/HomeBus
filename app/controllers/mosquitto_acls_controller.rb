@@ -1,5 +1,7 @@
 class MosquittoAclsController < ApplicationController
-  before_action :authenticate_user!
+  load_and_authorize_resource
+  check_authorization
+
   before_action :set_mosquitto_acl, only: [:show, :edit, :update, :destroy]
 
   # GET /mosquitto_acls

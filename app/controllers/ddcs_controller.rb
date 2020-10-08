@@ -1,4 +1,7 @@
 class DdcsController < ApplicationController
+  load_and_authorize_resource
+  check_authorization
+  
   before_action :set_ddc, only: [:show, :edit, :update, :destroy]
 
   # GET /ddcs

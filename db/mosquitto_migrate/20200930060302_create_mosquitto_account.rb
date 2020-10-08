@@ -2,7 +2,6 @@ class CreateMosquittoAccount < ActiveRecord::Migration[6.0]
   def change
     enable_extension 'pgcrypto'
 
-if false
     create_table :mosquitto_accounts, id: :uuid do |t|
       t.string :password, null: false
       t.boolean :superuser, null: false, default: false
@@ -13,7 +12,7 @@ if false
     end
 
     add_index :mosquitto_accounts, :provision_request_id, unique: true
-end
+
     add_index :mosquitto_accounts, [:enabled, :provision_request_id], unique: true
     add_index :mosquitto_accounts, [:id, :enabled]
     add_index :mosquitto_accounts, :created_at

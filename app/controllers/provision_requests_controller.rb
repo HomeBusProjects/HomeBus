@@ -1,7 +1,9 @@
 require 'securerandom'
 
 class ProvisionRequestsController < ApplicationController
-  before_action :authenticate_user!
+  load_and_authorize_resource
+  check_authorization
+
   before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
 
   def accept
