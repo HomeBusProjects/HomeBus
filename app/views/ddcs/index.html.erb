@@ -20,7 +20,7 @@
         <td><%= link_to ddc.name, ddc %></td>
         <td><%= ddc.description %></td>
         <td><%= ddc.reference_url %></td>
-<% if can? :manage, :ddc %>
+<% if can? :delete, :ddc %>
         <td><%= link_to 'Destroy', ddc, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 <% end %>
       </tr>
@@ -30,4 +30,6 @@
 
 <br>
 
+<% if can? :new, Ddc %>
 <%= link_to 'New DDC', new_ddc_path, class: 'btn btn-info' %>
+<% end %>

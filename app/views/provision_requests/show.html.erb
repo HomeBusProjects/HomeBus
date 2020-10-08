@@ -6,11 +6,18 @@
     <h3>Pin:</h3>
     <%= @provision_request.pin %>
 
+    <hr>
 
+    Network: <%= link_to @provision_request.network.name, @provision_request.network %>
+    
+    <hr>
+
+<% if can? :manage, :all %>
     <h3>IP Address:</h3>
     <p>
       <%= @provision_request.ip_address %>
     </p>
+<% end %>
   </div>
 </div>
 
@@ -48,7 +55,7 @@
 
 <div class='row'>
   <div class='col'>
-    <h3>UUIDs ( <%= @provision_request.requested_uuid_count %>)</h3>
+    <h3>Devices ( <%= @provision_request.requested_uuid_count %>)</h3>
     <ul class='list-group-flush'>
       <% @provision_request.devices.pluck(:id).each do |uuid| %>
       <li class='list-group-item'><%= uuid %> - <%= link_to Device.find(uuid).friendly_name, Device.find(uuid) %></li>
@@ -58,9 +65,9 @@
 </div>
 
 <hr>
-<h2>Broker</h2>
 <p>
   <h3>Broker Account</h3>
+<% if @provision_request.mosquitto_account %>
   <table>
     <tr>
       <td>username</td>
@@ -85,13 +92,16 @@
       <td><%= @provision_request.network.broker.secure_port %></td>
     </tr>
 </table>
+<% else %>
+  Broker account will not be created until the request is accepted.
+<% end %>
 </p>
 
 <% if can? :manage, :all %>
 <p>
   <h3>Mosquitto ACLs</h3>
   <ul>
-    <% @provision_request.mosquitto_acl.find_each do |acl| %>
+    <% MosquittoAcl.where(provision_request_id: @provision_request.id).find_each do |acl| %>
     <li><%= link_to acl.topic, acl %></li>
     <% end %>    
   </ul>

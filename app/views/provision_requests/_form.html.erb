@@ -18,6 +18,26 @@
     </div>
   </div>
 
+  <hr>
+
+  <div class="row">
+    <div class="col">
+      Choose the target network for this request. The network cannot be changed later.
+      <p>
+	<br>
+	<%= form.label :network %>
+	<%= form.collection_select :network_id, current_user.networks, :id, :name, {}, { class: 'form-control', readonly: true } %>
+      </p>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col">
+      <p>The manufacturer, model, serial number and PIN uniquely identify each device.</p>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col">
       <%= form.label :manufacturer %>
@@ -42,38 +62,44 @@
     </div>
   </div>
     
+  <hr>
+
   <div class="row">
-   <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, options_for_select([:unanswered, :accepted, :denied], selected: form.object.status) %>
+   <div class="col">
+     <%= form.label :status %>
+     <%= form.select :status, options_for_select([:unanswered, :accepted, :denied], selected: form.object.status) %>
+   </div>
   </div>
-  </div>
+
+  <hr>
 
   <div class="row">
     <div class="col">
-      <%= form.label "Write-only DDCs" %>
+      <%= form.label "Publishes" %>
       <%= form.text_area :wo_ddcs, { class: "form-control", value: @provision_request.wo_ddcs.join("\r\n") } %>
     </div>
 
     <div class="col">
-      <%= form.label "Read-only DDCs" %>
+      <%= form.label "Consumes" %>
       <%= form.text_area :ro_ddcs, { class: "form-control", value: @provision_request.ro_ddcs.join("\r\n") }  %>
     </div>
   </div>
 
+  <hr>
+
   <div class="row">
     <div class="col">
-      <%= form.label :requested_uuid_count, 'Requested UUID count' %>
+      <%= form.label :requested_uuid_count, 'Requested Device UUID count' %>
       <%= form.number_field :requested_uuid_count,  { class: "form-control" }  %>
     </div>
       
     <div class="col">
-      <%= form.label "UUIDs" %>
+      <%= form.label "Device UUIDs" %>
       <%= form.text_area :allocated_uuids, { class: "form-control", value: @provision_request.allocated_uuids.join("\r\n") }  %>
     </div>
   </div>
 
   <div class="actions">
-    <%= form.submit "Update Provision Request", class: "btn btn-primary" %>
+    <%= form.submit "Update Request", class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -16,7 +16,7 @@ development:
     host: homebus-postgres
     username: postgres
     password: homebus-development
-    database: homebus_development_mosquitto
+    database: homebus_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

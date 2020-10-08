@@ -15,4 +15,6 @@
   <%= @ddc.reference_url %>
 </p>
 
+<% if can? :edit, Ddc %>
 <%= link_to 'Edit', edit_ddc_path(@ddc), class: 'btn btn-info' %>
+<% end %>

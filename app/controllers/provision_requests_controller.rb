@@ -165,7 +165,7 @@ class ProvisionRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def provision_request_params
-      arrayize_ddcs!(params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :uuids))
+      arrayize_ddcs!(params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :network_id, :uuids))
     end
 
     def arrayize_ddcs!(p)
