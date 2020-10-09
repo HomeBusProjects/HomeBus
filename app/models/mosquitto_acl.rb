@@ -16,7 +16,7 @@ class MosquittoAcl < MosquittoRecord
           if ddc_device.publishable
             MosquittoAcl.create username: account.id,
                                 topic: "homebus/device/#{device.id}/#{ddc_device.ddc.name}",
-                                permissions: 1,
+                                permissions: 2,
                                 provision_request_id: pr.id
           end
 
@@ -25,8 +25,9 @@ class MosquittoAcl < MosquittoRecord
             ddc_device.ddc.devices do |device|
               MosquittoAcl.create username: account.id,
                                   topic: "homebus/device/#{d.id}/#{ddc_device.ddc.name}",
-                                  permissions: 2,
+                                  permissions: 1+4,
                                   provision_request_id: pr.id
+            end
           end
         end
       end
