@@ -16,7 +16,7 @@
       <h2>Published</h2>
       <ul>
 	<% @wo_ddcs.each do |ddc| %>
-	<li><%= link_to ddc.name, ddc %></li>
+	<li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
 	<% end %>
       </ul>
     </div>
@@ -24,7 +24,7 @@
       <h2>Consumed</h2>
       <ul>
 	<% @ro_ddcs.each do |ddc| %>
-	<li><%= link_to ddc.name, ddc %></li>
+	<li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
 	<% end %>
       </ul>
     </div>
