@@ -16,15 +16,17 @@ class MosquittoAcl < MosquittoRecord
           if ddc_device.publishable
             MosquittoAcl.create username: account.id,
                                 topic: "homebus/device/#{device.id}/#{ddc_device.ddc.name}",
-                                permissions: :read,
+                                permissions: 1,
                                 provision_request_id: pr.id
           end
 
           if ddc_device.consumable
-            MosquittoAcl.create username: account.id,
-                                topic: "homebus/device/+/#{ddc_device.ddc.name}",
-                                permissions: :write,
-                                provision_request_id: pr.id
+            # must iterate through all publishers
+            ddc_device.ddc.devices do |device|
+              MosquittoAcl.create username: account.id,
+                                  topic: "homebus/device/#{d.id}/#{ddc_device.ddc.name}",
+                                  permissions: 2,
+                                  provision_request_id: pr.id
           end
         end
       end
