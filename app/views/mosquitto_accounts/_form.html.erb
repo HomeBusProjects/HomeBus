@@ -18,7 +18,7 @@
 
   <div class="field form-group">
     <%= form.label :password %>
-    <%= form.text_field :password,  { class: 'form-control' readonly: true } %>
+    <%= form.text_field :password,  { class: 'form-control', readonly: true } %>
   </div>
 
 
@@ -28,8 +28,8 @@
   </div>
 
   <div class="field form-group">
-    <%= form.label :provision_request_id %>
-    <%= form.text_field :provision_request_id,  { class: 'form-control', readonly: true, value: mosquitto_account.provision_request.friendly_name } %>
+    <%= form.label 'Request' %>
+    <%= form.collection_select :provision_request_id, ProvisionRequest.all, :id, :friendly_name, {}, { class: 'form-control', disabled: true } %>
   </div>
 
   <div class="actions">

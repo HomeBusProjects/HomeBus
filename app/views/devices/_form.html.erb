@@ -51,10 +51,10 @@
 
   <div class="field form-group">
     <%= form.label :provision_request_id %>
-    <%= form.collection_select :provision_request_id, ProvisionRequest.all, :id, :friendly_name, {}, { class: 'form-control', readonly: true } %>
+    <%= form.collection_select :provision_request_id, ProvisionRequest.all, :id, :friendly_name, {}, { class: 'form-control', disabled: true } %>
   </div>
 
   <div class="actions">
-    <%= form.submit "Update Device", class: "btn btn-primary" %>
+    <%= form.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>
