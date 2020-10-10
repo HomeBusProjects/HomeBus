@@ -72,9 +72,13 @@ class ProvisionRequestsController < ApplicationController
   # GET /provision_requests.json
   def index
     if can? :manage, ProvisionRequest
+      logger.debug "CAN manage PR"
+
       @unanswered_provision_requests = ProvisionRequest.where(status: ProvisionRequest.statuses[:unanswered]).order(created_at: :desc)
       @provision_requests = ProvisionRequest.where('status != ?', ProvisionRequest.statuses[:unanswered]).order(friendly_name: :asc, created_at: :desc)
     else
+      logger.debug "CANNOT manage PR"
+
       @unanswered_provision_requests = current_user.provision_requests.where(status: ProvisionRequest.statuses[:unanswered]).order(created_at: :desc)
       @provision_requests = current_user.provision_requests.where('status != ?', ProvisionRequest.statuses[:unanswered]).order(friendly_name: :asc, created_at: :desc)
     end

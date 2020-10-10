@@ -2,6 +2,9 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    logger.debug 'ABILITY'
+    logger.unknown '1. can :manage, ProvisionRequest', user.networks.pluck(:id), pr.network_id
+
     if user.present?  # additional permissions for logged in users (they can manage their posts)
       if user.site_admin?  # additional permissions for administrators
         can :manage, :all
@@ -13,7 +16,7 @@ class Ability
       can [ :create, :new], Network
       #      can :manage, ProvisionRequest, id: ProvisionRequest.owned_by(user)
       can :manage, ProvisionRequest do |pr|
-        logger.info 'can :manage, ProvisionRequest', user.networks.pluck(:id), pr.network_id
+        logger.unknown '2. can :manage, ProvisionRequest', user.networks.pluck(:id), pr.network_id
 
         user.networks.pluck(:id).include?(pr.network_id)
       end
