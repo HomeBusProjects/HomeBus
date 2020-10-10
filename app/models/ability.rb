@@ -3,7 +3,8 @@ class Ability
 
   def initialize(user)
     Rails.logger.debug 'ABILITY'
-    Rails.logger.unknown '1. can :manage, ProvisionRequest', user.networks.pluck(:id)
+    Rails.logger.debug '1. can :manage, ProvisionRequest'
+    Rails.logger.debug user.networks.pluck(:id)
 
     if user.present?  # additional permissions for logged in users (they can manage their posts)
       if user.site_admin?  # additional permissions for administrators
