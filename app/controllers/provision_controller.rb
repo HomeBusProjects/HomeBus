@@ -15,12 +15,7 @@ class ProvisionController < ActionController::Base
       raise ActionController::InvalidAuthenticityToken
     end
 
-#    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [], 'read-write': [] ])
-
-    pp p[:provision][:identity]
-    pp 'SERIAL ', p[:provision][:identity][:serial_number]
-    pp 'DDCS ', p[:provision][:ddcs]
-    pp p[:provision][:ddcs][:'write-only']
+#    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
 
     unless validate_provision(p)
       raise ActionController::ParameterMissing
