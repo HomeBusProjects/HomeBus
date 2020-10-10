@@ -9,4 +9,9 @@ class User < ApplicationRecord
   has_many :networks, through: :networks_users
 
   has_and_belongs_to_many :devices
+
+  after_create :send_admin_mail
+  def send_admin_mail
+    UserMailer.send_new_user_message(self).deliver
+  end
 end

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+<h1>New Homebus user</h1>
+<p>
+A new user has joined the site: <%= @user.name %> - <a href='mailto:<%= user.email %>'><%= user.email %></a>
+</p>
+<p>
+  <%= link_to "User profile for #{@user.email}", user %>
+</p>
