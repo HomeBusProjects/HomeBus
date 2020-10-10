@@ -14,7 +14,7 @@ class Ability
       #      can :manage, ProvisionRequest, id: ProvisionRequest.owned_by(user)
       can :manage, ProvisionRequest do |pr|
         puts 'can :manage, ProvisionRequest'
-        puts user.networks.pluck(:id), pr.network_id)
+        puts user.networks.pluck(:id), pr.network_id
 
         user.networks.pluck(:id).include?(pr.network_id)
       end
