@@ -8,6 +8,8 @@ class ProvisionRequest < ApplicationRecord
 
   belongs_to :network
 
+  scope :owned_by, -> (user) { ProvisionRequest.where(network_id: user.networks.pluck(:id)) }
+
   def get_refresh_token(user)
     payload = {
       kind: 'refresh',

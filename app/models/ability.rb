@@ -11,7 +11,7 @@ class Ability
       can :manage, User, id: user.id # permissions for every user, even if not logged in    
       can :manage, Network, id: user.networks.pluck(:id)
       can [ :create, :new], Network
-      can :manage, ProvisionRequest, network_id: user.networks.pluck(:id)
+      can :manage, ProvisionRequest, id: ProvisionRequest.owned_by(user)
       can :manage, Device, id: user.devices.pluck(:id)
       can :read, Ddc
 
