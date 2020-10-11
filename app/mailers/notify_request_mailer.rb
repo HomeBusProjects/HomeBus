@@ -10,6 +10,6 @@ class NotifyRequestMailer < ApplicationMailer
   def admins_new_user
     @user = params[:user]
     @url  = 'http://example.com/login'
-    mail(to: User.where(site_admn: true).pluck(:email), subject: 'New user')
+    mail(to: User.where(site_admin: true).pluck(:email), subject: 'New user')
   end
 end
