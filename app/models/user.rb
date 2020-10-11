@@ -12,6 +12,6 @@ class User < ApplicationRecord
 
   after_create :send_admin_mail
   def send_admin_mail
-    UserMailer.send_new_user_message(self).deliver
+    NotifyRequestMailer.admins_new_user(self).deliver
   end
 end

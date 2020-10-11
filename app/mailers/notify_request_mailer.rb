@@ -6,4 +6,10 @@ class NotifyRequestMailer < ApplicationMailer
     @user = params[:user]
     mail(to: @user.email, subject: 'New Homebus Request')
   end
+
+  def admins_new_user
+    @user = params[:user]
+    @url  = 'http://example.com/login'
+    mail(to: User.where(site_admn: true).pluck(:email), subject: 'New user')
+  end
 end
