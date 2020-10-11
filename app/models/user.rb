@@ -14,4 +14,12 @@ class User < ApplicationRecord
   def send_admin_mail
     NotifyRequestMailer.with(user: self).admins_new_user.deliver
   end
+
+  def active_for_authentication? 
+    super && approved? 
+  end 
+  
+  def inactive_message 
+    approved? ? super : :not_approved
+  end
 end
