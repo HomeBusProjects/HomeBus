@@ -72,6 +72,6 @@ class DdcsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ddc_params
-      params.require(:ddc).permit(:name, :description, :reference_url)
+      params.require(:ddc).permit(:name, :description, :reference_url, :json, :examples)
     end
 end

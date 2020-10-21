@@ -1,19 +1,28 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%= @ddc.name %></h1>
 <p>
-  <strong>Name:</strong>
-  <%= @ddc.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
   <%= @ddc.description %>
 </p>
 
+<h2>Specification</h2>
+<code class='json'>
+  <%= @ddc.json %>
+</code>
+
+<% if @ddc.examples.length > 0 %>
+<h2>Examples</h2>
+<code class='json'>
+  <%= @ddc.examples %>
+</code>
+<% end %>
+
+<% if @ddc.reference_url.length > 0 %>
 <p>
   <strong>Reference url:</strong>
   <%= @ddc.reference_url %>
 </p>
+<% end %>
 
 <% if can? :edit, Ddc %>
 <%= link_to 'Edit', edit_ddc_path(@ddc), class: 'btn btn-info' %>
