@@ -5,7 +5,8 @@ require 'bcrypt'
 class MosquittoAccount < MosquittoRecord
   belongs_to :provision_request
 
-  has_many :mosquitto_acl, foreign_key: username, dependent: :destroy
+#  has_many :mosquitto_acl, foreign_key: username, dependent: :destroy
+  has_many :mosquitto_acl
 
   def generate_password!
     unencoded_password = SecureRandom.base64(40)
