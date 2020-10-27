@@ -7,15 +7,7 @@ class ProvisionRequestsController < ApplicationController
   before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
 
   def accept
-    i = 0
-
-    @provision_request.requested_uuid_count.times do
-      device = @provision_request.devices.create friendly_name: "#{@provision_request.friendly_name}-#{i}"
-      i += 1
-    end
-
-    @provision_request.accepted!
-    @provision_request.create_mosquitto_account(superuser: true, password: SecureRandom.base64(32), enabled: true)
+    @provision_request.accept!
 
     respond_to do |format|
       if @provision_request.save
@@ -51,9 +43,7 @@ class ProvisionRequestsController < ApplicationController
 
   def revoke
     @provision_request.devices.update_all(provisioned: false)
-    @provision_request.revoked!
-
-    @provision_request.mosquitto_account.enabled = false
+    @provision_request.revoke
 
     respond_to do |format|
       if @provision_request.save

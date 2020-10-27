@@ -1,7 +1,7 @@
 class ProvisionRequest < ApplicationRecord
   enum status: [ :unanswered, :accepted, :denied ]
 
-  has_many :devices
+  has_many :devices, dependent: :delete_all
 
   has_one :mosquitto_account
   has_many :mosquitto_acl
@@ -23,6 +23,48 @@ class ProvisionRequest < ApplicationRecord
     }
 
     JsonWebToken.encode(payload, Time.now + 1.year)
+  end
+
+  def accept!
+    accepted!
+
+    ro_ddcs.each do |ddc_name|
+      Ddc.where(name: ddc_name).first_or_create(description: '', reference_url: '')
+    end
+
+    wo_ddcs.each do |ddc_name|
+      Ddc.where(name: ddc_name).first_or_create(description: '', reference_url: '')
+    end
+
+    requested_uuid_count.times do |i|
+      device = self.devices.create friendly_name: "#{friendly_name}-#{i}"
+
+      device.networks << network
+      device.users << network.users.first
+
+      ro_ddcs.each do |ddc_name|
+        ddc = Ddc.find_by name: ddc_name
+
+        device.ddcs << ddc
+        device.ddcs_devices.where(ddc: ddc).update(consumable: true)
+      end
+
+      wo_ddcs.each do |ddc_name|
+        ddc = Ddc.find_by name: ddc_name
+
+        device.ddcs << ddc
+        device.ddcs_devices.where(ddc: ddc).update(publishable: true)
+      end
+    end
+
+
+    self.create_mosquitto_account(superuser: true, password: SecureRandom.base64(32), enabled: true)
+
+    MosquittoAcl.from_provision_request self
+  end
+
+  def revoke!
+    self.mosquitto_account.update(enabled: false)
   end
 
   def self.find_by_refresh_token(token)

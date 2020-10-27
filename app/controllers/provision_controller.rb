@@ -76,9 +76,12 @@ class ProvisionController < ActionController::Base
       args[:network] = network
       pr = ProvisionRequest.create args
 
-      NotifyRequestMailer.with(provision_request: pr, user: pr.network.users.first).new_provisioning_request.deliver_now
+      begin
+        NotifyRequestMailer.with(provision_request: pr, user: pr.network.users.first).new_provisioning_request.deliver_now
+      rescue
+      end
 
-      response = { uuid: pr.id,
+      response = { refresh_token: pr.get_refresh_token(pr.network.users.first),
                    status: 'waiting',
                    retry_time: 60
                  }
