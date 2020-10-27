@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>App Servers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Port</th>
+      <th>Secret key</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @app_servers.each do |app_server| %>
+      <tr>
+        <td><%= app_server.name %></td>
+        <td><%= app_server.port %></td>
+        <td><%= app_server.secret_key %></td>
+        <td><%= link_to 'Show', app_server %></td>
+        <td><%= link_to 'Edit', edit_app_server_path(app_server) %></td>
+        <td><%= link_to 'Destroy', app_server, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New App Server', new_app_server_path %>

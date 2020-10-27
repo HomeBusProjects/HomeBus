@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @app_server.name %>
+</p>
+
+<p>
+  <strong>Port:</strong>
+  <%= @app_server.port %>
+</p>
+
+<p>
+  <strong>Secret key:</strong>
+  <%= @app_server.secret_key %>
+</p>
+
+<%= link_to 'Edit', edit_app_server_path(@app_server) %> |
+<%= link_to 'Back', app_servers_path %>

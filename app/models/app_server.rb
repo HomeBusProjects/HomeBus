@@ -1,0 +1,2 @@
+class AppServer < ApplicationRecord
+end
