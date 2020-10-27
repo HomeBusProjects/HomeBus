@@ -37,10 +37,15 @@
 
 <p>Copy this token into src/config.h</p>
 <p><a href='#' onclick="if($('#auth_token_code').is(':visible')) { $('#auth_token_code').hide(); } else { $('#auth_token_code').show(); } return false;">Click to reveal authentication token</a></p>
-<pre id='auth_token_code' style="display: none;">
+<div id='auth_token_code' style="display: none;">
+  <p>Authorization token is:</p>
+  <p><code><%= @token %></code></p>
+  <p>Use this token in multiball-related firmware by using these lines in <code>src/config.h</code>.</p>
+  <pre>
 #define HOMEBUS_AUTHENTICATION_TOKEN "<%= @token %>"
-#define HOMEBUS_SERVER "api.homebus.io"
-</pre>
+#define HOMEBUS_SERVER "http://homebus.org"
+  </pre>
+</div>
 <p>
   This token is good for 24 hours (until <%= Time.now + 24.hours %>). Refresh the page to generate a new token.
 </p>
