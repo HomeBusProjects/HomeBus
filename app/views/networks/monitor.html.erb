@@ -25,6 +25,7 @@ $(document).ready(function() {
 });
 
 function onConnect() {
+console.log('mqtt connected');
   [
 <% @consume_ddcs.each do |ddc| %>
     '<%= ddc %>',
@@ -47,6 +48,7 @@ function onConnectFail(e) {
 }
 
 function onMessageArrived(message) {
+console.log('mqtt msg');
   $('<pre>').prepend(message.payloadString);
 }
 </script>
