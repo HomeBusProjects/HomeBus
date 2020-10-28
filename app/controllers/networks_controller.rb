@@ -1,5 +1,5 @@
 class NetworksController < ApplicationController
-  before_action :set_network, only: [:show, :edit, :update, :destroy]
+  before_action :set_network, only: [:show, :edit, :update, :destroy, :monitor]
 
   # GET /networks
   # GET /networks.json
@@ -71,6 +71,33 @@ class NetworksController < ApplicationController
       format.html { redirect_to networks_url, notice: 'Network was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # GET /networks/#/monitor
+  def monitor
+    @consume_ddcs = @network.provision_requests.pluck(:wo_ddcs).flatten.uniq.sort
+    pp 'DDCS', @consume_ddcs
+
+    pr = ProvisionRequest.create manufacturer: 'Homebus',
+                                 model: 'Temporary web monitor',
+                                 serial_number: @network.id,
+                                 ro_ddcs: @consume_ddcs,
+                                 wo_ddcs: [],
+                                 requested_uuid_count: 1,
+                                 network: @network,
+                                 ip_address: '127.0.0.1'
+
+    pr.accept!
+
+    @broker = Hash.new
+
+    @broker[:server] = pr.network.broker.name
+    @broker[:port] = 8883
+
+    @broker[:username] = pr.mosquitto_account.id
+    @broker[:password] = pr.mosquitto_account.generate_password!
+
+    @client_id = pr.id
   end
 
   private

@@ -1,0 +1,52 @@
+<h1>Network Monitor <%= @network.name %></h1>
+<p>
+  The monitor has created a temporary device on your network which will be automatically removed after a period of inactivity. Refresh this page if it stops working.
+</p>
+<pre>
+</pre>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js'></script>
+<script>
+$(document).ready(function() {
+    client = new Paho.Client('<%= @broker[:server] %>', <%= @broker[:port] %>,'<%= @client_id %>');
+
+    client.onConnectionLost = onConnectionLost; 
+    client.onMessageArrived = onMessageArrived;
+
+    let options = {
+	useSSL: true,
+	userName: '<%= @broker[:username] %>',
+	password: '<%= @broker[:password] %>',
+	onSuccess: onConnect,
+	onFailure: onConnectFail,
+	reconnect: true
+    };
+
+    client.connect(options); 
+});
+
+function onConnect() {
+  [
+<% @consume_ddcs.each do |ddc| %>
+    '<%= ddc %>',
+<% end %>
+  ].forEach(function(ddc) {
+    client.subscribe('homebus/device/+/' + ddc);
+  });
+}
+
+function onConnectionLost(responseObject) {
+    if (responseObject.errorCode !== 0) {
+        console.log("onConnectionLost:" + responseObject.errorMessage);
+    }
+    console.log("connection lost");
+}
+
+function onConnectFail(e) {
+    console.log(e);
+    console.log("doFail");
+}
+
+function onMessageArrived(message) {
+  $('<pre>').prepend(message.payloadString);
+}
+</script>
