@@ -92,7 +92,7 @@ class NetworksController < ApplicationController
     @broker = Hash.new
 
     @broker[:server] = pr.network.broker.name
-    @broker[:port] = 8883
+    @broker[:port] = 8083
 
     @broker[:username] = pr.mosquitto_account.id
     @broker[:password] = pr.mosquitto_account.generate_password!
