@@ -2,8 +2,18 @@
 <p>
   The monitor has created a temporary device on your network which will be automatically removed after a period of inactivity. Refresh this page if it stops working.
 </p>
-<pre>
-</pre>
+<table id='monitor_table' class='table'>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>DDC</th>
+      <th>Timestamp</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js'></script>
 <script>
 $(document).ready(function() {
@@ -48,7 +58,31 @@ function onConnectFail(e) {
 }
 
 function onMessageArrived(message) {
-console.log('mqtt msg', message);
-  $('pre').prepend(message.payloadString);
+  console.log('mqtt msg', message);
+
+  let data;
+  try {
+    data = JSON.parse(message.payloadString);
+  } catch(error) {
+    $('#monitor_table tbody').prepend('<tr><td>parse error</td><td></td><td><code>' + message.payloadString + '</code></d>'); 
+    return;
+  }
+
+    let source, timestamp, ddc, payload; 
+
+    // is it a new style message?
+    if(data["source"]) {
+        source = data["source"];
+        timestamp = data["timestamp"];
+        try {
+            ddc = data["contents"]["ddc"];
+            payload = data["contents"]["payload"];
+        } catch(error) {
+          $('#monitor_table tbody').prepend('<tr><td>' + data['source'] + '</td><td>parse error</td><td><code>' + message.payloadString + '</code></d>'); 
+          return;
+        }
+    }
+
+  $('#monitor_table tbody').prepend('<tr><td>' + source + '</td><td>' + ddc + '</td><td>' + timestamp + '</td><td><code>' + payload + '</code></td></tr>');
 }
 </script>
