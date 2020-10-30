@@ -87,7 +87,7 @@ class NetworksController < ApplicationController
                                  network: @network,
                                  ip_address: '127.0.0.1',
                                  friendly_name: 'Web monitor',
-                                 auto_remove_interval: 10*60
+                                 autoremove_interval: 10*60
 
     pr.accept!
 
