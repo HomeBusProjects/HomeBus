@@ -78,7 +78,7 @@ function onMessageArrived(message) {
             ddc = data["contents"]["ddc"];
             payload = data["contents"]["payload"];
         } catch(error) {
-          $('#monitor_table tbody').prepend('<tr><td>' + data['source'] + '</td><td>parse error</td><td><code>' + message.payloadString + '</code></d>'); 
+          $('#monitor_table tbody').prepend('<tr><td><a href="/devices/' + source +  '">' + source + '</td><td>parse error</td><td><code>' + message.payloadString + '</code></d>'); 
           return;
         }
     }

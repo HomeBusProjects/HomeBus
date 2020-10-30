@@ -2,6 +2,7 @@ class MosquittoAcl < MosquittoRecord
   include Bitfields
 
   belongs_to :provision_request
+  belongs_to :mosquitto_account
 
   bitfield :permissions, 1 => :read, 2 => :write, 4 => :subscribe
 
@@ -26,7 +27,7 @@ class MosquittoAcl < MosquittoRecord
             ddc = ddc_device.ddc
 
             pr.network.devices.each do |d|
-              names = DdcsDevice.joins(:ddc).where(device: d, consumable: true).pluck(:'ddcs.name')
+              names = DdcsDevice.joins(:ddc).where(device: d, publishable: true).pluck(:'ddcs.name')
               if names.include? ddc_device.ddc.name
                 MosquittoAcl.create username: account.id,
                                     topic: "homebus/device/#{d.id}/#{ddc_device.ddc.name}",

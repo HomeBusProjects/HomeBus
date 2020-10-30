@@ -85,7 +85,9 @@ class NetworksController < ApplicationController
                                  wo_ddcs: [],
                                  requested_uuid_count: 1,
                                  network: @network,
-                                 ip_address: '127.0.0.1'
+                                 ip_address: '127.0.0.1',
+                                 friendly_name: 'Web monitor',
+                                 auto_remove_interval: 10*60
 
     pr.accept!
 
