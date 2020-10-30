@@ -48,7 +48,7 @@ function onConnectFail(e) {
 }
 
 function onMessageArrived(message) {
-console.log('mqtt msg');
-  $('<pre>').prepend(message.payloadString);
+console.log('mqtt msg', message);
+  $('pre').prepend(message.payloadString);
 }
 </script>
