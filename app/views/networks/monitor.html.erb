@@ -68,7 +68,7 @@ function onMessageArrived(message) {
     return;
   }
 
-    let source, timestamp, ddc, payload; 
+    let source, timestamp, ddc, payload, date;
 
     // is it a new style message?
     if(data["source"]) {
@@ -83,6 +83,12 @@ function onMessageArrived(message) {
         }
     }
 
-  $('#monitor_table tbody').prepend('<tr><td>' + source + '</td><td>' + ddc + '</td><td>' + timestamp + '</td><td><code>' + payload + '</code></td></tr>');
+  try {
+    date = new Date(timestamp * 1000);
+ } catch(error) {
+    date = "invalid";
+ }
+
+  $('#monitor_table tbody').prepend('<tr><td>' + source + '</td><td>' + ddc + '</td><td>' + date + '</td><td><code>' + JSON.stringify(payload) + '</code></td></tr>');
 }
 </script>
