@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  device: one
+  network: one
+  ddc: one
+  consumes: false
+  publishes: false
+
+two:
+  device: two
+  network: two
+  ddc: two
+  consumes: false
+  publishes: false

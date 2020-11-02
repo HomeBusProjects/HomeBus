@@ -1,0 +1,43 @@
+<%= form_with(model: permission, local: true) do |form| %>
+  <% if permission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(permission.errors.count, "error") %> prohibited this permission from being saved:</h2>
+
+      <ul>
+        <% permission.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :device_id %>
+
+    <%= form.collection_select :device_id, current_user.devices, :id, :friendly_name, {}, { class: 'form-control', disabled: true } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :network_id %>
+    <%= form.collection_select :network_id, current_user.networks, :id, :name, {}, { class: 'form-control', disabled: true } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ddc_id %>
+    <%= form.collection_select :ddc_id, Ddc.order(name: :asc), :id, :name, {}, { class: 'form-control' } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :consumes %>
+    <%= form.check_box :consumes, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :publishes %>
+    <%= form.check_box :publishes, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-info' %>
+  </div>
+<% end %>

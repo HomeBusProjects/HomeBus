@@ -46,14 +46,16 @@ class ProvisionRequest < ApplicationRecord
         ddc = Ddc.find_by name: ddc_name
 
         device.ddcs << ddc
-        device.ddcs_devices.where(ddc: ddc).update(consumable: true)
+
+        Permission.create(device: device, ddc: ddc, network: network, consumes: true, publishes: false)
       end
 
       wo_ddcs.each do |ddc_name|
         ddc = Ddc.find_by name: ddc_name
 
         device.ddcs << ddc
-        device.ddcs_devices.where(ddc: ddc).update(publishable: true)
+
+        Permission.create(device: device, ddc: ddc, network: network, publishes: true, consumes: false)
       end
     end
 

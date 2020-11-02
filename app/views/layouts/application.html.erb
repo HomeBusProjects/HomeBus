@@ -47,8 +47,11 @@
 	        Admin
 	      </a>
 	      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		<%= link_to 'Brokers', brokers_path, class: 'dropdown-item' %>
 		<%= link_to 'Users', users_path, class: 'dropdown-item' %>
+                <div class="dropdown-divider"></div>
+		<%= link_to 'Permissions', permissions_path, class: 'dropdown-item' %>
+                <div class="dropdown-divider"></div>
+  		<%= link_to 'Brokers', brokers_path, class: 'dropdown-item' %>
 		<%= link_to 'Broker Accounts', mosquitto_accounts_path, class: 'dropdown-item' %>
 		<%= link_to 'Broker ACLs', mosquitto_acls_path, class: 'dropdown-item' %>
               </div>

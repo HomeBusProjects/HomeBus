@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Device:</strong>
+  <%= @permission.device_id %>
+</p>
+
+<p>
+  <strong>Network:</strong>
+  <%= @permission.network_id %>
+</p>
+
+<p>
+  <strong>Ddc:</strong>
+  <%= @permission.ddc_id %>
+</p>
+
+<p>
+  <strong>Consumes:</strong>
+  <%= @permission.consumes %>
+</p>
+
+<p>
+  <strong>Publishes:</strong>
+  <%= @permission.publishes %>
+</p>
+
+<%= link_to 'Edit', edit_permission_path(@permission) %> |
+<%= link_to 'Back', permissions_path %>

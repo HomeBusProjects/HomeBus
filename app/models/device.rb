@@ -7,7 +7,7 @@ class Device < ApplicationRecord
   has_and_belongs_to_many :networks
   has_and_belongs_to_many :users
 
-  #  has_and_belongs_to_many :ddcs
-  has_many :ddcs_devices, dependent: :destroy
-  has_many :ddcs, through: :ddcs_devices
+  has_and_belongs_to_many :ddcs
+
+  has_many :permissions, dependent: :destroy
 end
