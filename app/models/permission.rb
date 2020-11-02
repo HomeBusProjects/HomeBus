@@ -3,7 +3,7 @@ class Permission < ApplicationRecord
   belongs_to :network
   belongs_to :ddc
 
-  def self.from_device(device)
+  def self.from_device(device, network)
     device.provision_request.ro_ddcs.each do |ddc_name|
       ddc = Ddc.find_by name: ddc_name
       device.ddcs << ddc

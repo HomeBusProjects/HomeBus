@@ -42,7 +42,7 @@ class ProvisionRequest < ApplicationRecord
       device.networks << network
       device.users << network.users.first
 
-      Permission.from_device device
+      Permission.from_device(device, network)
     end
 
     self.create_mosquitto_account(superuser: true, password: SecureRandom.base64(32), enabled: true)
