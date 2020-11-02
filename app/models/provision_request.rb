@@ -42,23 +42,8 @@ class ProvisionRequest < ApplicationRecord
       device.networks << network
       device.users << network.users.first
 
-      ro_ddcs.each do |ddc_name|
-        ddc = Ddc.find_by name: ddc_name
-
-        device.ddcs << ddc
-
-        Permission.create(device: device, ddc: ddc, network: network, consumes: true, publishes: false)
-      end
-
-      wo_ddcs.each do |ddc_name|
-        ddc = Ddc.find_by name: ddc_name
-
-        device.ddcs << ddc
-
-        Permission.create(device: device, ddc: ddc, network: network, publishes: true, consumes: false)
-      end
+      Permission.from_device device
     end
-
 
     self.create_mosquitto_account(superuser: true, password: SecureRandom.base64(32), enabled: true)
 
