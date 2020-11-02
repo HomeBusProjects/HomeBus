@@ -20,10 +20,10 @@ class MosquittoAcl < MosquittoRecord
           if Permission.find_by(device: device, network: pr.network, ddc: ddc, publishes: true)
             puts "write acl homebus/device/#{device.id}/#{ddc.name}"
 
-            MosquittoAcl.create username: account.id,
+            MosquittoAcl.create(username: account.id,
                                 topic: "homebus/device/#{device.id}/#{ddc.name}",
                                 permissions: 2,
-                                provision_request_id: pr.id
+                                provision_request_id: pr.id)
           end
 
           # for each consumable DDC we need to find all devices on the network which publish
@@ -34,10 +34,10 @@ class MosquittoAcl < MosquittoRecord
             Permission.where(network: pr.network, ddc: ddc, publishes: true).each do |p|
               puts "read acl homebus/device/#{p.device.id}/#{device.ddc.name}"
 
-              MosquittoAcl.create username: account.id,
+              MosquittoAcl.create(username: account.id,
                                   topic: "homebus/device/#{p.device.id}/#{device.ddc.name}",
                                   permissions: 1+4,
-                                  provision_request_id: pr.id
+                                  provision_request_id: pr.id)
             end
           end
         end
