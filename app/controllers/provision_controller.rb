@@ -35,15 +35,11 @@ class ProvisionController < ActionController::Base
     args[:wo_ddcs] = p[:provision][:ddcs][:'write-only']
 
     pp 'ARGS', args
-    if args["uuid"]
-      puts "trying to find uuid #{args["uuid"]}"
-      pr = ProvisionRequest.find args["uuid"]
-    else
-      puts "trying to find serial number #{args[:serial_number]} manufacturer #{args[:manufacturer]} model #{args[:model]}"
-      pr = ProvisionRequest.find_by(serial_number: args[:serial_number],
-                                    manufacturer: args[:manufacturer],
-                                    model: args[:model])
-    end
+
+    puts "trying to find serial number #{args[:serial_number]} manufacturer #{args[:manufacturer]} model #{args[:model]}"
+    pr = ProvisionRequest.find_by(serial_number: args[:serial_number],
+                                  manufacturer: args[:manufacturer],
+                                  model: args[:model])
 
     if pr
       if pr.accepted?
