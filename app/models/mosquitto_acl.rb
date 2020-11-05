@@ -32,11 +32,10 @@ class MosquittoAcl < MosquittoRecord
         if Permission.find_by(device: device, network: pr.network, ddc: ddc, consumes: true)
           Permission.where(network: pr.network, ddc: ddc, publishes: true).each do |p|
             Rails.logger.debug "READ ACL homebus/device/#{p.device.id}/#{ddc.name}"
-
-            records.push MosquittoAcl.create(username: account.id,
-                                             topic: "homebus/device/#{p.device.id}/#{ddc.name}",
-                                             permissions: 1+4,
-                                             provision_request_id: pr.id)
+            records.push MosquittoAcl.new(username: account.id,
+                                          topic: "homebus/device/#{p.device.id}/#{ddc.name}",
+                                          permissions: 1+4,
+                                          provision_request_id: pr.id)
 
           end
         end
