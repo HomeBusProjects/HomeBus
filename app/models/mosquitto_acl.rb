@@ -14,10 +14,10 @@ class MosquittoAcl < MosquittoRecord
 
     pr.devices.each do |device|
       device.ddcs.each do |ddc|
-        puts "PUBLISHES PERMISSION CHECK device ID: #{device.id}, network ID: #{pr.network.id}, ddc ID: #{ddc.id}"
+        Rails.logger.debug "PUBLISHES PERMISSION CHECK device ID: #{device.id}, network ID: #{pr.network.id}, ddc ID: #{ddc.id}"
 
         if Permission.find_by(device: device, network: pr.network, ddc: ddc, publishes: true)
-          puts "WRITE ACL homebus/device/#{device.id}/#{ddc.name}"
+          Rails.logger.debug "WRITE ACL homebus/device/#{device.id}/#{ddc.name}"
 
             records.push MosquittoAcl.new(username: account.id,
                                           topic: "homebus/device/#{device.id}/#{ddc.name}",
@@ -31,7 +31,7 @@ class MosquittoAcl < MosquittoRecord
 
         if Permission.find_by(device: device, network: pr.network, ddc: ddc, consumes: true)
           Permission.where(network: pr.network, ddc: ddc, publishes: true).each do |p|
-            puts "READ ACL homebus/device/#{p.device.id}/#{device.ddc.name}"
+            Rails.logger.debug "READ ACL homebus/device/#{p.device.id}/#{device.ddc.name}"
 
             records.push MosquittoAcl.create(username: account.id,
                                              topic: "homebus/device/#{p.device.id}/#{device.ddc.name}",
@@ -45,7 +45,7 @@ class MosquittoAcl < MosquittoRecord
 
     ActiveRecord::Base.transaction do
       pr.mosquitto_acl.delete_all
-      records.each { |record| pp "RECORD", record ; record.save! }
+      records.each { |record| Rails.logger.debug "RECORD #{record.inspect}" ; record.save! }
     end
   end
 
