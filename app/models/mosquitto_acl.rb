@@ -2,7 +2,7 @@ class MosquittoAcl < MosquittoRecord
   include Bitfields
 
   belongs_to :provision_request
-  belongs_to :mosquitto_account
+#  belongs_to :mosquitto_account
 
   bitfield :permissions, 1 => :read, 2 => :write, 4 => :subscribe
 
@@ -48,7 +48,7 @@ class MosquittoAcl < MosquittoRecord
 
     ActiveRecord::Base.transaction do
       pr.mosquitto_acl.delete_all
-      records.each { |record| Rails.logger.debug "RECORD #{record.inspect}" ; record.save ; Rails.logger.debug record.errors }
+      records.each { |record| Rails.logger.debug "RECORD #{record.inspect}" ; record.save ; Rails.logger.debug record.errors.inspect }
     end
   end
 
