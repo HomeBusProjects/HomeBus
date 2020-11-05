@@ -48,7 +48,7 @@ class MosquittoAcl < MosquittoRecord
 
     ActiveRecord::Base.transaction do
       pr.mosquitto_acl.delete_all
-      records.each { |record| Rails.logger.debug "RECORD #{record.inspect}" ; record.save! }
+      records.each { |record| Rails.logger.debug "RECORD #{record.inspect}" ; record.save ; Rails.logger.debug record.errors }
     end
   end
 
