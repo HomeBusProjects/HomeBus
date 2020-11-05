@@ -10,11 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_054546) do
+ActiveRecord::Schema.define(version: 2020_11_05_052343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "app_servers", force: :cascade do |t|
+    t.string "name"
+    t.integer "port"
+    t.string "secret_key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "apps", force: :cascade do |t|
+    t.string "name"
+    t.string "source"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "brokers", force: :cascade do |t|
     t.string "name", null: false
@@ -33,25 +48,17 @@ ActiveRecord::Schema.define(version: 2020_10_07_054546) do
     t.string "reference_url", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "json", default: "", null: false
+    t.string "examples", default: "", null: false
     t.index ["name"], name: "index_ddcs_on_name"
   end
 
   create_table "ddcs_devices", force: :cascade do |t|
     t.uuid "device_id"
     t.bigint "ddc_id"
-    t.boolean "publishable", default: false, null: false
-    t.boolean "consumable", default: false, null: false
-    t.boolean "allow_publish", default: false, null: false
-    t.boolean "allow_consume", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["ddc_id", "consumable"], name: "index_ddcs_devices_on_ddc_id_and_consumable"
-    t.index ["ddc_id", "publishable"], name: "index_ddcs_devices_on_ddc_id_and_publishable"
     t.index ["ddc_id"], name: "index_ddcs_devices_on_ddc_id"
-    t.index ["device_id", "allow_consume"], name: "index_ddcs_devices_on_device_id_and_allow_consume"
-    t.index ["device_id", "allow_publish"], name: "index_ddcs_devices_on_device_id_and_allow_publish"
-    t.index ["device_id", "consumable"], name: "index_ddcs_devices_on_device_id_and_consumable"
-    t.index ["device_id", "publishable"], name: "index_ddcs_devices_on_device_id_and_publishable"
     t.index ["device_id"], name: "index_ddcs_devices_on_device_id"
   end
 
@@ -83,23 +90,15 @@ ActiveRecord::Schema.define(version: 2020_10_07_054546) do
 
   create_table "mosquitto_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "password", null: false
-    t.boolean "superuser", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "provision_request_id"
+    t.boolean "superuser", default: false, null: false
+    t.uuid "provision_request_id", null: false
     t.boolean "enabled", default: true, null: false
-    t.index ["provision_request_id"], name: "index_mosquitto_accounts_on_provision_request_id"
-  end
-
-  create_table "mosquitto_acls", force: :cascade do |t|
-    t.string "username", null: false
-    t.string "topic", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "provision_request_id"
-    t.integer "permissions", default: 7, null: false
-    t.index ["provision_request_id"], name: "index_mosquitto_acls_on_provision_request_id"
-    t.index ["username"], name: "index_mosquitto_acls_on_username"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_mosquitto_accounts_on_created_at"
+    t.index ["enabled", "provision_request_id"], name: "index_mosquitto_accounts_on_enabled_and_provision_request_id", unique: true
+    t.index ["id", "enabled"], name: "index_mosquitto_accounts_on_id_and_enabled"
+    t.index ["provision_request_id"], name: "index_mosquitto_accounts_on_provision_request_id", unique: true
   end
 
   create_table "networks", force: :cascade do |t|
@@ -116,6 +115,21 @@ ActiveRecord::Schema.define(version: 2020_10_07_054546) do
     t.bigint "user_id"
     t.index ["network_id"], name: "index_networks_users_on_network_id"
     t.index ["user_id"], name: "index_networks_users_on_user_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.uuid "device_id", null: false
+    t.bigint "network_id", null: false
+    t.bigint "ddc_id", null: false
+    t.boolean "consumes", null: false
+    t.boolean "publishes", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ddc_id"], name: "index_permissions_on_ddc_id"
+    t.index ["device_id", "network_id", "ddc_id", "consumes"], name: "index_permissions_consumable"
+    t.index ["device_id", "network_id", "ddc_id", "publishes"], name: "index_permissions_publishable"
+    t.index ["device_id"], name: "index_permissions_on_device_id"
+    t.index ["network_id"], name: "index_permissions_on_network_id"
   end
 
   create_table "provision_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -135,8 +149,12 @@ ActiveRecord::Schema.define(version: 2020_10_07_054546) do
     t.integer "requested_uuid_count", default: 1, null: false
     t.integer "networks_counter", default: 0, null: false
     t.bigint "network_id"
+    t.datetime "last_refresh"
+    t.integer "autoremove_interval"
     t.index ["allocated_uuids"], name: "index_provision_requests_on_allocated_uuids", using: :gin
+    t.index ["autoremove_interval"], name: "index_provision_requests_on_autoremove_interval"
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
+    t.index ["last_refresh"], name: "index_provision_requests_on_last_refresh"
     t.index ["manufacturer"], name: "index_provision_requests_on_manufacturer"
     t.index ["model"], name: "index_provision_requests_on_model"
     t.index ["network_id"], name: "index_provision_requests_on_network_id"
@@ -163,6 +181,8 @@ ActiveRecord::Schema.define(version: 2020_10_07_054546) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
+    t.boolean "approved", default: false, null: false
+    t.index ["approved"], name: "index_users_on_approved"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -170,4 +190,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_054546) do
   end
 
   add_foreign_key "devices", "provision_requests"
+  add_foreign_key "permissions", "ddcs"
+  add_foreign_key "permissions", "devices"
+  add_foreign_key "permissions", "networks"
 end
