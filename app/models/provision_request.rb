@@ -1,10 +1,10 @@
 class ProvisionRequest < ApplicationRecord
   enum status: [ :unanswered, :accepted, :denied ]
 
-  has_many :devices, dependent: :delete_all
+  has_many :devices, dependent: :destroy_all
 
-  has_one :mosquitto_account, dependent: :delete
-  has_many :mosquitto_acl, dependent: :delete_all
+  has_one :mosquitto_account, dependent: :destroy
+  has_many :mosquitto_acl, dependent: :destroy_all
 
   belongs_to :network
 

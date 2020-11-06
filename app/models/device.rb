@@ -9,5 +9,5 @@ class Device < ApplicationRecord
 
   has_and_belongs_to_many :ddcs
 
-  has_many :permissions, dependent: :delete_all
+  has_many :permissions, dependent: :destroy_all
 end
