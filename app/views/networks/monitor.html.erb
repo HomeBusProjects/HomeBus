@@ -14,7 +14,9 @@
   <tbody>
   </tbody>
 </table>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js'></script>
+<% content_for(:header) do %>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js'></script>
+<% end %>
 <script>
 $(document).ready(function() {
     client = new Paho.Client('<%= @broker[:server] %>', <%= @broker[:port] %>,'<%= @client_id %>');
