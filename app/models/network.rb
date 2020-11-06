@@ -3,7 +3,7 @@ require 'json_web_token'
 class Network < ApplicationRecord
   has_and_belongs_to_many :devices
 
-  has_many :permissions, dependent: :destroy
+  has_many :permissions, dependent: :delete_all
 
   has_many :networks_users
   has_many :users, through: :networks_users

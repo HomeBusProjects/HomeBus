@@ -3,7 +3,7 @@ class ProvisionRequest < ApplicationRecord
 
   has_many :devices, dependent: :delete_all
 
-  has_one :mosquitto_account, dependent: :delete_all
+  has_one :mosquitto_account, dependent: :delete
   has_many :mosquitto_acl, dependent: :delete_all
 
   belongs_to :network
