@@ -131,13 +131,14 @@ class ProvisionRequestsController < ApplicationController
   # DELETE /provision_requests/1
   # DELETE /provision_requests/1.json
   def destroy
-    if @provision_request.mosquitto_account
+
+#    if @provision_request.mosquitto_account
 #      MosquittoAcl.where(username: @provision.mosquitto_account.id).delete_all
 
-      @provision_request.mosquitto_account.delete
-    end
+#      @provision_request.mosquitto_account.destroy
+#    end
 
-    @provision_request.devices.delete_all
+#    @provision_request.devices.destroy_all
 
     @provision_request.destroy
     respond_to do |format|
