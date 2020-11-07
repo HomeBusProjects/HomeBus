@@ -14,7 +14,13 @@
   <tbody>
   </tbody>
 </table>
+
 <% content_for(:title) do 'Network monitor' end %>
+<% content_for(:header) do %>
+<meta name="turbolinks-cache-control" content="no-cache">
+<meta name="turbolinks-visit-control" content="reload">
+<% end %>
+
 <script>
   let monitor_params = {
     broker: {
