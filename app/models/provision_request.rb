@@ -45,7 +45,7 @@ class ProvisionRequest < ApplicationRecord
       Permission.from_device(device, network)
     end
 
-    self.create_mosquitto_account(superuser: true, password: SecureRandom.base64(32), enabled: true)
+    self.create_mosquitto_account(superuser: false, password: SecureRandom.base64(32), enabled: true)
 
     MosquittoAcl.from_provision_request self
   end
