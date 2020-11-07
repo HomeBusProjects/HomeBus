@@ -8,7 +8,7 @@ $(document).ready(function() {
     client.onConnectionLost = onConnectionLost; 
     client.onMessageArrived = onMessageArrived;
 
-    let options = {
+    var options = {
 	useSSL: true,
 	userName: monitor_params['broker']['username'],
 	password: monitor_params['broker']['password'],
