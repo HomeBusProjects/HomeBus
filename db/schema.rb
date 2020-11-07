@@ -88,19 +88,6 @@ ActiveRecord::Schema.define(version: 2020_11_05_052343) do
     t.index ["user_id"], name: "index_devices_users_on_user_id"
   end
 
-  create_table "mosquitto_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "password", null: false
-    t.boolean "superuser", default: false, null: false
-    t.uuid "provision_request_id", null: false
-    t.boolean "enabled", default: true, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_at"], name: "index_mosquitto_accounts_on_created_at"
-    t.index ["enabled", "provision_request_id"], name: "index_mosquitto_accounts_on_enabled_and_provision_request_id", unique: true
-    t.index ["id", "enabled"], name: "index_mosquitto_accounts_on_id_and_enabled"
-    t.index ["provision_request_id"], name: "index_mosquitto_accounts_on_provision_request_id", unique: true
-  end
-
   create_table "networks", force: :cascade do |t|
     t.string "name", null: false
     t.integer "count_of_users", default: 0, null: false

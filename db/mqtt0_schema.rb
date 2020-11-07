@@ -29,15 +29,16 @@ ActiveRecord::Schema.define(version: 2020_09_30_060413) do
     t.index ["provision_request_id"], name: "index_mosquitto_accounts_on_provision_request_id", unique: true
   end
 
-  create_table :mosquitto_acls do |t|
-    t.uuid :username, null: false
-    t.string :topic, null: false
-    t.uuid :provision_request_id, null: false
-    t.integer :permissions, null: false, default: 0
-
-    t.timestamps
-    t.index ["username"], name: "index_mosquitto_acls_on_username"
+  create_table "mosquitto_acls", force: :cascade do |t|
+    t.uuid "username", null: false
+    t.string "topic", null: false
+    t.uuid "provision_request_id", null: false
+    t.integer "permissions", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["provision_request_id"], name: "index_mosquitto_acls_on_provision_request_id"
     t.index ["topic"], name: "index_mosquitto_acls_on_topic"
+    t.index ["username"], name: "index_mosquitto_acls_on_username"
   end
+
 end
