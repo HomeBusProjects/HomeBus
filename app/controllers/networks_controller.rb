@@ -1,4 +1,7 @@
 class NetworksController < ApplicationController
+  load_and_authorize_resource
+  check_authorization
+    
   before_action :set_network, only: [:show, :edit, :update, :destroy, :monitor]
 
   # GET /networks
