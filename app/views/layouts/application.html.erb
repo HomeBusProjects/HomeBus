@@ -66,8 +66,14 @@
 	    </li>
 	  <% end %>
 	  <% if user_signed_in? %>
-	    <li class="nav-item">
-  	      <%= link_to current_user.email, current_user, class: 'nav-link' %>
+	    <li class="nav-item dropdown">
+	      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	        <%= current_user.name || current_user.email %>
+  	      </a>
+	      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+  	      <%= link_to 'Profile', current_user, class: 'dropdown-item' %>
+	      <%= link_to 'Sign out',  destroy_user_session_path, :method => 'delete', class: 'dropdown-item' %>
+              </div>
 	    </li>
 	  <% end %>
 	  </ul>
