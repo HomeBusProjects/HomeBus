@@ -78,6 +78,8 @@ class NetworksController < ApplicationController
     @consume_ddcs = @network.provision_requests.pluck(:wo_ddcs).flatten.uniq.sort
     pp 'DDCS', @consume_ddcs
 
+    @endpoints = Permission.where(network: @network, publishes: true).map { |perm| "homebus/device/#{perm.device.id}/#{perm.ddc.name}" }
+
     pr = ProvisionRequest.create manufacturer: 'Homebus',
                                  model: 'Temporary web monitor',
                                  serial_number: @network.id,

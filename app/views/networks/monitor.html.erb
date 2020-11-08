@@ -32,8 +32,13 @@
     },
     ddcs: [ 
 <% @consume_ddcs.each do |ddc| %>
-    '<%= ddc %>',
+    '<%= ddc %>', 
 <% end %>
-    ]
+    ],
+  endpoints: [
+<% @endpoints.each do |endpoint| %>
+    '<%= endpoint %>', 
+<% end %>
+  ]
   };
 </script>

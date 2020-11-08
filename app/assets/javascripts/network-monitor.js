@@ -24,6 +24,12 @@ function onConnect() {
 console.log('mqtt connected');
   monitor_params['ddcs'].forEach(function(ddc) {
     client.subscribe('homebus/device/+/' + ddc);
+      console.log('subscribed to ' + 'homebus/device/+/' + ddc);
+  });
+
+  monitor_params['endpoints'].forEach(function(endpoint) {
+      client.subscribe(endpoint);
+      console.log('subscribed to ' + endpoint);
   });
 }
 
