@@ -37,7 +37,7 @@ class Network < ApplicationRecord
         return nil
       end
 
-      Network.find request["network"]["id"]
+      request
     rescue
       nil
     end

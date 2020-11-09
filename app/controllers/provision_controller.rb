@@ -10,8 +10,11 @@ class ProvisionController < ActionController::Base
     pp '>>> AUTH', request.headers['Authorization']
     pp JsonWebToken.decode(request.headers['Authorization']);
 
-    network = Network.find_from_auth_token request.headers['Authorization']
-    unless network
+    decoded_request = Network.find_from_auth_token request.headers['Authorization']
+    user = User.find decoded_request[:user][:id]
+    network = Network.find decoded_request[:network][:id]
+
+    unless network && user
       raise ActionController::InvalidAuthenticityToken
     end
 
@@ -60,7 +63,7 @@ class ProvisionController < ActionController::Base
             secure_mqtt_port: 8883
           },
           uuids: pr.devices.map { |d| d.id },
-          refresh_token: pr.get_refresh_token(pr.network.users.first)
+          refresh_token: pr.get_refresh_token(pr.user)
         }
       else
         response = { refresh_token: pr.get_refresh_token(pr.network.users.first),
@@ -70,6 +73,7 @@ class ProvisionController < ActionController::Base
       end
     else
       args[:network] = network
+      args[:user] = user
       pr = ProvisionRequest.create args
 
       begin
