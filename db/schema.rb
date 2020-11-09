@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_052343) do
+ActiveRecord::Schema.define(version: 2020_11_09_000225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 2020_11_05_052343) do
     t.bigint "network_id"
     t.datetime "last_refresh"
     t.integer "autoremove_interval"
+    t.bigint "user_id", null: false
     t.index ["allocated_uuids"], name: "index_provision_requests_on_allocated_uuids", using: :gin
     t.index ["autoremove_interval"], name: "index_provision_requests_on_autoremove_interval"
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
@@ -147,6 +148,7 @@ ActiveRecord::Schema.define(version: 2020_11_05_052343) do
     t.index ["network_id"], name: "index_provision_requests_on_network_id"
     t.index ["ro_ddcs"], name: "index_provision_requests_on_ro_ddcs", using: :gin
     t.index ["rw_ddcs"], name: "index_provision_requests_on_rw_ddcs", using: :gin
+    t.index ["user_id"], name: "index_provision_requests_on_user_id"
     t.index ["wo_ddcs"], name: "index_provision_requests_on_wo_ddcs", using: :gin
   end
 
@@ -180,4 +182,5 @@ ActiveRecord::Schema.define(version: 2020_11_05_052343) do
   add_foreign_key "permissions", "ddcs"
   add_foreign_key "permissions", "devices"
   add_foreign_key "permissions", "networks"
+  add_foreign_key "provision_requests", "users"
 end
