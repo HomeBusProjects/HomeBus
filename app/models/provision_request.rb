@@ -7,6 +7,7 @@ class ProvisionRequest < ApplicationRecord
   has_many :mosquitto_acl, dependent: :destroy
 
   belongs_to :network
+  belongs_to :user
 
   scope :owned_by, -> (user) { ProvisionRequest.where(network_id: user.networks.pluck(:id)) }
 

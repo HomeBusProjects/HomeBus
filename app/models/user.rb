@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :networks_users, dependent: :destroy
   has_many :networks, through: :networks_users
 
+  has_many :provision_requests
+
   has_and_belongs_to_many :devices
 
   after_create :send_admin_mail
