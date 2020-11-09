@@ -34,11 +34,15 @@ class Network < ApplicationRecord
       request = JsonWebToken.decode(token)
 
       if Time.now.to_i > request["exp"]
+        Rails.logger.error "request expired"
+
         return nil
       end
 
       request
-    rescue
+    rescue => e
+      Rails.logger.error "JsonWebToken exception" + e.backtrace
+
       nil
     end
   end

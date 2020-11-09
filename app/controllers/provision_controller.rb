@@ -11,6 +11,9 @@ class ProvisionController < ActionController::Base
     pp JsonWebToken.decode(request.headers['Authorization']);
 
     decoded_request = Network.find_from_auth_token request.headers['Authorization']
+
+    Rails.logger.debug ">>>> decoded_request " + decoded_request.inspect
+
     user = User.find decoded_request[:user][:id]
     network = Network.find decoded_request[:network][:id]
 
