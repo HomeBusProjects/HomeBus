@@ -14,8 +14,8 @@ class ProvisionController < ActionController::Base
 
     Rails.logger.debug ">>>> decoded_request " + decoded_request.inspect
 
-    user = User.find decoded_request[:user][:id]
-    network = Network.find decoded_request[:network][:id]
+    user = User.find decoded_request["user"]["id"]
+    network = Network.find decoded_request["network"]["id"]
 
     unless network && user
       raise ActionController::InvalidAuthenticityToken
