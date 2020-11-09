@@ -92,7 +92,7 @@ class NetworksController < ApplicationController
                                  network: @network,
                                  ip_address: '127.0.0.1',
                                  friendly_name: 'Temporary web monitor',
-                                 user: current_user
+                                 user: current_user,
                                  autoremove_interval: 10*60
 
     pr.accept!
