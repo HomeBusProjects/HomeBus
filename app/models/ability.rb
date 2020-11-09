@@ -12,9 +12,7 @@ class Ability
       can :manage, Network, id: user.networks.pluck(:id)
       can [ :create, :new], Network
 
-      can :manage, ProvisionRequest do |pr|
-        ProvisionRequest.owned_by(user).include? pr.id
-      end
+      can :manage, ProvisionRequest, user_id: user.id
 
       can :manage, Device, id: user.devices.pluck(:id)
       can :read, Ddc
