@@ -1,6 +1,6 @@
 version: '3.1'
 services:
-  homebus-postgres:
+  postgres:
     image: postgres:12.4
     ports:
       - "5432:5432"
@@ -10,13 +10,13 @@ services:
     networks: 
       - homebus-net 
 
-  homebus-web:
+  web:
     build: .
     command: ["bin/rails","server","-b","0.0.0.0","-p","3000"]
     ports:
       - "127.0.0.1:3000:3000"
     links:
-      - homebus-postgres
+      - postgres
     volumes:
       - .:/app
     environment:

@@ -6,14 +6,14 @@ default: &default
 development:
   primary:
     <<: *default
-    host: homebus-postgres
+    host: postgres
     username: postgres
     password: homebus-development
     database: homebus_development
   mqtt0:
     <<: *default
     migrations_paths: db/mosquitto_migrate
-    host: homebus-postgres
+    host: postgres
     username: postgres
     password: homebus-development
     database: homebus_development_mqtt0
