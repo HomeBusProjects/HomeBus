@@ -91,7 +91,8 @@ class NetworksController < ApplicationController
                                  requested_uuid_count: 1,
                                  network: @network,
                                  ip_address: '127.0.0.1',
-                                 friendly_name: 'Web monitor',
+                                 friendly_name: 'Temporary web monitor',
+                                 user: current_user
                                  autoremove_interval: 10*60
 
     pr.accept!
