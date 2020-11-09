@@ -27,10 +27,10 @@
     <div class="col">
       <h2>Publish</h2>
       <table class='table'>
-	<% @device.ddcs_devices.where(publishable: true).each do |perms| %>
+	<% Permission.where(device: @device, publishes: true).each do |perm| %>
 	<tr>
-	  <td><%= check_box_tag "wo_ddcs[]", perms.ddc_id, perms.allow_publish?, class: 'form-control' %></td>
-	  <td><%= link_to perms.ddc.name, perms.ddc %></td>
+	  <td><%= check_box_tag "wo_ddcs[]", perm.ddc_id, perm.publishes, class: 'form-control' %></td>
+	  <td><%= link_to perm.ddc.name, perm.ddc %></td>
 	</tr>
 	<% end %>
       </table>
@@ -39,10 +39,10 @@
     <div class="col">
       <h2>Consume</h2>
       <table class='table'>
-	<% @device.ddcs_devices.where(consumable: true).each do |perms| %>
+	<% Permission.where(device: @device, consumes: true).each do |perm| %>
 	<tr>
-	  <td><%= check_box_tag "ro_ddcs[]", perms.ddc_id, perms.allow_consume?, class: 'form-control' %></td>
-	  <td><%= link_to perms.ddc.name, perms.ddc %></td>
+	  <td><%= check_box_tag "ro_ddcs[]", perm.ddc_id, perm.consumes, class: 'form-control' %></td>
+	  <td><%= link_to perm.ddc.name, perm.ddc %></td>
 	</tr>
 	<% end %>
       </table>
