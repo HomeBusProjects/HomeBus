@@ -41,7 +41,7 @@
 <% end %>
   ],
   uuid_name_map: {
-<%= @uuid_name_map do |uuid_name| %>
+<%= @uuid_name_map.each do |uuid_name| %>
   "<%= uuid_name[:uuid] %>": "<%= uuid_name[:name] %>",
 <% end %>
   }
