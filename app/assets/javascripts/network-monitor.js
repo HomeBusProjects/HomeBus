@@ -77,5 +77,10 @@ function onMessageArrived(message) {
     date = "invalid";
  }
 
+  if(monitor_params["uuid_name_map"][source])
+    source = '<a href="/devices/' + source + '">' + monitor_params["uuid_name_map"][source] + '</a>';
+  else
+    source = '<a href="/devices/' + source + '">' + source + '</a>';
+
   $('#monitor_table tbody').prepend('<tr><td>' + source + '</td><td>' + ddc + '</td><td>' + date + '</td><td><code>' + JSON.stringify(payload) + '</code></td></tr>');
 }
