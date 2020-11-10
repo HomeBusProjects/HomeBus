@@ -72,9 +72,9 @@ function onMessageArrived(message) {
     }
 
   try {
-    date = new Date(timestamp * 1000);
+    datetime = format_date(new Date(timestamp * 1000));
  } catch(error) {
-    date = "invalid";
+    datetime = "invalid";
  }
 
   if(monitor_params["uuid_name_map"][source])
@@ -82,5 +82,17 @@ function onMessageArrived(message) {
   else
     source = '<a href="/devices/' + source + '">' + source + '</a>';
 
-    $('#monitor_table tbody').prepend('<tr><td>' + source + '</td><td>' + ddc + '</td><td>' + moment(date).format("H:mm:ss MM/DD/YY") + '</td><td><code>' + JSON.stringify(payload) + '</code></td></tr>');
+    $('#monitor_table tbody').prepend('<tr><td>' + source + '</td><td>' + ddc + '</td><td>' + datetime + '</td><td><code>' + JSON.stringify(payload) + '</code></td></tr>');
+}
+
+function format_date(datetime) {
+    let hours = datetime.getHours();
+    let minutes = datetime.getMinutes();
+    let seconds = datetime.getSeconds();
+
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    return hours + ':' + minutes + ':' + seconds + '  ' + (datetime.getMonth() + 1) + '/' + datetime.getDate() + '/' + datetime.getYear();
 }
