@@ -89,10 +89,12 @@ function format_date(datetime) {
     let hours = datetime.getHours();
     let minutes = datetime.getMinutes();
     let seconds = datetime.getSeconds();
+    let year = datetime.getYear();
 
     hours = hours < 10 ? '0' + hours : hours;
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
+    year = year < 100 ? year : year - 100;
 
     return hours + ':' + minutes + ':' + seconds + '  ' + (datetime.getMonth() + 1) + '/' + datetime.getDate() + '/' + datetime.getYear();
 }
