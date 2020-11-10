@@ -65,8 +65,8 @@ class ProvisionRequestsController < ApplicationController
       @unanswered_provision_requests = ProvisionRequest.where(status: ProvisionRequest.statuses[:unanswered]).order(created_at: :desc)
       @provision_requests = ProvisionRequest.where('status != ?', ProvisionRequest.statuses[:unanswered]).order(friendly_name: :asc, created_at: :desc)
     else
-      @unanswered_provision_requests = ProvisionRequest.owned_by(current_user).where(status: ProvisionRequest.statuses[:unanswered]).order(created_at: :desc)
-      @provision_requests = ProvisionRequest.owned_by(current_user).where('status != ?', ProvisionRequest.statuses[:unanswered]).order(friendly_name: :asc, created_at: :desc)
+      @unanswered_provision_requests = current_user.provision_requests.where(status: ProvisionRequest.statuses[:unanswered]).order(created_at: :desc)
+      @provision_requests = current_user.provision_requests.where('status != ?', ProvisionRequest.statuses[:unanswered]).order(friendly_name: :asc, created_at: :desc)
     end
 
     if params[:q]
