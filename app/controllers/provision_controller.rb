@@ -100,13 +100,16 @@ class ProvisionController < ActionController::Base
   end
 
   def refresh
+    
     pr = validate_refresh
     unless pr
       raise ActionController:BadRequest
     end
 
+    pr.update(last_refresh: Time.now.to_i)
+
     response = {
-      refresh_token: pr.get_refresh_token(pr.network.users.first),
+      refresh_token: pr.get_refresh_token(pr.user),
       status: 'provisioned'
     }
   end
@@ -139,7 +142,8 @@ class ProvisionController < ActionController::Base
   private
 
   def validate_refresh
-    ProvisionRequest.find_by_refresh_token(refresh)
+    refresh = request.headers['Authorization']
+    pr = ProvisionRequest.find_by_refresh_token(refresh)
   end
 
   def validate_provision(params)

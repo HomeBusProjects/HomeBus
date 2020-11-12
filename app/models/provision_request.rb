@@ -20,7 +20,8 @@ class ProvisionRequest < ApplicationRecord
       },
       user: {
         id: user.id
-      }
+      },
+      created_at: Time.now.to_i
     }
 
     JsonWebToken.encode(payload, Time.now + 1.year)

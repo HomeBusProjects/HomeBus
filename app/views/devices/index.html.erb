@@ -6,6 +6,8 @@
       <th>Name</th>
 <% if can? :manage, :all %>
       <th>User / Network</th>
+<% else %>
+      <th>Network</th>
 <% end %>
       <th>UUID</th>
       <th>Provision request</th>
@@ -17,7 +19,11 @@
     <% @devices.each do |device| %>
       <tr>
 	<td><%= link_to device.friendly_name, device %></td>
+<% if can? :manage, :all %>
 	<td><%= link_to device.users.first.name, device.users.first %> / <%= link_to device.networks.first.name, device.networks.first %></td>
+<% else %>
+        <td><%= link_to device.networks.first.name, device.networks.first %></td>
+<% end %>
 	<td><%= link_to device.id, device %>
         <td><%= link_to device.provision_request.friendly_name, device.provision_request %></td>
 
