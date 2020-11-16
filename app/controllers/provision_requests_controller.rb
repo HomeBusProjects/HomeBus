@@ -83,6 +83,13 @@ class ProvisionRequestsController < ApplicationController
   # GET /provision_requests/new
   def new
     @provision_request = ProvisionRequest.new
+    if can? :manage, ProvisionRequest
+      @users = User.all.order(email: :asc)
+      @networks = Network.all.order(name: :asc)
+    else
+      @users = [ current_user ]
+      @networks = current_user.networks.order(name: :asc)
+    end
   end
 
   # GET /provision_requests/1/edit

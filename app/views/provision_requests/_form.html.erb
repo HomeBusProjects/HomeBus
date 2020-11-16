@@ -20,13 +20,27 @@
 
   <hr>
 
+<% if can? :manage, ProvisionRequest %>
+  <div class="row">
+    <div class="col">
+      Choose the target user for this request. The user cannot be changed later.
+      <p>
+	<br>
+	<%= form.label :user %>
+	<%= form.collection_select :user_id, @users, :id, :name, {}, { class: 'form-control', readonly: true } %>
+      </p>
+    </div>
+  </div>
+  <hr>
+<% end %>
+
   <div class="row">
     <div class="col">
       Choose the target network for this request. The network cannot be changed later.
       <p>
 	<br>
 	<%= form.label :network %>
-	<%= form.collection_select :network_id, current_user.networks, :id, :name, {}, { class: 'form-control', readonly: true } %>
+	<%= form.collection_select :network_id, @networks, :id, :name, {}, { class: 'form-control', readonly: true } %>
       </p>
     </div>
   </div>
