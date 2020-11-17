@@ -12,6 +12,8 @@ class UsersController < ApplicationController
     else
       @users = User.all
     end
+
+    @users = @users.order(email: :asc)
   end
 
   # GET /users/1

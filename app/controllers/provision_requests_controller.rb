@@ -71,8 +71,12 @@ class ProvisionRequestsController < ApplicationController
 
     if params[:q]
       query = params[:q]
+      @unanswered_provision_requests = @unanswered_provision_requests.where("id::text ILIKE '%#{query}%' OR friendly_name ILIKE '%#{query}%' OR manufacturer ILIKE '%#{query}%' OR model ILIKE '%#{query}%' OR serial_number ILIKE '%#{query}%'")
       @provision_requests = @provision_requests.where("id::text ILIKE '%#{query}%' OR friendly_name ILIKE '%#{query}%' OR manufacturer ILIKE '%#{query}%' OR model ILIKE '%#{query}%' OR serial_number ILIKE '%#{query}%'")
     end
+
+    @unanswered_provision_requests = @unanswered_provision_requests.order(friendly_name: :asc)
+    @provision_requests = @provision_requests.order(friendly_name: :asc)
   end
 
   # GET /provision_requests/1

@@ -15,13 +15,11 @@ class DevicesController < ApplicationController
       @devices = @current_user.devices.includes(:provision_request).order('provision_requests.friendly_name asc, devices.friendly_name asc')
     end
 
-    if p[:space_id]
-      @devices = Space.find(p[:space_id]).devices
-    end
-
     if p[:provision_id]
       @devices = @devices.where(provision_request_id: p[:provision_id])
     end
+
+    @devices = @devices.order(friendly_name: :asc)
   end
 
   # GET /devices/1
