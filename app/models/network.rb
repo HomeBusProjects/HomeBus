@@ -10,9 +10,31 @@ class Network < ApplicationRecord
 
   has_many :provision_requests
 
+###  belongs_to :broker
   belongs_to :broker, counter_cache: true
+#  has_one :homebus_device
 
   validates :name, presence: true
+
+#  after_create :create_homebus_device
+
+  def create_homebus_device(user)
+    pr = ProvisionRequest.create friendly_name: 'Homebus',
+                                 manufacturer: 'Homebus',
+                                 model: 'Network attachment',
+                                 serial_number: self.id,
+                                 pin: '',
+                                 network: self,
+                                 user: user,
+                                 ip_address: '127.0.0.1',
+                                 requested_uuid_count: 1,
+                                 wo_ddcs: [ 'org.homebus.experimental.homebus.devices' ],
+                                 ro_ddcs: []
+
+    pr.accept!
+
+#    self.homebus_device = pr.devices.first
+  end
 
   def get_auth_token(user)
     payload = {

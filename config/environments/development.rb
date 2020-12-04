@@ -31,7 +31,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener_web
 
   config.log_level = :debug
   config.action_mailer.logger = ActiveSupport::Logger.new(STDOUT)
@@ -43,19 +43,11 @@ Rails.application.configure do
     reply_to: 'no-reply@homebus.org'
   }
 
-  config.action_mailer.smtp_settings = {
-    authentication: :plain,
-    address: 'homebus-mailhog',
-    domain: 'homebus.org',
-    enable_starttls_auto: false,
-    port: 1025
-  }
-
 #    user_name: ENV.fetch("SMTP_USERNAME"),
 #    password: ENV.fetch("SMTP_PASSWORD"),
 
 
-  config.action_mailer.default_url_options = { host: 'localhost:1080' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
