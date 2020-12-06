@@ -11,7 +11,7 @@ class PublishDevicesJob < ApplicationJob
                      uuid: device.id,
                      consumes: device.ddcs.pluck(:name),
                      publishes: device.ddcs.pluck(:name),
-                     temporary: !network.provision_request.autoremoval_interval.nil?
+                     temporary: !network.provision_request.autoremoval_interval.nil?,
                      public: false
                    })
     end
