@@ -58,3 +58,4 @@ gem 'backup', require: false
 gem 'bitfields'
 
 gem 'mqtt'
+gem 'sidekiq'
