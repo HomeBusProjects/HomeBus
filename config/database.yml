@@ -1,19 +1,19 @@
 default: &default
-  adapter: postgresql
   encoding: unicode
   pool: 5
 
+docker: &docker
+  adapter: postgresql
+
 development:
   primary:
-    <<: *default
-    host: postgres
+    <<: *docker
     username: postgres
     password: homebus-development
     database: homebus_development
   mqtt0:
-    <<: *default
+    <<: *docker
     migrations_paths: db/mosquitto_migrate
-    host: postgres
     username: postgres
     password: homebus-development
     database: homebus_development_mqtt0
@@ -22,8 +22,10 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
+  <<: *docker
   database: homebus_test
+
+
 
 heroku: &heroku
     <<: *default
