@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+require 'securerandom'
+
+admin = User.create(name: 'admin', email: 'invalid-email-address', encrypted_password: SecureRandom.base64(20), site_admin: true)
+
+broker = Broker.create(name: 'dummy-broker')
+
+network = Network.create(name: 'prime', user: admin, broker: broker)
+
