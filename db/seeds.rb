@@ -8,9 +8,10 @@
 
 require 'securerandom'
 
-admin = User.create(name: 'admin', email: 'invalid-email-address', encrypted_password: SecureRandom.base64(20), site_admin: true)
+admin = User.create(name: 'admin', email: 'invalid-email-address@localhost', password: SecureRandom.base64(20), site_admin: true)
 
 broker = Broker.create(name: 'dummy-broker')
 
-network = Network.create(name: 'prime', user: admin, broker: broker)
+network = Network.create(name: 'prime', broker: broker)
+network.users << admin
 
