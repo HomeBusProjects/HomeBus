@@ -25,7 +25,7 @@ test:
   <<: *default
   database: homebus_test
 
-heroku:
+heroku: &heroku
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     timeout: 5000
     host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
