@@ -1,19 +1,19 @@
 default: &default
+  adapter: postgresql
   encoding: unicode
   pool: 5
 
-docker: &docker
-  adapter: postgresql
-
 development:
   primary:
-    <<: *docker
+    <<: *default
+    host: postgres
     username: postgres
     password: homebus-development
     database: homebus_development
   mqtt0:
-    <<: *docker
+    <<: *default
     migrations_paths: db/mosquitto_migrate
+    host: postgres
     username: postgres
     password: homebus-development
     database: homebus_development_mqtt0
@@ -22,26 +22,19 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *docker
+  <<: *default
   database: homebus_test
-
-
-
-heroku: &heroku
-    <<: *default
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-
-staging:
-  primary:
-    <<: *heroku
-  mqtt0:
-    <<: *heroku
-    migrations_paths: db/mosquitto_migrate
 
 production:
   primary:
-    <<: *heroku
+    <<: *default
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    timeout: 5000
+    host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
+    username: <%= ENV['POSTGRESQL_USERNAME'] %>
+    password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+    port: <%= ENV['POSTGRESQL_PORT'] %>
+    database: homebus_production
   mqtt0:
     <<: *default
     migrations_paths: db/mosquitto_migrate
