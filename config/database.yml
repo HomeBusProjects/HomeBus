@@ -25,6 +25,23 @@ test:
   <<: *default
   database: homebus_test
 
+staging:
+  primary:
+    <<: *default
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    timeout: 5000
+    host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
+    username: <%= ENV['POSTGRESQL_USERNAME'] %>
+    password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+    port: <%= ENV['POSTGRESQL_PORT'] %>
+    database: homebus_staging
+  mqtt0:
+    <<: *default
+    migrations_paths: db/mosquitto_migrate
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    timeout: 5000
+    url: ENV['DATABASE_URL']
+
 production:
   primary:
     <<: *default
