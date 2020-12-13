@@ -145,6 +145,7 @@ GEM
       letter_opener (~> 1.0)
       railties (>= 3.2)
     libv8 (8.4.255.0)
+    libv8 (8.4.255.0-x86_64-linux)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -302,6 +303,7 @@ PLATFORMS
   x64-mingw32
   x86-mingw32
   x86-mswin32
+  x86_64-linux
 
 DEPENDENCIES
   actionview (>= 6.0.0)
@@ -343,4 +345,4 @@ RUBY VERSION
    ruby 2.6.6p146
 
 BUNDLED WITH
-   2.2.0.rc.2
+   2.2.0

@@ -8,7 +8,23 @@ services:
     environment:
       POSTGRES_PASSWORD: homebus-development
     networks: 
-      - homebus-net 
+      - homebus-net
+
+  redis:
+    image: redis:6.0.9
+    ports:
+      - "6379:6379"
+    restart: always
+    networks: 
+      - homebus-net
+
+  mosquitto:
+    image: eclipse-mosquitto:1.6.12
+    ports:
+      - "1883:1883"
+    restart: always
+    networks: 
+      - homebus-net
 
   web:
     build: .
