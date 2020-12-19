@@ -57,6 +57,11 @@
   		<%= link_to 'Brokers', brokers_path, class: 'dropdown-item' %>
 		<%= link_to 'Broker Accounts', mosquitto_accounts_path, class: 'dropdown-item' %>
 		<%= link_to 'Broker ACLs', mosquitto_acls_path, class: 'dropdown-item' %>
+                <div class="dropdown-divider"></div>
+		<%= link_to 'Sidekiq', '/sidekiq', class: 'dropdown-item' %>
+<% if ENV['USE_LETTEROPENER'] %>
+		<%= link_to 'Letter Opener', '/letter_opener', class: 'dropdown-item' %>
+<% end %>
               </div>
             </li>
 <% end %>
