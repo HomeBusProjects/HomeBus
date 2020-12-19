@@ -67,19 +67,25 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "Homebus_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :smtp
+
+  if ENV['USER_LETTEROPENER']
+    config.action_mailer.delivery_method = :letter_opener_web
+  else
+    config.action_mailer.delivery_method = :smtp
+
+    config.action_mailer.smtp_settings = {
+      address: ENV['MAILGUN_SMTP_SERVER'],
+      port: ENV['MAILGUN_SMTP_PORT'],
+      domain: ENV['MAILGUN_DOMAIN'],
+      user_name: ENV['MAILGUN_SMTP_LOGIN'],
+      password: ENV['MAILGUN_SMTP_PASSWORD'],
+      authentication: ENV['plain']
+    }
+  end
+
   config.action_mailer.default_options = {
     from: 'homebus@homebus.org',
     reply_to: 'no-reply@homebus.org'
-  }
-
-  config.action_mailer.smtp_settings = {
-    address: ENV['MAILGUN_SMTP_SERVER'],
-    port: ENV['MAILGUN_SMTP_PORT'],
-    domain: ENV['MAILGUN_DOMAIN'],
-    user_name: ENV['MAILGUN_SMTP_LOGIN'],
-    password: ENV['MAILGUN_SMTP_PASSWORD'],
-    authentication: ENV['plain']
   }
 
   config.action_mailer.default_url_options = { host: ENV['HOSTNAME'] }

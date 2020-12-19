@@ -10,7 +10,18 @@ require 'securerandom'
 
 admin = User.create(name: 'admin', email: 'invalid-email-address@localhost', password: SecureRandom.base64(20), site_admin: true)
 
-broker = Broker.create(name: 'dummy-broker')
+# development environment has a broker in Docker
+if Rails.env == 'development'
+  broker = Broker.create(name: 'homebus-mosquitto')
+end
+
+if Rails.env == 'staging'
+  broker = Broker.create(name: 'mqtt-staging.homebus.io')
+end
+
+if Rails.env == 'production'
+  broker = Broker.create(name: 'mqtt0.homebus.io')
+end
 
 network = Network.create(name: 'prime', broker: broker)
 network.users << admin

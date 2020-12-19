@@ -31,7 +31,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'mini_racer'
-  gem 'letter_opener_web', '~> 1.0'
 end
 
 group :test do
@@ -56,6 +55,8 @@ gem 'whenever', require: false
 gem 'backup', require: false
 
 gem 'bitfields'
+
+gem 'letter_opener_web', '~> 1.0'
 
 gem 'mqtt'
 gem 'sidekiq'
