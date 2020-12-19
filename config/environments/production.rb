@@ -68,7 +68,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  if ENV['USER_LETTEROPENER']
+  if ENV['USE_LETTEROPENER']
     config.action_mailer.delivery_method = :letter_opener_web
   else
     config.action_mailer.delivery_method = :smtp

@@ -30,9 +30,9 @@ Rails.application.routes.draw do
 
   get '/network/:id/monitor', to: 'networks#monitor'
 
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development? || ENV['USE_LETTEROPENER']
 
-  authenticate :user, ->(user) { user.admin? } do
+  authenticate :user, ->(user) { user.site_admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
