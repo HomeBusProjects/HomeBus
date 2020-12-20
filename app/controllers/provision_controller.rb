@@ -80,7 +80,7 @@ class ProvisionController < ActionController::Base
       pr = ProvisionRequest.create args
 
       begin
-        NotifyRequestMailer.with(provision_request: pr, user: pr.network.users.first).new_provisioning_request.deliver_now
+        NotifyRequestMailer.with(provision_request: pr, user: pr.network.users.first).new_provisioning_request.deliver_later
       rescue
       end
 

@@ -18,6 +18,20 @@ services:
     networks: 
       - homebus-net
 
+  sidekiq:
+    depends_on:
+      - 'postgres'
+      - 'redis'
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+      - '/app/tmp' # don't mount tmp directory
+    environment:
+      - REDIS_URL_SIDEKIQ=redis://redis:6379/0
+    networks: 
+      - homebus-net
+
   mosquitto:
     image: eclipse-mosquitto:1.6.12
     ports:
@@ -27,6 +41,9 @@ services:
       - homebus-net
 
   web:
+    depends_on:
+      - 'postgres'
+      - 'redis'
     build: .
     command: ["bin/rails","server","-b","0.0.0.0","-p","3000"]
     ports:

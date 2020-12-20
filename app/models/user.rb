@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   after_create :send_admin_mail
   def send_admin_mail
-    NotifyRequestMailer.with(user: self).admins_new_user.deliver
+    NotifyRequestMailer.with(user: self).admins_new_user.deliver_later
   end
 
   def active_for_authentication? 
