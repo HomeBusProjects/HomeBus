@@ -2,6 +2,6 @@ class CleanupTemporaryRequestsJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    # Do something later
+    ProvisionRequest.where('autoremove_at < ?', Time.now).delete_all
   end
 end

@@ -100,13 +100,16 @@ class ProvisionController < ActionController::Base
   end
 
   def refresh
-    
     pr = validate_refresh
     unless pr
       raise ActionController:BadRequest
     end
 
-    pr.update(last_refresh: Time.now.to_i)
+    if pr.autoremove_interval
+      pr.update(last_refresh: Time.now.to_i, autoremove_at: Time.now.to_i + pr.autoremove_interval)
+    else
+      pr.update(last_refresh: Time.now.to_i)
+    end
 
     response = {
       refresh_token: pr.get_refresh_token(pr.user),

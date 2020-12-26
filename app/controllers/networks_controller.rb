@@ -94,7 +94,8 @@ class NetworksController < ApplicationController
                                  ip_address: '127.0.0.1',
                                  friendly_name: 'Temporary web monitor',
                                  user: current_user,
-                                 autoremove_interval: 10*60
+                                 autoremove_interval: 9*60,
+                                 autoremove_at: Time.now + 9.minutes
 
     pr.accept!
 
@@ -107,6 +108,7 @@ class NetworksController < ApplicationController
     @broker[:password] = pr.mosquitto_account.generate_password!
 
     @client_id = pr.id
+    @refresh_token = pr.get_refresh_token
   end
 
   private
