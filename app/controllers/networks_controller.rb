@@ -108,7 +108,7 @@ class NetworksController < ApplicationController
     @broker[:password] = pr.mosquitto_account.generate_password!
 
     @client_id = pr.id
-    @refresh_token = pr.get_refresh_token
+    @refresh_token = pr.get_refresh_token(current_user)
   end
 
   private
