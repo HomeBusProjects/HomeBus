@@ -27,6 +27,7 @@ $(document).ready(function() {
     setInterval(function () {
 	$.ajax({
 	    url: '/provision/refresh',
+	    method: 'POST',
 	    error: function(jqXHR, status, error) { console.error('refresh token refresh failed'); console.error(status); console.error(error); },
 	    success: function(data) { console.log('got refresh_token'); monitor_params['refresh_token'] = data['refresh_token']; },
 	    dataType: 'json',
