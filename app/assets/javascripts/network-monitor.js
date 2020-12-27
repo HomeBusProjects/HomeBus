@@ -31,7 +31,7 @@ $(document).ready(function() {
 	    error: function(jqXHR, status, error) { console.error('refresh token refresh failed'); console.error(status); console.error(error); },
 	    success: function(data) { console.log('got refresh_token'); monitor_params['refresh_token'] = data['refresh_token']; },
 	    dataType: 'json',
-	    headers: { 'Authentication': monitor_params['refresh_token'] }
+	    headers: { 'Authorization': monitor_params['refresh_token'] }
 	});
     }, 1000*60);
 });
