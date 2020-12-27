@@ -24,13 +24,12 @@ $(document).ready(function() {
     client.connect(options);
 
     // refresh the refresh token once per minute to keep the monitor alive
-    window.monitor_params = monitor_params;
     setInterval(function () {
 	$.ajax({
 	    url: '/provision/refresh',
 	    method: 'POST',
 	    error: function(jqXHR, status, error) { console.error('refresh token refresh failed'); console.error(status); console.error(error); },
-	    success: function(data) { console.log('got refresh_token'); window.monitor_params['refresh_token'] = data['refresh_token']; },
+	    success: function(data) { console.log('got refresh_token'); console.log(data); monitor_params['refresh_token'] = data['refresh_token']; },
 	    dataType: 'json',
 	    headers: { 'Authorization': monitor_params['refresh_token'] }
 	});

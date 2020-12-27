@@ -115,6 +115,10 @@ class ProvisionController < ActionController::Base
       refresh_token: pr.get_refresh_token(pr.user),
       status: 'provisioned'
     }
+
+    respond_to do |format|
+      format.json { render json: response, status: :created }
+    end
   end
 
   def broker
@@ -136,6 +140,10 @@ class ProvisionController < ActionController::Base
       },
       refresh_token: pr.get_refresh_token(pr.network.users.first)
     }
+
+    respond_to do |format|
+      format.json { render json: response, status: :created }
+    end
   end
 
   def ddcs
