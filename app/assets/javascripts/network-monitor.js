@@ -1,5 +1,8 @@
 $(document).ready(function() {
+    console.log('setting up broker');
+
     if(typeof monitor_params == 'undefined') {
+	console.error('no monitor_params');
 	return;
     }
 
@@ -17,11 +20,23 @@ $(document).ready(function() {
 	reconnect: true
     };
 
-    client.connect(options); 
+    console.log('about to connect to broker');
+    client.connect(options);
+
+    // refresh the refresh token once per minute to keep the monitor alive
+    setInterval(function () {
+	$.ajax({
+	    url: monitor_params['homebus_refresh_url'],
+	    error: function(jqXHR, status, error) { console.error('refresh token refresh failed'); console.error(status); console.error(error); },
+	    success: function(data) { console.log('got refresh_token'); monitor_params['refresh_token'] = data['refresh_token']; },
+	    dataType: 'json',
+	    headers: { 'Authentication': monitor_params['refresh_token'] }
+	});
+    }, 1000*60);
 });
 
 function onConnect() {
-console.log('mqtt connected');
+  console.log('broker connected');
   monitor_params['ddcs'].forEach(function(ddc) {
     client.subscribe('homebus/device/+/' + ddc);
       console.log('subscribed to ' + 'homebus/device/+/' + ddc);
@@ -46,7 +61,7 @@ function onConnectFail(e) {
 }
 
 function onMessageArrived(message) {
-  console.log('mqtt msg', message);
+  console.log('broker msg', message);
 
   let data;
   try {
