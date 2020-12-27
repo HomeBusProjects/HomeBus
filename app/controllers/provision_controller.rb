@@ -100,21 +100,33 @@ class ProvisionController < ActionController::Base
   end
 
   def refresh
+    Rails.logger.info(">>> REFRESH TOKEN 1. pr count #{ProvisionRequest.count}")
+
     pr = validate_refresh
+    Rails.logger.info(">>> REFRESH TOKEN 2. pr count #{ProvisionRequest.count}")
+
     unless pr
+      Rails.logger.info(">>> REFRESH TOKEN raising BadRequest")
+
       raise ActionController:BadRequest
     end
 
+    Rails.logger.info(">>> REFRESH TOKEN 3. pr count #{ProvisionRequest.count}")
+
     if pr.autoremove_interval
-      pr.update(last_refresh: Time.now.to_i, autoremove_at: Time.now.to_i + pr.autoremove_interval)
+      pr.update(last_refresh: Time.now.to_i, autoremove_at: Time.now + pr.autoremove_interval.seconds)
     else
       pr.update(last_refresh: Time.now.to_i)
     end
+
+    Rails.logger.info(">>> REFRESH TOKEN 4. pr count #{ProvisionRequest.count}")
 
     response = {
       refresh_token: pr.get_refresh_token(pr.user),
       status: 'provisioned'
     }
+
+    Rails.logger.info(">>> REFRESH TOKEN 5. pr count #{ProvisionRequest.count}")
 
     respond_to do |format|
       format.json { render json: response, status: :created }
