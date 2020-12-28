@@ -79,7 +79,6 @@ class NetworksController < ApplicationController
   # GET /networks/#/monitor
   def monitor
     @consume_ddcs = @network.provision_requests.pluck(:wo_ddcs).flatten.uniq.sort
-    pp 'DDCS', @consume_ddcs
 
     @endpoints = Permission.where(network: @network, publishes: true).map { |perm| "homebus/device/#{perm.device.id}/#{perm.ddc.name}" }
     @uuid_name_map = @network.devices.map { |device| { id: device[:id], name: device[:friendly_name] } }

@@ -87,6 +87,7 @@ class ProvisionRequestsController < ApplicationController
   # GET /provision_requests/new
   def new
     @provision_request = ProvisionRequest.new
+
     if can? :manage, ProvisionRequest
       @users = User.all.order(email: :asc)
       @networks = Network.all.order(name: :asc)
@@ -142,16 +143,8 @@ class ProvisionRequestsController < ApplicationController
   # DELETE /provision_requests/1
   # DELETE /provision_requests/1.json
   def destroy
-
-#    if @provision_request.mosquitto_account
-#      MosquittoAcl.where(username: @provision.mosquitto_account.id).delete_all
-
-#      @provision_request.mosquitto_account.destroy
-#    end
-
-#    @provision_request.devices.destroy_all
-
     @provision_request.destroy
+
     respond_to do |format|
       flash_message 'danger', 'Provision request was successfully destroyed.'
 
