@@ -53,7 +53,7 @@ Rails.application.configure do
 #  config.ssl_options = { redirect: { exclude: -> request { request.path =~ /^provision$/ } } }
   config.ssl_options = {
     redirect: {
-      exclude: -> request { request.path == 'provision' }
+      exclude: -> request { request.path == '/provision' }
     }
   }
 
