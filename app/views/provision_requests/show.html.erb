@@ -14,7 +14,7 @@
 
 <% if @provision_request.autoremove_at %>
     <h3>Temporary</h3>
-    <p>Currently expires at <%= @provision_rquest.autoremove_at.to_s %></p>
+    <p>Currently expires at <%= @provision_request.autoremove_at.to_s %></p>
 <%end %>
 
 <% if can? :manage, :all %>
