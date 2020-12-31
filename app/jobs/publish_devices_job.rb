@@ -19,8 +19,8 @@ class PublishDevicesJob < ApplicationJob
     conn_opts = {
       remote_host: network.broker.name,
       remote_port: network.broker.secure_port,
-      username: network.announcer.mosquitto_account.id,
-      password: network.announcer.mosquitto_account.generate_password!
+      username: network.announcer.provision_request.mosquitto_account.id,
+      password: network.announcer.provision_request.mosquitto_account.generate_password!
     }
 
     homebus_message = {
