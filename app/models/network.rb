@@ -33,7 +33,12 @@ class Network < ApplicationRecord
 
     pr.accept!
 
-    self.announcer = pr.devices.first
+    d = pr.devices.first
+    d.friendly_name = 'Homebus Device Announcer'
+    d.save
+
+    self.announcer = d
+    self.save
   end
 
   def get_auth_token(user)
