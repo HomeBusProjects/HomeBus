@@ -3,7 +3,7 @@ class PublishDevicesJob < ApplicationJob
 
   DDC = 'org.homebus.experimental.homebus.devices'
 
-  def perform(*network)
+  def perform(network)
     devices = []
     network.devices.each do |device|
       devices.push({
