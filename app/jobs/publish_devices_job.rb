@@ -9,8 +9,8 @@ class PublishDevicesJob < ApplicationJob
       devices.push({
                      name: device.friendly_name,
                      uuid: device.id,
-                     consumes: device.provision_request.ro_ddcs.pluck(:name),
-                     publishes: device.provision_request.wo_ddcs.pluck(:name),
+                     consumes: device.provision_request.ro_ddcs,
+                     publishes: device.provision_request.wo_ddcs,
                      temporary: !device.provision_request.autoremoval_at.nil?,
                      public: false
                    })
