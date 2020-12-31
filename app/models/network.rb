@@ -12,7 +12,7 @@ class Network < ApplicationRecord
 
 ###  belongs_to :broker
   belongs_to :broker, counter_cache: true
-  has_one :announcer, class_name: "Device"
+  belongs_to :announcer, class_name: "Device"
 
   validates :name, presence: true
 
