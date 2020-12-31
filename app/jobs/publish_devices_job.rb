@@ -11,7 +11,7 @@ class PublishDevicesJob < ApplicationJob
                      uuid: device.id,
                      consumes: device.provision_request.ro_ddcs,
                      publishes: device.provision_request.wo_ddcs,
-                     temporary: !device.provision_request.autoremoval_at.nil?,
+                     temporary: !device.provision_request.autoremove_at.nil?,
                      public: false
                    })
     end
