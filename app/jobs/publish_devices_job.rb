@@ -20,7 +20,8 @@ class PublishDevicesJob < ApplicationJob
       remote_host: network.broker.name,
       remote_port: network.broker.secure_port,
       username: network.announcer.provision_request.mosquitto_account.id,
-      password: network.announcer.provision_request.mosquitto_account.generate_password!
+      password: network.announcer.provision_request.mosquitto_account.generate_password!,
+      ssl: true
     }
 
     homebus_message = {
@@ -31,6 +32,10 @@ class PublishDevicesJob < ApplicationJob
         payload: devices
       }
     }
+
+
+    puts "conn_opts #{conn_opts}"
+    puts "message #{homebus_message}"
 
     mqtt = MQTT::Client.connect(conn_opts) do |c|
       c.publish "homebus/device/#{device.uuid}/#{DDC}", JSON.generate(homebus_message), true
