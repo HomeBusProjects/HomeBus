@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_26_160431) do
+ActiveRecord::Schema.define(version: 2020_12_30_213140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(version: 2020_12_26_160431) do
     t.integer "count_of_users", default: 0, null: false
     t.integer "device_counter", default: 0, null: false
     t.bigint "broker_id"
+    t.uuid "announcer_id"
+    t.index ["announcer_id"], name: "index_networks_on_announcer_id"
     t.index ["broker_id"], name: "index_networks_on_broker_id"
     t.index ["name"], name: "index_networks_on_name"
   end

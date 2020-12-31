@@ -12,16 +12,16 @@ class Network < ApplicationRecord
 
 ###  belongs_to :broker
   belongs_to :broker, counter_cache: true
-#  has_one :homebus_device
+  has_one :announcer, class_name: "Device"
 
   validates :name, presence: true
 
-#  after_create :create_homebus_device
+  after_create :create_homebus_device
 
   def create_homebus_device(user)
     pr = ProvisionRequest.create friendly_name: 'Homebus',
                                  manufacturer: 'Homebus',
-                                 model: 'Network attachment',
+                                 model: 'Network announcer',
                                  serial_number: self.id,
                                  pin: '',
                                  network: self,
@@ -33,7 +33,7 @@ class Network < ApplicationRecord
 
     pr.accept!
 
-#    self.homebus_device = pr.devices.first
+    self.announcer = pr.devices.first
   end
 
   def get_auth_token(user)
