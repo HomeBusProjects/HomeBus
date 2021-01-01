@@ -131,6 +131,8 @@ class ProvisionRequestsController < ApplicationController
 
     respond_to do |format|
       if @provision_request.update(p)
+        PublishDevicesJob.perform_later(@network)
+
         flash_message 'success', 'Provision request was successfully updated.'
 
         format.html { redirect_to @provision_request }

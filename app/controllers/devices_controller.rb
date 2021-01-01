@@ -59,6 +59,8 @@ class DevicesController < ApplicationController
   def update
     respond_to do |format|
       if @device.update(device_params)
+        PublishDevicesJob.perform_later(@network)
+
         flash_message 'success', 'Device was successfully updated.'
 
         format.html { redirect_to @device }
