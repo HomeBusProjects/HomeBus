@@ -11,6 +11,8 @@ class ProvisionRequestsController < ApplicationController
 
     respond_to do |format|
       if @provision_request.save
+        PublishDevicesJob.perform_later(@provision_request.network)
+
         flash_message 'success', 'Provision request was successfully accepted.'
 
         format.html { redirect_to @provision_request }

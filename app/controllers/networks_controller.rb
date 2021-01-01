@@ -57,6 +57,10 @@ class NetworksController < ApplicationController
   def update
     respond_to do |format|
       if @network.update(network_params)
+        if network_params[:name]
+          PublishDevicesJob.perform_later(@network)
+        end
+
         format.html { redirect_to @network, notice: 'Network was successfully updated.' }
         format.json { render :show, status: :ok, location: @network }
       else

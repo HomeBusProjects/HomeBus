@@ -31,10 +31,12 @@ class PublishDevicesJob < ApplicationJob
       timestamp: Time.now.to_i,
       contents: {
         ddc: DDC,
-        payload: devices
+        payload: {
+          network: network.name,
+          devices: devices
+        }
       }
     }
-
 
     puts "conn_opts #{conn_opts}"
     puts "message #{homebus_message.pretty_inspect}"
