@@ -37,7 +37,7 @@ class PublishDevicesJob < ApplicationJob
 
 
     puts "conn_opts #{conn_opts}"
-    puts "message #{homebus_message.}"
+    puts "message #{homebus_message.pretty_inspect}"
 
     mqtt = MQTT::Client.connect(conn_opts) do |c|
       c.publish "homebus/device/#{network.announcer.id}/#{DDC}", JSON.generate(homebus_message), true
