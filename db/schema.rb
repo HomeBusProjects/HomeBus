@@ -10,25 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_30_213140) do
+ActiveRecord::Schema.define(version: 2021_01_03_202149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "app_servers", force: :cascade do |t|
-    t.string "name"
-    t.integer "port"
-    t.string "secret_key"
+  create_table "app_instances", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "app_id", null: false
+    t.bigint "user_id", null: false
+    t.json "parameters", default: "{}", null: false
+    t.string "public_key", null: false
+    t.string "log", default: "", null: false
+    t.integer "interval", default: 60, null: false
+    t.datetime "last_run", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["app_id"], name: "index_app_instances_on_app_id"
+    t.index ["last_run"], name: "index_app_instances_on_last_run"
+    t.index ["name"], name: "index_app_instances_on_name"
+    t.index ["user_id"], name: "index_app_instances_on_user_id"
+  end
+
+  create_table "app_servers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "port", null: false
+    t.string "public_key", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "public", default: false, null: false
+    t.bigint "owner_id", null: false
+    t.index ["owner_id"], name: "index_app_servers_on_owner_id"
   end
 
   create_table "apps", force: :cascade do |t|
-    t.string "name"
-    t.string "source"
+    t.string "name", default: "", null: false
+    t.string "source", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "description", default: "", null: false
+    t.string "parameters", default: "", null: false
   end
 
   create_table "brokers", force: :cascade do |t|
@@ -37,8 +59,10 @@ ActiveRecord::Schema.define(version: 2020_12_30_213140) do
     t.integer "devices_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "secure_port", default: 1883, null: false
-    t.integer "insecure_port", default: 8883, null: false
+    t.integer "secure_port", default: 8883, null: false
+    t.integer "insecure_port", default: 1883, null: false
+    t.integer "insecure_websocket_port", default: 9001, null: false
+    t.integer "secure_websocket_port", default: 8083, null: false
     t.index ["name"], name: "index_brokers_on_name", unique: true
   end
 
@@ -182,6 +206,9 @@ ActiveRecord::Schema.define(version: 2020_12_30_213140) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "app_instances", "apps"
+  add_foreign_key "app_instances", "users"
+  add_foreign_key "app_servers", "users", column: "owner_id"
   add_foreign_key "devices", "provision_requests"
   add_foreign_key "permissions", "ddcs"
   add_foreign_key "permissions", "devices"

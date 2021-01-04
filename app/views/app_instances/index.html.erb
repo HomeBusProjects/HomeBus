@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>App Instances</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>App</th>
+      <th>User</th>
+      <th>Parameters</th>
+      <th>Public key</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @app_instances.each do |app_instance| %>
+      <tr>
+        <td><%= app_instance.app_id %></td>
+        <td><%= app_instance.user_id %></td>
+        <td><%= app_instance.parameters %></td>
+        <td><%= app_instance.public_key %></td>
+        <td><%= link_to 'Show', app_instance %></td>
+        <td><%= link_to 'Edit', edit_app_instance_path(app_instance) %></td>
+        <td><%= link_to 'Destroy', app_instance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New App Instance', new_app_instance_path %>

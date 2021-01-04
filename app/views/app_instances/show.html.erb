@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>App:</strong>
+  <%= @app_instance.app_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @app_instance.user_id %>
+</p>
+
+<p>
+  <strong>Parameters:</strong>
+  <%= @app_instance.parameters %>
+</p>
+
+<p>
+  <strong>Public key:</strong>
+  <%= @app_instance.public_key %>
+</p>
+
+<%= link_to 'Edit', edit_app_instance_path(@app_instance) %> |
+<%= link_to 'Back', app_instances_path %>

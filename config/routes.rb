@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :app_instances
   resources :permissions
   resources :apps
   resources :app_servers

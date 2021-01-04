@@ -1,0 +1,37 @@
+<%= form_with(model: app_instance) do |form| %>
+  <% if app_instance.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(app_instance.errors.count, "error") %> prohibited this app_instance from being saved:</h2>
+
+      <ul>
+        <% app_instance.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :app_id %>
+    <%= form.text_field :app_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :parameters %>
+    <%= form.text_field :parameters %>
+  </div>
+
+  <div class="field">
+    <%= form.label :public_key %>
+    <%= form.text_field :public_key %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
