@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @app.name %>
@@ -10,5 +8,17 @@
   <%= @app.source %>
 </p>
 
-<%= link_to 'Edit', edit_app_path(@app) %> |
-<%= link_to 'Back', apps_path %>
+<p>
+  <strong>Description:</strong>
+  <%= @app.description %>
+</p>
+
+<p>
+  <strong>Parameters:</strong>
+  <code>
+    <%= @app.parameters %>
+  </code>
+</p>
+
+<%= link_to 'Edit', edit_app_path(@app), class: 'btn btn-info' %>
+<%= link_to 'Delete', app_instance, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
