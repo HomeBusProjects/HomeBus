@@ -10,6 +10,8 @@ class AppInstancesController < ApplicationController
   # GET /app_instances/1
   # GET /app_instances/1.json
   def show
+    @apps = App.order(name: :asc)
+    @users = User.order(email: :asc)
   end
 
   # GET /app_instances/new
