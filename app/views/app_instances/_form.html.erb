@@ -13,22 +13,27 @@
 
   <div class="field">
     <%= form.label :app_id %>
-    <%= form.text_field :app_id %>
+    <%= form.collection_select :app_id, @apps, :id, :name, {}, { class: 'form-control', readonly: true } %>
   </div>
 
   <div class="field">
     <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
+    <%= form.collection_select :user_id, @users, :id, :name, {}, { class: 'form-control', readonly: true } %>
   </div>
 
   <div class="field">
     <%= form.label :parameters %>
-    <%= form.text_field :parameters %>
+    <%= form.text_field :parameters, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :public_key %>
-    <%= form.text_field :public_key %>
+    <%= form.text_field :public_key, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :interval %>
+    <%= form.text_field :interval, class: 'form-control' %>
   </div>
 
   <div class="actions">
