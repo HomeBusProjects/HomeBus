@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.6'
 
-gem 'rails', '~> 6.1.0'
+gem 'rails', '~> 6.1.1'
 gem 'pg'
 gem 'puma', '~> 5.1.0'
 gem 'sass-rails', '~> 5.0'
@@ -51,8 +51,8 @@ gem 'bootstrap', '>= 4.3.1'
 
 gem 'jquery-rails'
 
-gem 'whenever', require: false
-gem 'backup', require: false
+#gem 'whenever', require: false
+#gem 'backup', require: false
 
 gem 'bitfields'
 
