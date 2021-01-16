@@ -73,7 +73,7 @@
 <p>
   <h3>Broker Account</h3>
 <% if @provision_request.mosquitto_account %>
-  <table>
+  <table class='table'>
     <tr>
       <td>username</td>
       <td><%= link_to @provision_request.mosquitto_account.id, @provision_request.mosquitto_account %></td>
@@ -88,13 +88,22 @@
       <td>broker</td>
       <td><%= link_to @provision_request.network.broker.name,  @provision_request.network.broker %></td>
     </tr>
+  </table>
+  <table class='table'>
     <tr>
-      <td>insecure port</td>
-      <td><%= @provision_request.network.broker.insecure_port %></td>
+      <th>port</th>
+      <th>insecure</th>
+      <th>secure</th>
     </tr>
     <tr>
-      <td>secure port</td>
+      <td>MQTT</td>
+      <td><%= @provision_request.network.broker.insecure_port %></td>
       <td><%= @provision_request.network.broker.secure_port %></td>
+    </tr>
+    <tr>
+      <td>websockets</td>
+      <td><%= @provision_request.network.broker.insecure_websocket_port %></td>
+      <td><%= @provision_request.network.broker.secure_websocket_port %></td>
     </tr>
 </table>
 <% else %>
