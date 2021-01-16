@@ -110,6 +110,7 @@ class ProvisionRequestsController < ApplicationController
 
     @provision_request = ProvisionRequest.new(p)
     @provision_request.ip_address = request.remote_ip
+    @provision_request.user = current_user
 
     respond_to do |format|
       if @provision_request.save
