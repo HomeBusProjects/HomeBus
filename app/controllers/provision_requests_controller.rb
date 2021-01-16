@@ -90,7 +90,7 @@ class ProvisionRequestsController < ApplicationController
   def new
     @provision_request = ProvisionRequest.new
 
-    if can? :manage, ProvisionRequest
+    if signed_in? && current_user.site_admin?
       @users = User.all.order(email: :asc)
       @networks = Network.all.order(name: :asc)
     else
