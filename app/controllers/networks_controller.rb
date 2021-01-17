@@ -36,12 +36,12 @@ class NetworksController < ApplicationController
   # POST /networks.json
   def create
     @network = Network.new(network_params.merge({ broker: Broker.first}))
-    @network.announcer = Network.create_homebus_announcer(current_user)
 
     pp @network
 
     respond_to do |format|
       if @network.save
+        @network.create_homebus_announcer(current_user)
         @network.users << current_user
 
         format.html { redirect_to @network, notice: 'Network was successfully created.' }

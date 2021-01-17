@@ -12,15 +12,15 @@ class Network < ApplicationRecord
 
 ###  belongs_to :broker
   belongs_to :broker, counter_cache: true
-  belongs_to :announcer, class_name: "Device"
+  belongs_to :announcer, class_name: "Device", optional: true
 
   validates :name, presence: true
 
-  def self.create_homebus_announcer(user)
+  def create_homebus_announcer(user)
     pr = ProvisionRequest.create friendly_name: 'Homebus',
                                  manufacturer: 'Homebus',
                                  model: 'Network announcer',
-                                 serial_number: '', # would like this to be the network's ID
+                                 serial_number: self.id,
                                  pin: '',
                                  network: self,
                                  user: user,
@@ -35,7 +35,8 @@ class Network < ApplicationRecord
     d.friendly_name = 'Homebus Device Announcer'
     d.save
 
-    return d
+    self.announcer = d
+    self.save
   end
 
   def get_auth_token(user)
