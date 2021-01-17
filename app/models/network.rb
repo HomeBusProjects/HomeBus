@@ -20,7 +20,7 @@ class Network < ApplicationRecord
     pr = ProvisionRequest.create friendly_name: 'Homebus',
                                  manufacturer: 'Homebus',
                                  model: 'Network announcer',
-                                 serial_number: self.id,
+                                 serial_number: '', # would like this to be the network's ID
                                  pin: '',
                                  network: self,
                                  user: user,
@@ -35,8 +35,7 @@ class Network < ApplicationRecord
     d.friendly_name = 'Homebus Device Announcer'
     d.save
 
-    self.announcer = d
-    self.save
+    return d
   end
 
   def get_auth_token(user)
