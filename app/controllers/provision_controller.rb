@@ -103,6 +103,14 @@ class ProvisionController < ActionController::Base
     pr = validate_refresh
 
     unless pr
+      Rails.logger.error "/provision/refresh fail"
+
+      token =  request.headers['Authorization']
+      Rails.logger.debug token
+
+      jwt = JsonWebToken.decode(token)
+      Rails.logger.debug jwt
+
       raise ActionController:BadRequest
     end
 

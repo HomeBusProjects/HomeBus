@@ -41,8 +41,8 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       if @network.save
-        @network.create_homebus_announcer(current_user)
         @network.users << current_user
+        @network.create_homebus_announcer(current_user)
 
         format.html { redirect_to @network, notice: 'Network was successfully created.' }
         format.json { render :show, status: :created, location: @network }
