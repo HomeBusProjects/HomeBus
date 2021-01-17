@@ -16,9 +16,7 @@ class Network < ApplicationRecord
 
   validates :name, presence: true
 
-  after_create :create_homebus_device
-
-  def create_homebus_device(user)
+  def self.create_homebus_announcer(user)
     pr = ProvisionRequest.create friendly_name: 'Homebus',
                                  manufacturer: 'Homebus',
                                  model: 'Network announcer',
