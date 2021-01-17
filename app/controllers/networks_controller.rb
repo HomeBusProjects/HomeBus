@@ -36,7 +36,7 @@ class NetworksController < ApplicationController
   # POST /networks.json
   def create
     @network = Network.new(network_params.merge({ broker: Broker.first}))
-    @network.announcer = Network.create_homebus-announcer
+    @network.announcer = Network.create_homebus_announcer
 
     pp @network
 
