@@ -59,7 +59,9 @@ class DevicesController < ApplicationController
   def update
     respond_to do |format|
       if @device.update(device_params)
-        PublishDevicesJob.perform_later(@network)
+        @device.networks.map do |network|
+          PublishDevicesJob.perform_later(network)
+        end
 
         flash_message 'success', 'Device was successfully updated.'
 

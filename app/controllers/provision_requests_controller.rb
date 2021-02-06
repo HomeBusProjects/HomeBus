@@ -135,7 +135,7 @@ class ProvisionRequestsController < ApplicationController
 
     respond_to do |format|
       if @provision_request.update(p)
-        PublishDevicesJob.perform_later(@network)
+        PublishDevicesJob.perform_later(@provision_request.network)
 
         flash_message 'success', 'Provision request was successfully updated.'
 
