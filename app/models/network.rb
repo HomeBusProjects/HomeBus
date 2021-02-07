@@ -67,7 +67,7 @@ class Network < ApplicationRecord
 
       request
     rescue => e
-      Rails.logger.error "JsonWebToken exception" + e.backtrace
+      Rails.logger.error "JsonWebToken exception" + e.backtrace.join("\n")
 
       nil
     end
