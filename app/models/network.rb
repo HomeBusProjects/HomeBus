@@ -52,7 +52,7 @@ class Network < ApplicationRecord
       created_at: Time.now.to_i
     }
 
-    JsonWebToken.encode(payload)
+    JsonWebToken.encode(payload, Time.now + 1.month)
   end
 
   def self.find_from_auth_token(token)
