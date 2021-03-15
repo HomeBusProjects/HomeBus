@@ -110,17 +110,22 @@ class MosquittoAcl < MosquittoRecord
 
     Device.find_each do |device|
       if device.provision_request == pr
-        records += self.class._permit_device device, account, pr, 2
+        records += MosquittoAcl._permit_device device, account, pr, 2
         next
       end
 
       if device.networks.pluck(:id).include?(pr.network.id)
-        records += self.class._permit_device device, account, pr, 4 + 1
+        records += MosquittoAcl._permit_device device, account, pr, 4 + 1
         next
       end
 
-      records += self.class._permit_device device, account, pr, 0
+      records += MosquittoAcl._permit_device device, account, pr, 0
     end
+
+    records.push MosquittoAcl.new(username: account.id,
+                                  topic: "homebus/device/+/#{ddc.name}",
+                                  permissions: 4 + 1,
+                                  provision_request_id: pr.id)
 
     Rails.logger.debug "#{records.length} records"
     Rails.logger.debug "#{records.inspect}"
