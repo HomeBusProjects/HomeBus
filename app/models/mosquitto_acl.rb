@@ -123,11 +123,13 @@ class MosquittoAcl < MosquittoRecord
     end
 
     pr.devices.each do |device|
-      device.ddcs_devices.where(consumable: true).join(:ddcs).pluck(:'ddc.name') do |ddc|
-        records.push MosquittoAcl.new(username: account.id,
-                                      topic: "homebus/device/+/#{ddc.name}",
-                                      permissions: 4 + 1,
-                                      provision_request_id: pr.id)
+      device.ddcs.each do |ddc|
+        if Permission.find_by(device: device, network: pr.network, ddc: ddc, consumes: true)
+          records.push MosquittoAcl.new(username: account.id,
+                                        topic: "homebus/device/+/#{ddc.name}",
+                                        permissions: 4 + 1,
+                                        provision_request_id: pr.id)
+        end
       end
     end
 
