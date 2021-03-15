@@ -49,7 +49,7 @@ class ProvisionRequest < ApplicationRecord
 
     self.create_mosquitto_account(superuser: false, password: SecureRandom.base64(32), enabled: true)
 
-    MosquittoAcl.from_provision_request self
+    MosquittoAcl.from_provision_request_opposite self
   end
 
   def revoke!

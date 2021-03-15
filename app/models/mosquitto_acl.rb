@@ -102,11 +102,54 @@ class MosquittoAcl < MosquittoRecord
     end
   end
 
+  def self.from_provision_request2(pr)
+    account = MosquittoAccount.find_by provision_request_id: pr.id
+    puts "NEW ACCOUNT ID #{account.id}"
+
+    records = []
+
+    Device.find_each do |device|
+      if device.provision_request == pr
+        records += self._permit_device device, account, pr, 2
+        next
+      end
+
+      if device.networks.pluck(:id).include?(pr.network.id)
+        records += self._permit_device device, account, pr, 4 + 1
+        next
+      end
+
+      records += self._permit_device device, account, pr, 0
+    end
+
+    Rails.logger.debug "#{records.length} records"
+    Rails.logger.debug "#{records.inspect}"
+
+    ActiveRecord::Base.transaction do
+      pr.mosquitto_acl.delete_all
+      records.each { |record| Rails.logger.debug "RECORD #{record.inspect}" ; record.save ; Rails.logger.debug record.errors.inspect }
+    end
+  end
+
 
   def self.from_device(device)
     device_publishes = device.ddcs_devices.where(publishable: true).join(:ddcs).pluck(:'ddc.name')
   end
 
   private
-  
+
+  def _permit_device(device, account, pr, permissions)
+    records = []
+
+    device.ddcs.each do |ddc|
+      Rails.logger.debug "ACL homebus/device/#{device.id}/#{ddc.name} -> #{permissions}"
+
+      records.push MosquittoAcl.new(username: account.id,
+                                    topic: "homebus/device/#{device.id}/#{ddc.name}",
+                                    permissions: permissions,
+                                    provision_request_id: pr.id)
+    end
+
+    records
+  end
 end
