@@ -110,16 +110,16 @@ class MosquittoAcl < MosquittoRecord
 
     Device.find_each do |device|
       if device.provision_request == pr
-        records += self._permit_device device, account, pr, 2
+        records += self.class._permit_device device, account, pr, 2
         next
       end
 
       if device.networks.pluck(:id).include?(pr.network.id)
-        records += self._permit_device device, account, pr, 4 + 1
+        records += self.class._permit_device device, account, pr, 4 + 1
         next
       end
 
-      records += self._permit_device device, account, pr, 0
+      records += self.class._permit_device device, account, pr, 0
     end
 
     Rails.logger.debug "#{records.length} records"
@@ -136,7 +136,9 @@ class MosquittoAcl < MosquittoRecord
     device_publishes = device.ddcs_devices.where(publishable: true).join(:ddcs).pluck(:'ddc.name')
   end
 
-  def _permit_device(device, account, pr, permissions)
+private
+
+  def self._permit_device(device, account, pr, permissions)
     records = []
 
     device.ddcs.each do |ddc|
