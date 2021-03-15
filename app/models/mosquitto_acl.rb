@@ -122,10 +122,12 @@ class MosquittoAcl < MosquittoRecord
       records += MosquittoAcl._permit_device device, account, pr, 0
     end
 
-    records.push MosquittoAcl.new(username: account.id,
-                                  topic: "homebus/device/+/#{ddc.name}",
-                                  permissions: 4 + 1,
-                                  provision_request_id: pr.id)
+    device.ddcs_devices.where(consumable: true).join(:ddcs).pluck(:'ddc.name') do |ddc|
+      records.push MosquittoAcl.new(username: account.id,
+                                    topic: "homebus/device/+/#{ddc.name}",
+                                    permissions: 4 + 1,
+                                    provision_request_id: pr.id)
+    end
 
     Rails.logger.debug "#{records.length} records"
     Rails.logger.debug "#{records.inspect}"
