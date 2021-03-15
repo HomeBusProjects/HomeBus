@@ -136,8 +136,6 @@ class MosquittoAcl < MosquittoRecord
     device_publishes = device.ddcs_devices.where(publishable: true).join(:ddcs).pluck(:'ddc.name')
   end
 
-private
-
   def self._permit_device(device, account, pr, permissions)
     records = []
 
