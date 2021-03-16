@@ -108,27 +108,26 @@ class MosquittoAcl < MosquittoRecord
 
     records = []
 
+    records.push "DELETE FROM \"mosquitto_acls\" WHERE \"mosquitto_acls.provision_request_id\" = \"#{pr.id}\""
+
     Device.find_each do |device|
       if device.provision_request == pr
-        records += MosquittoAcl._permit_device device, account, pr, 2
+        records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5, $6) RETURNING \"id\"  [[\"username\", \"#{account.id}\"], [\"topic\", \"homebus/device/#{device.id}#{ddc}\"], [\"provision_request_id\", \"#{pr.id}\"], [\"permissions\", 2], [\"created_at\", \"2021-03-16 03:52:12.630393\"], [\"updated_at\", \"2021-03-16 03:52:12.630393\"]];"
         next
       end
 
       if device.networks.pluck(:id).include?(pr.network.id)
-        records += MosquittoAcl._permit_device device, account, pr, 4 + 1
+        records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5, $6) RETURNING \"id\"  [[\"username\", \"#{account.id}\"], [\"topic\", \"homebus/device/#{device.id}#{ddc}\"], [\"provision_request_id\", \"#{pr.id}\"], [\"permissions\", 5], [\"created_at\", \"2021-03-16 03:52:12.630393\"], [\"updated_at\", \"2021-03-16 03:52:12.630393\"]];"
         next
       end
 
-      records += MosquittoAcl._permit_device device, account, pr, 0
+      records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5, $6) RETURNING \"id\"  [[\"username\", \"#{account.id}\"], [\"topic\", \"homebus/device/#{device.id}#{ddc}\"], [\"provision_request_id\", \"#{pr.id}\"], [\"permissions\", 0], [\"created_at\", \"2021-03-16 03:52:12.630393\"], [\"updated_at\", \"2021-03-16 03:52:12.630393\"]];"
     end
 
     pr.devices.each do |device|
       device.ddcs.each do |ddc|
         if Permission.find_by(device: device, network: pr.network, ddc: ddc, consumes: true)
-          records.push MosquittoAcl.new(username: account.id,
-                                        topic: "homebus/device/+/#{ddc.name}",
-                                        permissions: 4 + 1,
-                                        provision_request_id: pr.id)
+          records.push         records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5, $6) RETURNING \"id\"  [[\"username\", \"#{account.id}\"], [\"topic\", \"homebus/device/+/#{ddc}\"], [\"provision_request_id\", \"#{pr.id}\"], [\"permissions\", 5], [\"created_at\", \"2021-03-16 03:52:12.630393\"], [\"updated_at\", \"2021-03-16 03:52:12.630393\"]];"
         end
       end
     end
@@ -136,10 +135,14 @@ class MosquittoAcl < MosquittoRecord
     Rails.logger.debug "#{records.length} records"
     Rails.logger.debug "#{records.inspect}"
 
+if 0
     ActiveRecord::Base.transaction do
       pr.mosquitto_acl.delete_all
       records.each { |record| Rails.logger.debug "RECORD #{record.inspect}" ; record.save ; Rails.logger.debug record.errors.inspect }
     end
+end
+
+    return records
   end
 
 
