@@ -113,8 +113,6 @@ class MosquittoAcl < MosquittoRecord
     Device.find_each do |device|
       if device.provision_request == pr
         records += _permit_device(device, account, pr, 2)
-
-
         next
       end
 
@@ -124,14 +122,6 @@ class MosquittoAcl < MosquittoRecord
       end
 
       records += _permit_device(device, account, pr, 0)
-    end
-
-    pr.devices.each do |device|
-      device.ddcs.each do |ddc|
-        if Permission.find_by(device: device, network: pr.network, ddc: ddc, consumes: true)
-          records.push  "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5, $6) RETURNING \"id\"  [[\"username\", \"#{account.id}\"], [\"topic\", \"homebus/device/#{device.id}#{ddc.name}\"], [\"provision_request_id\", \"#{pr.id}\"], [\"permissions\", #{permissions}], [\"created_at\", \"2021-03-16 03:52:12.630393\"], [\"updated_at\", \"2021-03-16 03:52:12.630393\"]];"
-        end
-      end
     end
 
     Rails.logger.debug "#{records.length} records"
