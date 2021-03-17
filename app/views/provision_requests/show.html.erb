@@ -123,7 +123,7 @@
 <% end %>
 
 <code>
-  <%= MosquittoAcl.from_provision_request2(@provision_request) %>
+  <%= JSON.pretty_generate(MosquittoAcl.from_provision_request2(@provision_request)) %>
 </code>
 
 <p>
