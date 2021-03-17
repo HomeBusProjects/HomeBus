@@ -110,20 +110,23 @@ class MosquittoAcl < MosquittoRecord
     records += "DELETE FROM \"mosquitto_acls\" WHERE \"mosquitto_acls.provision_request_id\" = \"#{pr.id}\";\n\n"
     records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES\n"
 
+    raw_records = []
+
     Device.find_each do |device|
       if device.provision_request == pr
-        records += _permit_device(device, account, pr, 2)
+        raw_records.push  _permit_device(device, account, pr, 2)
         next
       end
 
       if device.networks.pluck(:id).include?(pr.network.id)
-        records += _permit_device(device, account, pr, 5)
+        raw_records.push _permit_device(device, account, pr, 5)
         next
       end
 
-      records += _permit_device(device, account, pr, 0)
+      raw_records.push _permit_device(device, account, pr, 0)
     end
 
+    records += raw_records.join(",\n")
     records += ";\n"
 
     Rails.logger.debug "#{records.length} records"
