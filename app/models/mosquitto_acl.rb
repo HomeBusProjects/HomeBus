@@ -108,7 +108,7 @@ class MosquittoAcl < MosquittoRecord
 
     records = []
 
-    records.push "DELETE FROM \"mosquitto_acls\" WHERE \"mosquitto_acls.provision_request_id\" = \"#{pr.id}\""
+    records.push "DELETE FROM \"mosquitto_acls\" WHERE \"mosquitto_acls.provision_request_id\" = \"#{pr.id}\";"
 
     Device.find_each do |device|
       if device.provision_request == pr
