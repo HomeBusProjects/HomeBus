@@ -147,7 +147,7 @@ end
   end
 
   def self._permit_device(device, account, pr, permissions)
-    records = []
+    records = ""
 
     device.ddcs.each do |ddc|
       Rails.logger.debug "ACL homebus/device/#{device.id}/#{ddc.name} -> #{permissions}"
