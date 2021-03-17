@@ -148,7 +148,7 @@ end
     device.ddcs.each do |ddc|
       Rails.logger.debug "ACL homebus/device/#{device.id}/#{ddc.name} -> #{permissions}"
 
-      records.push "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5, $6) [[\"username\", \"#{account.id}\"], [\"topic\", \"homebus/device/#{device.id}#{ddc}\"], [\"provision_request_id\", \"#{pr.id}\"], [\"permissions\", #{permissions}], [\"created_at\", \"2021-03-16 03:52:12.630393\"], [\"updated_at\", \"2021-03-16 03:52:12.630393\"]];"
+      records.push "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5, $6) [[\"username\", \"#{account.id}\"], [\"topic\", \"homebus/device/#{device.id}/#{ddc.name}\"], [\"provision_request_id\", \"#{pr.id}\"], [\"permissions\", #{permissions}], [\"created_at\", \"2021-03-16 03:52:12.630393\"], [\"updated_at\", \"2021-03-16 03:52:12.630393\"]];"
     end
 
     records
