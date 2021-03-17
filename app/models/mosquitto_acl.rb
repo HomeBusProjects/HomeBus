@@ -106,10 +106,9 @@ class MosquittoAcl < MosquittoRecord
     account = MosquittoAccount.find_by provision_request_id: pr.id
     puts "NEW ACCOUNT ID #{account.id}"
 
-    records = []
-
-    records.push "BEGIN;"
-    records.push "DELETE FROM \"mosquitto_acls\" WHERE \"mosquitto_acls.provision_request_id\" = \"#{pr.id}\";"
+    records = "BEGIN;\n\n"
+    records += "DELETE FROM \"mosquitto_acls\" WHERE \"mosquitto_acls.provision_request_id\" = \"#{pr.id}\";\n\n"
+    records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES\n"
 
     Device.find_each do |device|
       if device.provision_request == pr
@@ -125,6 +124,8 @@ class MosquittoAcl < MosquittoRecord
       records += _permit_device(device, account, pr, 0)
     end
 
+    records += ";\n"
+
     Rails.logger.debug "#{records.length} records"
     Rails.logger.debug "#{records.inspect}"
 
@@ -135,8 +136,7 @@ if false
     end
 end
 
-
-    records.push "COMMIT;"
+    records += "COMMIT;\n"
 
     return records
   end
@@ -152,9 +152,9 @@ end
     device.ddcs.each do |ddc|
       Rails.logger.debug "ACL homebus/device/#{device.id}/#{ddc.name} -> #{permissions}"
 
-      records.push "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES (\"#{account.id}\", \"homebus/device/#{device.id}/#{ddc.name}\", \"#{pr.id}\", #{permissions}, \"2021-03-16 03:52:12.630393\", \"2021-03-16 03:52:12.630393\");"
+      records.push =  "\t(\"#{account.id}\", \"homebus/device/#{device.id}/#{ddc.name}\", \"#{pr.id}\", #{permissions}, \"2021-03-16 03:52:12.630393\", \"2021-03-16 03:52:12.630393\")"
     end
 
-    records
+    records.join(",\n");
   end
 end
