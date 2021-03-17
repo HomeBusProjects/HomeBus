@@ -152,7 +152,7 @@ end
     device.ddcs.each do |ddc|
       Rails.logger.debug "ACL homebus/device/#{device.id}/#{ddc.name} -> #{permissions}"
 
-      records.push =  "\t(\"#{account.id}\", \"homebus/device/#{device.id}/#{ddc.name}\", \"#{pr.id}\", #{permissions}, \"2021-03-16 03:52:12.630393\", \"2021-03-16 03:52:12.630393\")"
+      records +=  "\t(\"#{account.id}\", \"homebus/device/#{device.id}/#{ddc.name}\", \"#{pr.id}\", #{permissions}, \"2021-03-16 03:52:12.630393\", \"2021-03-16 03:52:12.630393\")"
     end
 
     records.join(",\n");
