@@ -123,9 +123,7 @@
 <% end %>
 
 <code>
-  <% MosquittoAcl.from_provision_request2(@provision_request).each do |sql| %>
-    <%= sql.to_s %><br />
-  <% end %>
+  <%= MosquittoAcl.from_provision_request2(@provision_request).to_s %>
 </code>
 
 <p>
