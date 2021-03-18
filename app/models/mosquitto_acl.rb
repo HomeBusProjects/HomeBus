@@ -107,7 +107,7 @@ class MosquittoAcl < MosquittoRecord
     puts "NEW ACCOUNT ID #{account.id}"
 
     records = "BEGIN;\n\n"
-    records += "DELETE FROM \"mosquitto_acls\" WHERE \"mosquitto_acls.provision_request_id\" = \"#{pr.id}\";\n\n"
+    records += "DELETE FROM \"mosquitto_acls\" WHERE \"provision_request_id\" = \"#{pr.id}\";\n\n"
     records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES\n"
 
     raw_records = []

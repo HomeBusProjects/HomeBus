@@ -122,9 +122,11 @@
 </p>
 <% end %>
 
+<% if @provision_request.accepted? %>
 <code>
   <%= MosquittoAcl.from_provision_request2(@provision_request).to_s %>
 </code>
+<% end %>
 
 <p>
   <%= link_to 'Edit', edit_provision_request_path(@provision_request), class: 'btn btn-info' %>
