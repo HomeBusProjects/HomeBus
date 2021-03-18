@@ -114,16 +114,16 @@ class MosquittoAcl < MosquittoRecord
 
     Device.find_each do |device|
       if device.provision_request == pr
-        raw_records.push  _permit_device(device, account, pr, 2)
+        raw_records +=  _permit_device(device, account, pr, 2)
         next
       end
 
       if device.networks.pluck(:id).include?(pr.network.id)
-        raw_records.push _permit_device(device, account, pr, 5)
+        raw_records += _permit_device(device, account, pr, 5)
         next
       end
 
-      raw_records.push _permit_device(device, account, pr, 0)
+      raw_records += _permit_device(device, account, pr, 0)
     end
 
     records += raw_records.join(",\n")
@@ -158,6 +158,6 @@ end
       records.push  "\t(\"#{account.id}\", \"homebus/device/#{device.id}/#{ddc.name}\", \"#{pr.id}\", #{permissions}, \"2021-03-16 03:52:12.630393\", \"2021-03-16 03:52:12.630393\")"
     end
 
-    records.join(",\n");
+    records
   end
 end
