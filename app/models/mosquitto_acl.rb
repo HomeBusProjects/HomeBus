@@ -107,7 +107,7 @@ class MosquittoAcl < MosquittoRecord
     puts "NEW ACCOUNT ID #{account.id}"
 
     records = "BEGIN;\n\n"
-    records += "DELETE FROM \"mosquitto_acls\" WHERE \"provision_request_id\" = \"#{pr.id}\";\n\n"
+    records += "DELETE FROM \"mosquitto_acls\" WHERE \"provision_request_id\" = '#{pr.id}';\n\n"
     records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES\n"
 
     raw_records = []
@@ -155,7 +155,7 @@ end
     device.ddcs.each do |ddc|
       Rails.logger.debug "ACL homebus/device/#{device.id}/#{ddc.name} -> #{permissions}"
 
-      records.push  "\t(\"#{account.id}\", \"homebus/device/#{device.id}/#{ddc.name}\", \"#{pr.id}\", #{permissions}, \"2021-03-16 03:52:12.630393\", \"2021-03-16 03:52:12.630393\")"
+      records.push  "\t('#{account.id}', 'homebus/device/#{device.id}/#{ddc.name}', '#{pr.id}', #{permissions}, '2021-03-16 03:52:12.630393', '2021-03-16 03:52:12.630393')"
     end
 
     records
