@@ -11,17 +11,7 @@ $(document).ready(function() {
     client.onConnectionLost = onConnectionLost; 
     client.onMessageArrived = onMessageArrived;
 
-    let options = {
-	useSSL: true,
-	userName: monitor_params['broker']['username'],
-	password: monitor_params['broker']['password'],
-	onSuccess: onConnect,
-	onFailure: onConnectFail,
-	reconnect: true
-    };
-
-    console.log('about to connect to broker');
-    client.connect(options);
+    brokerConnect();
 
     // refresh the refresh token once per minute to keep the monitor alive
     setInterval(function () {
@@ -35,6 +25,20 @@ $(document).ready(function() {
 	});
     }, 1000*60);
 });
+
+function brokerConnect() {
+    let options = {
+	useSSL: true,
+	userName: monitor_params['broker']['username'],
+	password: monitor_params['broker']['password'],
+	onSuccess: onConnect,
+	onFailure: onConnectFail,
+	reconnect: true
+    };
+
+    console.log('about to connect to broker');
+    client.connect(options);
+}
 
 function onConnect() {
   console.log('broker connected');
@@ -60,7 +64,7 @@ function onConnectFail(e) {
     console.log(e);
     console.log("doFail");
 
-    setInterval(function () { client.connect(options); }, 1000*30);
+    setInterval(function () { brokerConnect(); }, 1000*30);
 }
 
 function onMessageArrived(message) {
