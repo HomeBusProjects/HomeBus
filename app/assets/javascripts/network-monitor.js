@@ -6,7 +6,8 @@ $(document).ready(function() {
 	return;
     }
 
-    client = new Paho.Client(monitor_params['broker']['server'], monitor_params['broker']['port'], monitor_params['broker']['client_id']);
+//    client = new Paho.Client(monitor_params['broker']['server'], monitor_params['broker']['port'], monitor_params['broker']['client_id']);
+    client = new Paho.Client(monitor_params['broker']['server'], monitor_params['broker']['port'], monitor_params['broker']['username']);
 
     client.onConnectionLost = onConnectionLost; 
     client.onMessageArrived = onMessageArrived;
