@@ -108,8 +108,8 @@ class NetworksController < ApplicationController
     @broker[:server] = pr.network.broker.name
     @broker[:port] = 8083
 
-    @broker[:username] = pr.mosquitto_account.id
-    @broker[:password] = pr.mosquitto_account.generate_password!
+    @broker[:username] = pr.account_id
+    @broker[:password] = pr.account_password
 
     @client_id = pr.id
     @refresh_token = pr.get_refresh_token(current_user)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_03_202149) do
+ActiveRecord::Schema.define(version: 2021_03_19_194708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -166,6 +166,10 @@ ActiveRecord::Schema.define(version: 2021_01_03_202149) do
     t.integer "autoremove_interval"
     t.bigint "user_id", null: false
     t.datetime "autoremove_at"
+    t.boolean "ready", default: true, null: false
+    t.string "account_id"
+    t.string "account_password"
+    t.string "account_encrypted_password"
     t.index ["allocated_uuids"], name: "index_provision_requests_on_allocated_uuids", using: :gin
     t.index ["autoremove_at"], name: "index_provision_requests_on_autoremove_at"
     t.index ["autoremove_interval"], name: "index_provision_requests_on_autoremove_interval"
@@ -174,6 +178,7 @@ ActiveRecord::Schema.define(version: 2021_01_03_202149) do
     t.index ["manufacturer"], name: "index_provision_requests_on_manufacturer"
     t.index ["model"], name: "index_provision_requests_on_model"
     t.index ["network_id"], name: "index_provision_requests_on_network_id"
+    t.index ["ready"], name: "index_provision_requests_on_ready"
     t.index ["ro_ddcs"], name: "index_provision_requests_on_ro_ddcs", using: :gin
     t.index ["rw_ddcs"], name: "index_provision_requests_on_rw_ddcs", using: :gin
     t.index ["user_id"], name: "index_provision_requests_on_user_id"

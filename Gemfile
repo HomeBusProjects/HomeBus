@@ -60,3 +60,7 @@ gem 'letter_opener_web', '~> 1.0'
 
 gem 'mqtt'
 gem 'sidekiq'
+
+gem 'net-ssh'
+gem 'ed25519'
+gem 'bcrypt_pbkdf'

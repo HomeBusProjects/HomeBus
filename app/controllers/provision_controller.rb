@@ -48,17 +48,17 @@ class ProvisionController < ActionController::Base
                                   model: args[:model])
 
     if pr
-      if pr.accepted?
+      if pr.accepted? && pr.ready?
         # generating a password is the only time we have it in plain text to return to the client
-        password = pr.mosquitto_account.generate_password!
+#        password = pr.mosquitto_account.generate_password!
 
         broker = Broker.first
 
         response = {
           status: 'provisioned',
           credentials: {
-            mqtt_username: pr.mosquitto_account.id,
-            mqtt_password: password,
+            mqtt_username: pr.account_id,
+            mqtt_password: pr.account_password,
           },
           broker: {
             mqtt_hostname: broker.name,

@@ -103,8 +103,7 @@ class MosquittoAcl < MosquittoRecord
   end
 
   def self.from_provision_request2(pr)
-    account = MosquittoAccount.find_by provision_request_id: pr.id
-    puts "NEW ACCOUNT ID #{account.id}"
+    puts "ACCOUNT ID #{pr.account_id}"
 
     records = "BEGIN;\n\n"
     records += "DELETE FROM \"mosquitto_acls\" WHERE \"provision_request_id\" = '#{pr.id}';\n\n"
@@ -114,16 +113,16 @@ class MosquittoAcl < MosquittoRecord
 
     Device.find_each do |device|
       if device.provision_request == pr
-        raw_records +=  _permit_device(device, account, pr, 2)
+        raw_records +=  _permit_device(device, pr, 2)
         next
       end
 
       if device.networks.pluck(:id).include?(pr.network.id)
-        raw_records += _permit_device(device, account, pr, 5)
+        raw_records += _permit_device(device, pr, 5)
         next
       end
 
-      raw_records += _permit_device(device, account, pr, 0)
+      raw_records += _permit_device(device, pr, 0)
     end
 
     records += raw_records.join(",\n")
@@ -149,13 +148,13 @@ end
     device_publishes = device.ddcs_devices.where(publishable: true).join(:ddcs).pluck(:'ddc.name')
   end
 
-  def self._permit_device(device, account, pr, permissions)
+  def self._permit_device(device, pr, permissions)
     records = []
 
     device.ddcs.each do |ddc|
       Rails.logger.debug "ACL homebus/device/#{device.id}/#{ddc.name} -> #{permissions}"
 
-      records.push  "\t('#{account.id}', 'homebus/device/#{device.id}/#{ddc.name}', '#{pr.id}', #{permissions}, '2021-03-16 03:52:12.630393', '2021-03-16 03:52:12.630393')"
+      records.push  "\t('#{pr.account_id}', 'homebus/device/#{device.id}/#{ddc.name}', '#{pr.id}', #{permissions}, NOW(), NOW())"
     end
 
     records
