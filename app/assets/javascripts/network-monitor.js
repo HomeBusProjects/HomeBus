@@ -59,6 +59,8 @@ function onConnectionLost(responseObject) {
 function onConnectFail(e) {
     console.log(e);
     console.log("doFail");
+
+    setInterval(function () { client.connect(options); }, 1000*30);
 }
 
 function onMessageArrived(message) {
