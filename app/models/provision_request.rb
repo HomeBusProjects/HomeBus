@@ -52,7 +52,8 @@ class ProvisionRequest < ApplicationRecord
     ma = MosquittoAccount.new
 
     self.account_id = SecureRandom.uuid
-    self.account_password = ma.generate_pbkdf2_password!
+#    self.account_password = ma.generate_pbkdf2_password!
+    self.account_password = ma.generate_password!
     self.account_encrypted_password = ma.password
     self.save
 
