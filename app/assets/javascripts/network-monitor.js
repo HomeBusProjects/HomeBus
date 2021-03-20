@@ -12,7 +12,7 @@ $(document).ready(function() {
     client.onConnectionLost = onConnectionLost; 
     client.onMessageArrived = onMessageArrived;
 
-    setTimeout(function () { brokerConnect(); }, 1000*20);
+    setTimeout(function () { brokerConnect(); }, 1000*45);
 //    brokerConnect();
 
     // refresh the refresh token once per minute to keep the monitor alive
@@ -65,6 +65,8 @@ function onConnectionLost(responseObject) {
 function onConnectFail(e) {
     console.log(e);
     console.log("doFail");
+
+    setTimeout(function () { brokerConnect(); }, 1000*15);
 }
 
 function onMessageArrived(message) {
