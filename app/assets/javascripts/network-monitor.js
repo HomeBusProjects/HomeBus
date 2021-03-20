@@ -11,7 +11,8 @@ $(document).ready(function() {
     client.onConnectionLost = onConnectionLost; 
     client.onMessageArrived = onMessageArrived;
 
-    brokerConnect();
+    setTimeout(function () { brokerConnect(); }, 1000*20);
+//    brokerConnect();
 
     // refresh the refresh token once per minute to keep the monitor alive
     setInterval(function () {
@@ -63,8 +64,6 @@ function onConnectionLost(responseObject) {
 function onConnectFail(e) {
     console.log(e);
     console.log("doFail");
-
-//    setInterval(function () { brokerConnect(); }, 1000*30);
 }
 
 function onMessageArrived(message) {
