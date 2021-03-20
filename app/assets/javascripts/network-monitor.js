@@ -64,7 +64,7 @@ function onConnectFail(e) {
     console.log(e);
     console.log("doFail");
 
-    setInterval(function () { brokerConnect(); }, 1000*30);
+//    setInterval(function () { brokerConnect(); }, 1000*30);
 }
 
 function onMessageArrived(message) {
