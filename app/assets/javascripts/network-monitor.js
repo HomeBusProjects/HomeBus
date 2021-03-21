@@ -12,7 +12,7 @@ $(document).ready(function() {
     client.onConnectionLost = onConnectionLost; 
     client.onMessageArrived = onMessageArrived;
 
-    setTimeout(function () { brokerConnect(); }, 1000*45);
+    setTimeout(function () { brokerConnect(); }, 1000*15);
 //    brokerConnect();
 
     // refresh the refresh token once per minute to keep the monitor alive
@@ -70,15 +70,15 @@ function onConnectFail(e) {
 }
 
 function onMessageArrived(message) {
-  console.log('broker msg', message);
+    console.log('broker msg', message);
 
-  let data;
-  try {
-    data = JSON.parse(message.payloadString);
-  } catch(error) {
-    $('#monitor_table tbody').prepend('<tr><td>parse error</td><td></td><td><code>' + message.payloadString + '</code></d>'); 
-    return;
-  }
+    let data;
+    try {
+	data = JSON.parse(message.payloadString);
+    } catch(error) {
+	$('#monitor_table tbody').prepend('<tr><td>parse error</td><td></td><td><code>' + message.payloadString + '</code></d>'); 
+	return;
+    }
 
     let source, timestamp, ddc, payload, date;
 
@@ -90,21 +90,24 @@ function onMessageArrived(message) {
             ddc = data["contents"]["ddc"];
             payload = data["contents"]["payload"];
         } catch(error) {
-          $('#monitor_table tbody').prepend('<tr><td><a href="/devices/' + source +  '">' + source + '</td><td>parse error</td><td><code>' + message.payloadString + '</code></d>'); 
-          return;
+            $('#monitor_table tbody').prepend('<tr><td><a href="/devices/' + source +  '">' + source + '</td><td>parse error</td><td><code>' + message.payloadString + '</code></d>'); 
+            return;
         }
     }
 
-  try {
-    datetime = format_date(new Date(timestamp * 1000));
- } catch(error) {
-    datetime = "invalid";
- }
+    if(ddc == 'org.homebus.experimental.tick' || ddc == 'org.homebus.experimental.clock')
+	return;
 
-  if(monitor_params["uuid_name_map"][source])
-    source = '<a href="/devices/' + source + '">' + monitor_params["uuid_name_map"][source] + '</a>';
-  else
-    source = '<a href="/devices/' + source + '">' + source + '</a>';
+    try {
+	datetime = format_date(new Date(timestamp * 1000));
+    } catch(error) {
+	datetime = "invalid";
+    }
+
+    if(monitor_params["uuid_name_map"][source])
+	source = '<a href="/devices/' + source + '">' + monitor_params["uuid_name_map"][source] + '</a>';
+    else
+	source = '<a href="/devices/' + source + '">' + source + '</a>';
 
     $('#monitor_table tbody').prepend('<tr><td>' + source + '</td><td>' + ddc + '</td><td>' + datetime + '</td><td><code>' + JSON.stringify(payload) + '</code></td></tr>');
 }
