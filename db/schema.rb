@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_19_194708) do
+ActiveRecord::Schema.define(version: 2021_03_22_153527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -92,7 +92,9 @@ ActiveRecord::Schema.define(version: 2021_03_19_194708) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "calibrated", default: false, null: false
+    t.boolean "public", default: false, null: false
     t.index ["provision_request_id"], name: "index_devices_on_provision_request_id"
+    t.index ["public"], name: "index_devices_on_public"
   end
 
   create_table "devices_networks", force: :cascade do |t|
@@ -185,6 +187,26 @@ ActiveRecord::Schema.define(version: 2021_03_19_194708) do
     t.index ["wo_ddcs"], name: "index_provision_requests_on_wo_ddcs", using: :gin
   end
 
+  create_table "public_devices", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.uuid "device_id", null: false
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["device_id"], name: "index_public_devices_on_device_id"
+  end
+
+  create_table "public_networks", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.bigint "network_id", null: false
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["network_id"], name: "index_public_networks_on_network_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -219,4 +241,6 @@ ActiveRecord::Schema.define(version: 2021_03_19_194708) do
   add_foreign_key "permissions", "devices"
   add_foreign_key "permissions", "networks"
   add_foreign_key "provision_requests", "users"
+  add_foreign_key "public_devices", "devices"
+  add_foreign_key "public_networks", "networks"
 end

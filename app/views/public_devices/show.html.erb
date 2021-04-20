@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @public_device.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @public_device.description %>
+</p>
+
+<p>
+  <strong>Device:</strong>
+  <%= @public_device.device_id %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @public_device.active %>
+</p>
+
+<%= link_to 'Edit', edit_public_device_path(@public_device) %> |
+<%= link_to 'Back', public_devices_path %>

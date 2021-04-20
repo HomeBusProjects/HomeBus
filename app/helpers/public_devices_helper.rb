@@ -1,0 +1,2 @@
+module PublicDevicesHelper
+end

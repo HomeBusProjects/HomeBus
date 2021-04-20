@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :public_networks
+  resources :public_devices
   resources :app_instances
   resources :permissions
   resources :apps

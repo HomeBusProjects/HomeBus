@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Public Networks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Network</th>
+      <th>Active</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @public_networks.each do |public_network| %>
+      <tr>
+        <td><%= public_network.title %></td>
+        <td><%= public_network.description %></td>
+        <td><%= public_network.network_id %></td>
+        <td><%= public_network.active %></td>
+        <td><%= link_to 'Show', public_network %></td>
+        <td><%= link_to 'Edit', edit_public_network_path(public_network) %></td>
+        <td><%= link_to 'Destroy', public_network, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Public Network', new_public_network_path %>

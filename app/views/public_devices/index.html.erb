@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Public Devices</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Device</th>
+      <th>Active</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @public_devices.each do |public_device| %>
+      <tr>
+        <td><%= public_device.title %></td>
+        <td><%= public_device.description %></td>
+        <td><%= public_device.device_id %></td>
+        <td><%= public_device.active %></td>
+        <td><%= link_to 'Show', public_device %></td>
+        <td><%= link_to 'Edit', edit_public_device_path(public_device) %></td>
+        <td><%= link_to 'Destroy', public_device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Public Device', new_public_device_path %>

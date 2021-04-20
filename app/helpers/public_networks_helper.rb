@@ -1,0 +1,2 @@
+module PublicNetworksHelper
+end

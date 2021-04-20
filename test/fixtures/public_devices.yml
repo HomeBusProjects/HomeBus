@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  device: one
+  active: false
+
+two:
+  title: MyString
+  description: MyString
+  device: two
+  active: false
