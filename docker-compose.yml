@@ -29,6 +29,8 @@ services:
       - '/app/tmp' # don't mount tmp directory
     environment:
       - REDIS_URL_SIDEKIQ=redis://redis:6379/0
+      - REDIS_URL=redis://redis:6379/0
+      - REDIS_PROVIDER=redis://redis:6379/0
     networks: 
       - homebus-net
 

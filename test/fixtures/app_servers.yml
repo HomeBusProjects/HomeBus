@@ -3,9 +3,12 @@
 one:
   name: MyString
   port: 1
-  secret_key: MyString
+  public_key: MyString
+  owner_id: 1
 
 two:
   name: MyString
   port: 1
-  secret_key: MyString
+  public_key: MyString
+  owner_id: 1
+

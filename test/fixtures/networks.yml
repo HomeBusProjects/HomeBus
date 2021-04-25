@@ -3,9 +3,9 @@
 one:
   name: MyString
   count_of_users: 1
-  token: MyString
+  users: [ user_one ]
 
 two:
   name: MyString
   count_of_users: 1
-  token: MyString
+  users: [ user_two ]

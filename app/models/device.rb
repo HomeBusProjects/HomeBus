@@ -10,4 +10,5 @@ class Device < ApplicationRecord
   has_and_belongs_to_many :ddcs
 
   has_many :permissions, dependent: :destroy
+  has_one :public_device, dependent: :destroy
 end

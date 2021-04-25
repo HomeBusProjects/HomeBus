@@ -2,8 +2,15 @@
 
 one:
   name: MyString
-  auth_token: MyString
+  secure_port: 8883
+  insecure_port: 1883
+  secure_websocket_port: 9901
+  insecure_websocket_port: 9001
 
 two:
-  name: MyString
-  auth_token: MyString
+  name: MyString2
+  secure_port: 8883
+  insecure_port: 1883
+  secure_websocket_port: 9901
+  insecure_websocket_port: 9001
+

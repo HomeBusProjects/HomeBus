@@ -2,12 +2,16 @@
 
 one:
   app: one
-  user: one
-  parameters: 
+  user: user_one
+  name: AppOne
+  parameters: {}
   public_key: MyString
+  last_run: <%= 1.day.ago.to_s(:db) %>
 
 two:
   app: two
-  user: two
-  parameters: 
+  user: user_two
+  name: AppTwo
+  parameters: {}
   public_key: MyString
+  last_run: <%= 1.day.ago.to_s(:db) %>

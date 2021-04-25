@@ -9,11 +9,13 @@ class User < ApplicationRecord
   has_many :networks_users, dependent: :destroy
   has_many :networks, through: :networks_users
 
-  has_many :provision_requests
+  has_many :provision_requests, dependent: :destroy
+  has_many :app_instances, dependent: :destroy
 
   has_and_belongs_to_many :devices
 
   after_create :send_admin_mail
+
   def send_admin_mail
     NotifyRequestMailer.with(user: self).admins_new_user.deliver_later
   end
@@ -24,5 +26,10 @@ class User < ApplicationRecord
   
   def inactive_message 
     approved? ? super : :not_approved
+  end
+
+  def approve!
+    self.approved = true
+    self.save
   end
 end

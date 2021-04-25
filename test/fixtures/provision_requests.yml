@@ -1,20 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+pr_one:
+  user: user_one
   pin: MyString
   ip_address:  '10.0.1.2'
   friendly_name: MyString
-  friendly_location: MyString
   manufacturer: MyString
   model: MyString
   serial_number: MyString
   status: 1
 
-two:
+pr_two:
+  user: user_two
   pin: MyString
   ip_address: '192.168.1.2'
   friendly_name: MyString
-  friendly_location: MyString
   manufacturer: MyString
   model: MyString
   serial_number: MyString
