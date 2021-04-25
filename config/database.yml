@@ -18,11 +18,11 @@ development:
 test:
   primary:
     <<: *default 
-    url: <%= ENV['DATABASE_URL', 'postgresql://postgres:homebus-development@postgres:5432/homebus_test?pool=5'] %>
+    url: <%= ENV['DATABASE_URL'] || 'postgresql://postgres:homebus-development@postgres:5432/homebus_test?pool=5' %>
   mqtt0:
     <<: *default
     migrations_paths: db/mosquitto_migrate
-    url: <%= ENV['DATABASE_URL', 'postgresql://postgres:homebus-development@postgres:5432/homebus_test?pool=5'] %>
+    url: <%= ENV['DATABASE_URL'] || 'postgresql://postgres:homebus-development@postgres:5432/homebus_test?pool=5' %>
 
 staging:
   primary:
