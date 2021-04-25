@@ -17,7 +17,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -32,8 +32,6 @@ jobs:
           RAILS_MASTER_KEY: $
         run: |
           sudo apt-get -yqq install libpq-dev
-          gem install bundler
-          bundle install --jobs 4 --retry 3
           yarn install
           bundle exec rails db:prepare
           bundle exec rails test
