@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDevicesUsersJoinTable < ActiveRecord::Migration[6.0]
   def change
     create_table :devices_users, id: false do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddAutoRemoveToProvisionRequest < ActiveRecord::Migration[6.0]
   def change
     add_column :provision_requests, :last_refresh, :datetime

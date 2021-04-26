@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class MosquittoAccountsController < ApplicationController
   load_and_authorize_resource
   check_authorization
-  
-  before_action :set_mosquitto_account, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_mosquitto_account, only: %i[show edit update destroy]
 
   # GET /mosquitto_accounts
   # GET /mosquitto_accounts.json
@@ -12,8 +14,7 @@ class MosquittoAccountsController < ApplicationController
 
   # GET /mosquitto_accounts/1
   # GET /mosquitto_accounts/1.json
-  def show
-  end
+  def show; end
 
   # GET /mosquitto_accounts/new
   def new
@@ -21,8 +22,7 @@ class MosquittoAccountsController < ApplicationController
   end
 
   # GET /mosquitto_accounts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /mosquitto_accounts
   # POST /mosquitto_accounts.json
@@ -32,7 +32,7 @@ class MosquittoAccountsController < ApplicationController
     respond_to do |format|
       if @mosquitto_account.save
         flash_message 'success', 'Mosquitto account was successfully created.'
-        
+
         format.html { redirect_to @mosquitto_account }
         format.json { render :show, status: :created, location: @mosquitto_account }
       else
@@ -75,13 +75,14 @@ class MosquittoAccountsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_mosquitto_account
-      @mosquitto_account = MosquittoAccount.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def mosquitto_account_params
-      params.require(:mosquitto_account).permit(:password, :superuser, :provision_request_id, :enabled)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_mosquitto_account
+    @mosquitto_account = MosquittoAccount.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def mosquitto_account_params
+    params.require(:mosquitto_account).permit(:password, :superuser, :provision_request_id, :enabled)
+  end
 end

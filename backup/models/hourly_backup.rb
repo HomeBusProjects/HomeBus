@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 # Backup Generated: hourly_backup
 # Once configured, you can run the backup with the following command:
@@ -9,7 +11,7 @@
 #
 Model.new(:hourly_backup, 'Description for hourly_backup') do
   database PostgreSQL do |db|
-    db.name      = 'homebus_' + ENV['RAILS_ENV']
+    db.name      = "homebus_#{ENV['RAILS_ENV']}"
     db.username  = ENV['POSTGRESQL_USERNAME']
     db.password  = ENV['POSTGRESQL_PASSWORD']
     db.host      = ENV['POSTGRESQL_HOSTNAME']

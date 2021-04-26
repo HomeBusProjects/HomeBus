@@ -1,21 +1,19 @@
-class ProvisionController < ActionController::Base
+# frozen_string_literal: true
+
+class ProvisionController < ApplicationController
   protect_from_forgery except: ['index']
 
   def index
     decoded_request = Network.find_from_auth_token request.headers['Authorization']
 
-    user = User.find decoded_request["user"]["id"]
-    network = Network.find decoded_request["network"]["id"]
+    user = User.find decoded_request['user']['id']
+    network = Network.find decoded_request['network']['id']
 
-    unless network && user
-      raise ActionController::InvalidAuthenticityToken
-    end
+    raise ActionController::InvalidAuthenticityToken unless network && user
 
-#    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
+    #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
 
-    unless validate_provision(p)
-      raise ActionController::ParameterMissing
-    end
+    raise ActionController::ParameterMissing unless validate_provision(p)
 
     args = { ip_address: request.remote_ip, status: :unanswered }
     args[:manufacturer] = p[:provision][:identity][:manufacturer]
@@ -37,7 +35,7 @@ class ProvisionController < ActionController::Base
     if pr
       if pr.accepted? && pr.ready?
         # generating a password is the only time we have it in plain text to return to the client
-#        password = pr.mosquitto_account.generate_password!
+        #        password = pr.mosquitto_account.generate_password!
 
         broker = Broker.first
 
@@ -45,21 +43,20 @@ class ProvisionController < ActionController::Base
           status: 'provisioned',
           credentials: {
             mqtt_username: pr.account_id,
-            mqtt_password: pr.account_password,
+            mqtt_password: pr.account_password
           },
           broker: {
             mqtt_hostname: broker.name,
             insecure_mqtt_port: 1883,
             secure_mqtt_port: 8883
           },
-          uuids: pr.devices.map { |d| d.id },
+          uuids: pr.devices.map(&:id),
           refresh_token: pr.get_refresh_token(pr.user)
         }
       else
         response = { refresh_token: pr.get_refresh_token(pr.network.users.first),
                      status: 'waiting',
-                     retry_time: 60
-                   }
+                     retry_time: 60 }
       end
     else
       args[:network] = network
@@ -67,14 +64,14 @@ class ProvisionController < ActionController::Base
       pr = ProvisionRequest.create args
 
       begin
-        NotifyRequestMailer.with(provision_request: pr, user: pr.network.users.first).new_provisioning_request.deliver_later
-      rescue
+        NotifyRequestMailer.with(provision_request: pr,
+                                 user: pr.network.users.first).new_provisioning_request.deliver_later
+      rescue StandardError
       end
 
       response = { refresh_token: pr.get_refresh_token(pr.network.users.first),
                    status: 'waiting',
-                   retry_time: 60
-                 }
+                   retry_time: 60 }
     end
 
     respond_to do |format|
@@ -90,19 +87,19 @@ class ProvisionController < ActionController::Base
     pr = validate_refresh
 
     unless pr
-      Rails.logger.error "/provision/refresh fail"
+      Rails.logger.error '/provision/refresh fail'
 
-      token =  request.headers['Authorization']
+      token = request.headers['Authorization']
       Rails.logger.debug token
 
       jwt = JsonWebToken.decode(token)
       Rails.logger.debug jwt
 
-      raise ActionController:BadRequest
+      raise ActionController: BadRequest
     end
 
     if pr.autoremove_interval
-      pr.update(last_refresh: Time.now.to_i, autoremove_at: Time.now + pr.autoremove_interval.seconds)
+      pr.update(last_refresh: Time.now.to_i, autoremove_at: Time.zone.now + pr.autoremove_interval.seconds)
     else
       pr.update(last_refresh: Time.now.to_i)
     end
@@ -119,15 +116,13 @@ class ProvisionController < ActionController::Base
 
   def broker
     pr = validate_refresh
-    unless pr
-      raise ActionController:BadRequest
-    end
+    raise ActionController: BadRequest unless pr
 
     response = {
       status: 'provisioned',
       credentials: {
         mqtt_username: pr.mosquitto_account.id,
-        mqtt_password: password,
+        mqtt_password: password
       },
       broker: {
         mqtt_hostname: broker.name,
@@ -150,24 +145,18 @@ class ProvisionController < ActionController::Base
 
   def validate_refresh
     refresh = request.headers['Authorization']
-    pr = ProvisionRequest.find_by_refresh_token(refresh)
+    pr = ProvisionRequest.find_by(refresh_token: refresh)
   end
 
   def validate_provision(params)
     p = params[:provision]
 
-    unless p
-      return false
-    end
+    return false unless p
 
-    unless p[:identity] && p[:ddcs]
-      return false
-    end
+    return false unless p[:identity] && p[:ddcs]
 
     i = p[:identity]
-    unless i[:manufacturer]
-      return false
-    end
+    return false unless i[:manufacturer]
 
     i[:model] ||= ''
     i[:serial_number] ||= ''
@@ -179,10 +168,8 @@ class ProvisionController < ActionController::Base
 
     p[:requested_uuid_count] ||= 1
 
-    return true
+    true
   end
 
-  def refresh_token
-    
-  end
+  def refresh_token; end
 end

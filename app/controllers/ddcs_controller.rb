@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class DdcsController < ApplicationController
   load_and_authorize_resource
   check_authorization
-  
-  before_action :set_ddc, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_ddc, only: %i[show edit update destroy]
 
   # GET /ddcs
   # GET /ddcs.json
@@ -12,8 +14,7 @@ class DdcsController < ApplicationController
 
   # GET /ddcs/1
   # GET /ddcs/1.json
-  def show
-  end
+  def show; end
 
   # GET /ddcs/new
   def new
@@ -21,8 +22,7 @@ class DdcsController < ApplicationController
   end
 
   # GET /ddcs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /ddcs
   # POST /ddcs.json
@@ -65,13 +65,14 @@ class DdcsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ddc
-      @ddc = Ddc.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def ddc_params
-      params.require(:ddc).permit(:name, :description, :reference_url, :json, :examples)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ddc
+    @ddc = Ddc.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def ddc_params
+    params.require(:ddc).permit(:name, :description, :reference_url, :json, :examples)
+  end
 end

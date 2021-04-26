@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FixBrokerPorts < ActiveRecord::Migration[6.1]
   def change
     add_column :brokers, :insecure_websocket_port, :integer, null: false, default: 9001

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AppsController < ApplicationController
-  before_action :set_app, only: [:show, :edit, :update, :destroy]
+  before_action :set_app, only: %i[show edit update destroy]
 
   # GET /apps
   # GET /apps.json
@@ -9,8 +11,7 @@ class AppsController < ApplicationController
 
   # GET /apps/1
   # GET /apps/1.json
-  def show
-  end
+  def show; end
 
   # GET /apps/new
   def new
@@ -18,8 +19,7 @@ class AppsController < ApplicationController
   end
 
   # GET /apps/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /apps
   # POST /apps.json
@@ -62,13 +62,14 @@ class AppsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_app
-      @app = App.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def app_params
-      params.require(:app).permit(:name, :source, :description, :parameters)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_app
+    @app = App.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def app_params
+    params.require(:app).permit(:name, :source, :description, :parameters)
+  end
 end

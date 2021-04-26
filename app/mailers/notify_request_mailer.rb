@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotifyRequestMailer < ApplicationMailer
   default from: 'do-not-reply@homebus.org'
 
@@ -10,6 +12,9 @@ class NotifyRequestMailer < ApplicationMailer
   def admins_new_user
     @user = params[:user]
     @url  = 'http://example.com/login'
-    mail(to: User.where(site_admin: true).pluck(:email), subject: 'New user') if User.where(site_admin: true).count > 0
+    if User.where(site_admin: true).count.positive?
+      mail(to: User.where(site_admin: true).pluck(:email),
+           subject: 'New user')
+    end
   end
 end

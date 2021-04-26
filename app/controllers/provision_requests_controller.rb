@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
 class ProvisionRequestsController < ApplicationController
   load_and_authorize_resource
   check_authorization
 
-  before_action :set_provision_request, only: [:show, :edit, :update, :destroy, :accept, :deny, :revoke]
+  before_action :set_provision_request, only: %i[show edit update destroy accept deny revoke]
 
   def accept
     @provision_request.accept!
@@ -65,10 +67,14 @@ class ProvisionRequestsController < ApplicationController
   def index
     if signed_in? && current_user.site_admin?
       @unanswered_provision_requests = ProvisionRequest.where(status: ProvisionRequest.statuses[:unanswered]).order(created_at: :desc)
-      @provision_requests = ProvisionRequest.where('status != ?', ProvisionRequest.statuses[:unanswered]).order(friendly_name: :asc, created_at: :desc)
+      @provision_requests = ProvisionRequest.where.not(status: ProvisionRequest.statuses[:unanswered]).order(
+        friendly_name: :asc, created_at: :desc
+      )
     else
       @unanswered_provision_requests = current_user.provision_requests.where(status: ProvisionRequest.statuses[:unanswered]).order(created_at: :desc)
-      @provision_requests = current_user.provision_requests.where('status != ?', ProvisionRequest.statuses[:unanswered]).order(friendly_name: :asc, created_at: :desc)
+      @provision_requests = current_user.provision_requests.where.not(status: ProvisionRequest.statuses[:unanswered]).order(
+        friendly_name: :asc, created_at: :desc
+      )
     end
 
     if params[:q]
@@ -83,8 +89,7 @@ class ProvisionRequestsController < ApplicationController
 
   # GET /provision_requests/1
   # GET /provision_requests/1.json
-  def show
-  end
+  def show; end
 
   # GET /provision_requests/new
   def new
@@ -94,14 +99,13 @@ class ProvisionRequestsController < ApplicationController
       @users = User.all.order(email: :asc)
       @networks = Network.all.order(name: :asc)
     else
-      @users = [ current_user ]
+      @users = [current_user]
       @networks = current_user.networks.order(name: :asc)
     end
   end
 
   # GET /provision_requests/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /provision_requests
   # POST /provision_requests.json
@@ -159,27 +163,25 @@ class ProvisionRequestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_provision_request
-      @provision_request = ProvisionRequest.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def provision_request_params
-      arrayize_ddcs!(params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model, :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :network_id, :uuids))
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_provision_request
+    @provision_request = ProvisionRequest.find(params[:id])
+  end
 
-    def arrayize_ddcs!(p)
-      wo_ddcs = p[:wo_ddcs]
-      if wo_ddcs.present?
-        p.merge!({ wo_ddcs: wo_ddcs.split })
-      end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def provision_request_params
+    arrayize_ddcs!(params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model,
+                                                             :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :network_id, :uuids))
+  end
 
-      ro_ddcs = p[:ro_ddcs]
-      if ro_ddcs.present?
-        p.merge!({ ro_ddcs: ro_ddcs.split })
-      end
+  def arrayize_ddcs!(p)
+    wo_ddcs = p[:wo_ddcs]
+    p.merge!({ wo_ddcs: wo_ddcs.split }) if wo_ddcs.present?
 
-      p
-    end
+    ro_ddcs = p[:ro_ddcs]
+    p.merge!({ ro_ddcs: ro_ddcs.split }) if ro_ddcs.present?
+
+    p
+  end
 end

@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 class NetworksController < ApplicationController
   load_and_authorize_resource
   check_authorization
-    
-  before_action :set_network, only: [:show, :edit, :update, :destroy, :monitor]
+
+  before_action :set_network, only: %i[show edit update destroy monitor]
 
   # GET /networks
   # GET /networks.json
   def index
-    if can? :manage, :devices
-      @networks = Network.all
-    else
-      @networks = @current_user.networks
-    end
+    @networks = if can? :manage, :devices
+                  Network.all
+                else
+                  @current_user.networks
+                end
   end
 
   # GET /networks/1
@@ -29,13 +31,12 @@ class NetworksController < ApplicationController
   end
 
   # GET /networks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /networks
   # POST /networks.json
   def create
-    @network = Network.new(network_params.merge({ broker: Broker.first}))
+    @network = Network.new(network_params.merge({ broker: Broker.first }))
 
     respond_to do |format|
       if @network.save
@@ -56,9 +57,7 @@ class NetworksController < ApplicationController
   def update
     respond_to do |format|
       if @network.update(network_params)
-        if network_params[:name]
-          PublishDevicesJob.perform_later(@network)
-        end
+        PublishDevicesJob.perform_later(@network) if network_params[:name]
 
         format.html { redirect_to @network, notice: 'Network was successfully updated.' }
         format.json { render :show, status: :ok, location: @network }
@@ -83,7 +82,9 @@ class NetworksController < ApplicationController
   def monitor
     @consume_ddcs = @network.provision_requests.pluck(:wo_ddcs).flatten.uniq.sort
 
-    @endpoints = Permission.where(network: @network, publishes: true).map { |perm| "homebus/device/#{perm.device.id}/#{perm.ddc.name}" }
+    @endpoints = Permission.where(network: @network, publishes: true).map do |perm|
+      "homebus/device/#{perm.device.id}/#{perm.ddc.name}"
+    end
     @uuid_name_map = @network.devices.map { |device| { id: device[:id], name: device[:friendly_name] } }
 
     pr = ProvisionRequest.create manufacturer: 'Homebus',
@@ -96,12 +97,12 @@ class NetworksController < ApplicationController
                                  ip_address: '127.0.0.1',
                                  friendly_name: 'Temporary web monitor',
                                  user: current_user,
-                                 autoremove_interval: 9*60,
-                                 autoremove_at: Time.now + 9.minutes
+                                 autoremove_interval: 9 * 60,
+                                 autoremove_at: Time.zone.now + 9.minutes
 
     pr.accept!
 
-    @broker = Hash.new
+    @broker = {}
 
     @broker[:server] = pr.network.broker.name
     @broker[:port] = 8083
@@ -114,13 +115,14 @@ class NetworksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_network
-      @network = Network.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def network_params
-      params.require(:network).permit(:name, :count_of_users)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_network
+    @network = Network.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def network_params
+    params.require(:network).permit(:name, :count_of_users)
+  end
 end

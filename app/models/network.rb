@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json_web_token'
 
 class Network < ApplicationRecord
@@ -13,7 +15,7 @@ class Network < ApplicationRecord
   has_one :public_network, dependent: :destroy
 
   belongs_to :broker, counter_cache: true
-  belongs_to :announcer, class_name: "Device", optional: true
+  belongs_to :announcer, class_name: 'Device', optional: true
 
   validates :name, presence: true
 
@@ -21,13 +23,13 @@ class Network < ApplicationRecord
     pr = ProvisionRequest.create friendly_name: 'Homebus',
                                  manufacturer: 'Homebus',
                                  model: 'Network announcer',
-                                 serial_number: self.id,
+                                 serial_number: id,
                                  pin: '',
                                  network: self,
                                  user: user,
                                  ip_address: '127.0.0.1',
                                  requested_uuid_count: 1,
-                                 wo_ddcs: [ 'org.homebus.experimental.homebus.devices' ],
+                                 wo_ddcs: ['org.homebus.experimental.homebus.devices'],
                                  ro_ddcs: []
 
     pr.accept!
@@ -37,7 +39,7 @@ class Network < ApplicationRecord
     d.save
 
     self.announcer = d
-    self.save
+    save
   end
 
   def get_auth_token(user)
@@ -53,24 +55,22 @@ class Network < ApplicationRecord
       created_at: Time.now.to_i
     }
 
-    JsonWebToken.encode(payload, Time.now + 1.month)
+    JsonWebToken.encode(payload, Time.zone.now + 1.month)
   end
 
   def self.find_from_auth_token(token)
-    begin
-      request = JsonWebToken.decode(token)
+    request = JsonWebToken.decode(token)
 
-      if Time.now.to_i > request["exp"]
-        Rails.logger.error "request expired"
+    if Time.now.to_i > request['exp']
+      Rails.logger.error 'request expired'
 
-        return nil
-      end
-
-      request
-    rescue => e
-      Rails.logger.error "JsonWebToken exception" + e.backtrace.join("\n")
-
-      nil
+      return nil
     end
+
+    request
+  rescue StandardError => e
+    Rails.logger.error "JsonWebToken exception#{e.backtrace.join("\n")}"
+
+    nil
   end
 end

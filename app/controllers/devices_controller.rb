@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class DevicesController < ApplicationController
   load_and_authorize_resource
   check_authorization
-  
-  before_action :set_device, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_device, only: %i[show edit update destroy]
 
   # GET /devices
   # GET /devices.json
@@ -15,17 +17,14 @@ class DevicesController < ApplicationController
       @devices = @current_user.devices.includes(:provision_request).order('provision_requests.friendly_name asc, devices.friendly_name asc')
     end
 
-    if p[:provision_id]
-      @devices = @devices.where(provision_request_id: p[:provision_id])
-    end
+    @devices = @devices.where(provision_request_id: p[:provision_id]) if p[:provision_id]
 
     @devices = @devices.order(friendly_name: :asc)
   end
 
   # GET /devices/1
   # GET /devices/1.json
-  def show
-  end
+  def show; end
 
   # GET /devices/new
   def new
@@ -33,8 +32,7 @@ class DevicesController < ApplicationController
   end
 
   # GET /devices/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /devices
   # POST /devices.json
@@ -43,7 +41,7 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.save
-       flash_message 'success', 'Device was successfully created.'
+        flash_message 'success', 'Device was successfully created.'
 
         format.html { redirect_to @device }
         format.json { render :show, status: :created, location: @device }
@@ -87,13 +85,15 @@ class DevicesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_device
-      @device = Device.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def device_params
-      params.require(:device).permit(:provisioned, :friendly_name, :friendly_location, :index, :accuracy, :precision, :update_frequency, :calibrated, :provision_request_id, { wo_topics: [], ro_topics: [], rw_topics: [], space_ids: [] })
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_device
+    @device = Device.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def device_params
+    params.require(:device).permit(:provisioned, :friendly_name, :friendly_location, :index, :accuracy, :precision,
+                                   :update_frequency, :calibrated, :provision_request_id, { wo_topics: [], ro_topics: [], rw_topics: [], space_ids: [] })
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMosquittoAccount < ActiveRecord::Migration[6.0]
   def change
     enable_extension 'pgcrypto'
@@ -13,8 +15,8 @@ class CreateMosquittoAccount < ActiveRecord::Migration[6.0]
 
     add_index :mosquitto_accounts, :provision_request_id, unique: true
 
-    add_index :mosquitto_accounts, [:enabled, :provision_request_id], unique: true
-    add_index :mosquitto_accounts, [:id, :enabled]
+    add_index :mosquitto_accounts, %i[enabled provision_request_id], unique: true
+    add_index :mosquitto_accounts, %i[id enabled]
     add_index :mosquitto_accounts, :created_at
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FixApps < ActiveRecord::Migration[6.1]
   def change
     change_column :apps, :name, :string, null: false, default: '', index: true

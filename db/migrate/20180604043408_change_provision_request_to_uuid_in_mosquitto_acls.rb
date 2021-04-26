@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeProvisionRequestToUuidInMosquittoAcls < ActiveRecord::Migration[5.2]
   def change
     remove_column :mosquitto_acls, :provision_request_id

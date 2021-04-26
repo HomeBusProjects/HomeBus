@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ProvisionRequest < ApplicationRecord
-  enum status: [ :unanswered, :accepted, :denied ]
+  enum status: { unanswered: 0, accepted: 1, denied: 2 }
 
   has_many :devices, dependent: :destroy
 
@@ -9,14 +11,14 @@ class ProvisionRequest < ApplicationRecord
   belongs_to :network
   belongs_to :user
 
-  scope :owned_by, -> (user) { ProvisionRequest.where(network_id: user.networks.pluck(:id)) }
+  scope :owned_by, ->(user) { ProvisionRequest.where(network_id: user.networks.pluck(:id)) }
 
   def get_refresh_token(user)
     payload = {
       kind: 'refresh',
       provision_request: {
         name: friendly_name,
-        id: self.id
+        id: id
       },
       user: {
         id: user.id
@@ -24,7 +26,7 @@ class ProvisionRequest < ApplicationRecord
       created_at: Time.now.to_i
     }
 
-    JsonWebToken.encode(payload, Time.now + 1.year)
+    JsonWebToken.encode(payload, Time.zone.now + 1.year)
   end
 
   def accept!
@@ -39,7 +41,7 @@ class ProvisionRequest < ApplicationRecord
     end
 
     requested_uuid_count.times do |i|
-      device = self.devices.create friendly_name: "#{friendly_name}-#{i}"
+      device = devices.create friendly_name: "#{friendly_name}-#{i}"
 
       device.networks << network
       device.users << network.users.first
@@ -47,37 +49,32 @@ class ProvisionRequest < ApplicationRecord
       Permission.from_device(device, network)
     end
 
-#    self.create_mosquitto_account(superuser: false, password: SecureRandom.base64(32), enabled: true)
+    #    self.create_mosquitto_account(superuser: false, password: SecureRandom.base64(32), enabled: true)
 
     ma = MosquittoAccount.new
 
     self.account_id = SecureRandom.uuid
-#    self.account_password = ma.generate_pbkdf2_password!
+    #    self.account_password = ma.generate_pbkdf2_password!
     self.account_password = ma.generate_password!
     self.account_encrypted_password = ma.password
-    self.save
+    save
 
     UpdateMqttAuthJob.perform_later(self)
 
-#    MosquittoAcl.from_provision_request2 self
+    #    MosquittoAcl.from_provision_request2 self
   end
 
   def revoke!
-    self.mosquitto_account.update(enabled: false)
+    mosquitto_account.update(enabled: false)
   end
 
   def self.find_by_refresh_token(token)
-    begin
-      request = JsonWebToken.decode(token)
+    request = JsonWebToken.decode(token)
 
-      if Time.now.to_i > request["exp"]
-        return nil
-      end
+    return nil if Time.now.to_i > request['exp']
 
-      ProvisionRequest.find request["provision_request"]["id"]
-    rescue
-      nil
-    end
+    ProvisionRequest.find request['provision_request']['id']
+  rescue StandardError
+    nil
   end
-
 end

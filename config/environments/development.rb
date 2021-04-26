@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -34,7 +36,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :letter_opener_web
 
   config.log_level = :debug
-  config.action_mailer.logger = ActiveSupport::Logger.new(STDOUT)
+  config.action_mailer.logger = ActiveSupport::Logger.new($stdout)
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
 
@@ -43,9 +45,8 @@ Rails.application.configure do
     reply_to: 'no-reply@homebus.org'
   }
 
-#    user_name: ENV.fetch("SMTP_USERNAME"),
-#    password: ENV.fetch("SMTP_PASSWORD"),
-
+  #    user_name: ENV.fetch("SMTP_USERNAME"),
+  #    password: ENV.fetch("SMTP_PASSWORD"),
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
@@ -76,4 +77,4 @@ end
 
 Rails.application.routes.default_url_options[:host] = 'localhost:1080'
 Rails.application.default_url_options[:host] = 'localhost:1080'
-#Rails.application.action_mailer.default_url_options[:host] = 'localhost:1080'
+# Rails.application.action_mailer.default_url_options[:host] = 'localhost:1080'

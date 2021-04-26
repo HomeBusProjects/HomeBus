@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 desc 'Populate device/ddc table'
 task populate_ddcs: :environment do
   Device.all.each do |d|
@@ -26,4 +28,3 @@ task populate_ddcs: :environment do
     end
   end
 end
-

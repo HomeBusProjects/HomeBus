@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddJsonToDdcs < ActiveRecord::Migration[6.0]
   def change
     add_column :ddcs, :json, :string, null: false, default: ''

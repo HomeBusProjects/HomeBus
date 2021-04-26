@@ -1,25 +1,26 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   load_and_authorize_resource
   check_authorization
-  
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users
   # GET /users.json
   def index
-    if params[:approved] == "false"
-      @users = User.where(approved: false)
-    else
-      @users = User.all
-    end
+    @users = if params[:approved] == 'false'
+               User.where(approved: false)
+             else
+               User.all
+             end
 
     @users = @users.order(email: :asc)
   end
 
   # GET /users/1
   # GET /users/1.json
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -27,8 +28,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users
   # POST /users.json
@@ -71,13 +71,14 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:email, :name, :password)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:email, :name, :password)
+  end
 end

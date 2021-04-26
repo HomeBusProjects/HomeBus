@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
+gem 'bugsnag'
 gem 'capistrano'
+gem 'capistrano3-puma'
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'
-gem 'capistrano3-puma'
 gem 'whenever', require: false
-gem 'bugsnag'

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class AdminController < ApplicationController
   load_and_authorize_resource
   check_authorization
-  
+
   before_action :authenticate_user!
 
   def clear_db

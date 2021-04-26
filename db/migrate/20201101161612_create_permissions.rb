@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePermissions < ActiveRecord::Migration[6.0]
   def change
     create_table :permissions do |t|
@@ -10,8 +12,8 @@ class CreatePermissions < ActiveRecord::Migration[6.0]
 
       t.timestamps
 
-      t.index [ :device_id, :network_id, :ddc_id, :consumes ], name: :index_permissions_consumable
-      t.index [ :device_id, :network_id, :ddc_id, :publishes ], name: :index_permissions_publishable
+      t.index %i[device_id network_id ddc_id consumes], name: :index_permissions_consumable
+      t.index %i[device_id network_id ddc_id publishes], name: :index_permissions_publishable
     end
   end
 end

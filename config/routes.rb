@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :public_networks
   resources :public_devices
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
 
   get '/network/:id/monitor', to: 'networks#monitor'
 
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development? || ENV['USE_LETTEROPENER']
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development? || ENV['USE_LETTEROPENER']
 
   authenticate :user, ->(user) { user.site_admin? } do
     mount Sidekiq::Web => '/sidekiq'

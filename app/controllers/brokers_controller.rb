@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class BrokersController < ApplicationController
   load_and_authorize_resource
   check_authorization
-  
+
   before_action :authenticate_user!
   load_and_authorize_resource
 
-  before_action :set_broker, only: [:show, :edit, :update, :destroy]
+  before_action :set_broker, only: %i[show edit update destroy]
 
   # GET /brokers
   # GET /brokers.json
@@ -15,8 +17,7 @@ class BrokersController < ApplicationController
 
   # GET /brokers/1
   # GET /brokers/1.json
-  def show
-  end
+  def show; end
 
   # GET /brokers/new
   def new
@@ -24,8 +25,7 @@ class BrokersController < ApplicationController
   end
 
   # GET /brokers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /brokers
   # POST /brokers.json
@@ -68,13 +68,14 @@ class BrokersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_broker
-      @broker = Broker.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def broker_params
-      params.require(:broker).permit(:name, :secure_port, :insecure_port)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_broker
+    @broker = Broker.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def broker_params
+    params.require(:broker).permit(:name, :secure_port, :insecure_port)
+  end
 end

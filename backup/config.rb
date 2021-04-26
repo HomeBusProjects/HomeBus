@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 ##
 # Backup v5.x Configuration
@@ -10,9 +10,9 @@ require 'dotenv'
 
 Dotenv.load(File.expand_path('~/HomeBus/shared/.env'))
 
-tmp_path  File.expand_path("~/HomeBus/shared/tmp")
+tmp_path  File.expand_path('~/HomeBus/shared/tmp')
 
-data_path File.expand_path("~/HomeBus/shared/backups")
+data_path File.expand_path('~/HomeBus/shared/backups')
 
 # lock down where we find these programs
 Utilities.configure do
@@ -28,7 +28,7 @@ end
 
 Logger.configure do
   logfile.enabled   = true
-  logfile.log_path  = File.expand_path("~/HomeBus/shared/log")
+  logfile.log_path  = File.expand_path('~/HomeBus/shared/log')
   logfile.max_bytes = 500_000
 end
 

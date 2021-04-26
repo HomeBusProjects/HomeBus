@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMosquittoAcl < ActiveRecord::Migration[6.0]
   def change
     create_table :mosquitto_acls do |t|

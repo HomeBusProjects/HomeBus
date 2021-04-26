@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDdcsToProvisionRequest < ActiveRecord::Migration[5.2]
   def change
     add_column :provision_requests, :ro_ddcs, :string, array: true, null: false, default: []

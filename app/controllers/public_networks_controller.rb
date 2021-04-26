@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class PublicNetworksController < ApplicationController
-  before_action :set_public_network, only: %i[ show edit update destroy ]
+  before_action :set_public_network, only: %i[show edit update destroy]
 
   # GET /public_networks or /public_networks.json
   def index
@@ -7,8 +9,7 @@ class PublicNetworksController < ApplicationController
   end
 
   # GET /public_networks/1 or /public_networks/1.json
-  def show
-  end
+  def show; end
 
   # GET /public_networks/new
   def new
@@ -16,8 +17,7 @@ class PublicNetworksController < ApplicationController
   end
 
   # GET /public_networks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /public_networks or /public_networks.json
   def create
@@ -25,7 +25,7 @@ class PublicNetworksController < ApplicationController
 
     respond_to do |format|
       if @public_network.save
-        format.html { redirect_to @public_network, notice: "Public network was successfully created." }
+        format.html { redirect_to @public_network, notice: 'Public network was successfully created.' }
         format.json { render :show, status: :created, location: @public_network }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class PublicNetworksController < ApplicationController
   def update
     respond_to do |format|
       if @public_network.update(public_network_params)
-        format.html { redirect_to @public_network, notice: "Public network was successfully updated." }
+        format.html { redirect_to @public_network, notice: 'Public network was successfully updated.' }
         format.json { render :show, status: :ok, location: @public_network }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,19 +51,20 @@ class PublicNetworksController < ApplicationController
   def destroy
     @public_network.destroy
     respond_to do |format|
-      format.html { redirect_to public_networks_url, notice: "Public network was successfully destroyed." }
+      format.html { redirect_to public_networks_url, notice: 'Public network was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_public_network
-      @public_network = PublicNetwork.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def public_network_params
-      params.require(:public_network).permit(:title, :description, :network_id, :active)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_public_network
+    @public_network = PublicNetwork.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def public_network_params
+    params.require(:public_network).permit(:title, :description, :network_id, :active)
+  end
 end

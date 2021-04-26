@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AppServersController < ApplicationController
-  before_action :set_app_server, only: [:show, :edit, :update, :destroy]
+  before_action :set_app_server, only: %i[show edit update destroy]
 
   # GET /app_servers
   # GET /app_servers.json
@@ -9,8 +11,7 @@ class AppServersController < ApplicationController
 
   # GET /app_servers/1
   # GET /app_servers/1.json
-  def show
-  end
+  def show; end
 
   # GET /app_servers/new
   def new
@@ -18,8 +19,7 @@ class AppServersController < ApplicationController
   end
 
   # GET /app_servers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /app_servers
   # POST /app_servers.json
@@ -62,13 +62,14 @@ class AppServersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_app_server
-      @app_server = AppServer.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def app_server_params
-      params.require(:app_server).permit(:name, :port, :secret_key)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_app_server
+    @app_server = AppServer.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def app_server_params
+    params.require(:app_server).permit(:name, :port, :secret_key)
+  end
 end

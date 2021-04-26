@@ -1,1 +1,3 @@
-json.partial! "brokers/broker", broker: @broker
+# frozen_string_literal: true
+
+json.partial! 'brokers/broker', broker: @broker

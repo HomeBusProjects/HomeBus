@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AppInstancesController < ApplicationController
-  before_action :set_app_instance, only: [:show, :edit, :update, :destroy]
+  before_action :set_app_instance, only: %i[show edit update destroy]
 
   # GET /app_instances
   # GET /app_instances.json
@@ -9,8 +11,7 @@ class AppInstancesController < ApplicationController
 
   # GET /app_instances/1
   # GET /app_instances/1.json
-  def show
-  end
+  def show; end
 
   # GET /app_instances/new
   def new
@@ -66,13 +67,14 @@ class AppInstancesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_app_instance
-      @app_instance = AppInstance.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def app_instance_params
-      params.require(:app_instance).permit(:app_id, :user_id, :parameters, :public_key)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_app_instance
+    @app_instance = AppInstance.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def app_instance_params
+    params.require(:app_instance).permit(:app_id, :user_id, :parameters, :public_key)
+  end
 end

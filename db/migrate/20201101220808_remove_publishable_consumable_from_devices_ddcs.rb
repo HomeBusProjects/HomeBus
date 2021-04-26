@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemovePublishableConsumableFromDevicesDdcs < ActiveRecord::Migration[6.0]
   def change
     remove_column :ddcs_devices, :publishable

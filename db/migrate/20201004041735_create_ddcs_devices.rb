@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDdcsDevices < ActiveRecord::Migration[6.0]
   def change
     create_table :ddcs_devices do |t|
@@ -12,14 +14,14 @@ class CreateDdcsDevices < ActiveRecord::Migration[6.0]
 
       t.timestamps
 
-      t.index [ :device_id, :publishable ]
-      t.index [ :ddc_id, :publishable ]
+      t.index %i[device_id publishable]
+      t.index %i[ddc_id publishable]
 
-      t.index [ :device_id, :consumable ]
-      t.index [ :ddc_id, :consumable ]
+      t.index %i[device_id consumable]
+      t.index %i[ddc_id consumable]
 
-      t.index [ :device_id, :allow_publish ]
-      t.index [ :device_id, :allow_consume ]
+      t.index %i[device_id allow_publish]
+      t.index %i[device_id allow_consume]
     end
   end
 end

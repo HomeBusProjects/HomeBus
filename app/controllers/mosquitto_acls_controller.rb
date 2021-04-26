@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class MosquittoAclsController < ApplicationController
   load_and_authorize_resource
   check_authorization
 
-  before_action :set_mosquitto_acl, only: [:show, :edit, :update, :destroy]
+  before_action :set_mosquitto_acl, only: %i[show edit update destroy]
 
   # GET /mosquitto_acls
   # GET /mosquitto_acls.json
@@ -12,8 +14,7 @@ class MosquittoAclsController < ApplicationController
 
   # GET /mosquitto_acls/1
   # GET /mosquitto_acls/1.json
-  def show
-  end
+  def show; end
 
   # GET /mosquitto_acls/new
   def new
@@ -21,8 +22,7 @@ class MosquittoAclsController < ApplicationController
   end
 
   # GET /mosquitto_acls/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /mosquitto_acls
   # POST /mosquitto_acls.json
@@ -76,13 +76,14 @@ class MosquittoAclsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_mosquitto_acl
-      @mosquitto_acl = MosquittoAcl.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def mosquitto_acl_params
-      params.require(:mosquitto_acl).permit(:topic, :permissions, :read, :write, :subscribe, :provision_request)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_mosquitto_acl
+    @mosquitto_acl = MosquittoAcl.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def mosquitto_acl_params
+    params.require(:mosquitto_acl).permit(:topic, :permissions, :read, :write, :subscribe, :provision_request)
+  end
 end
