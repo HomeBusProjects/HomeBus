@@ -10,7 +10,8 @@ class Network < ApplicationRecord
 
   has_many :provision_requests
 
-###  belongs_to :broker
+  has_one :public_network, dependent: :destroy
+
   belongs_to :broker, counter_cache: true
   belongs_to :announcer, class_name: "Device", optional: true
 

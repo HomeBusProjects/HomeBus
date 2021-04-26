@@ -1,18 +1,8 @@
-require 'pp'
-
 class ProvisionController < ActionController::Base
   protect_from_forgery except: ['index']
 
   def index
-    pp 'PROVISION REQUEST'
-    p = params.permit!.to_h
-    pp p
-    pp '>>> AUTH', request.headers['Authorization']
-    pp JsonWebToken.decode(request.headers['Authorization']);
-
     decoded_request = Network.find_from_auth_token request.headers['Authorization']
-
-    Rails.logger.debug ">>>> decoded_request " + decoded_request.inspect
 
     user = User.find decoded_request["user"]["id"]
     network = Network.find decoded_request["network"]["id"]
@@ -40,9 +30,6 @@ class ProvisionController < ActionController::Base
     args[:ro_ddcs] = p[:provision][:ddcs][:'read-only']
     args[:wo_ddcs] = p[:provision][:ddcs][:'write-only']
 
-    pp 'ARGS', args
-
-    puts "trying to find serial number #{args[:serial_number]} manufacturer #{args[:manufacturer]} model #{args[:model]}"
     pr = ProvisionRequest.find_by(serial_number: args[:serial_number],
                                   manufacturer: args[:manufacturer],
                                   model: args[:model])

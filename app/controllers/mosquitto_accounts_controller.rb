@@ -49,8 +49,6 @@ class MosquittoAccountsController < ApplicationController
     p.delete :provision_request_id
     p.delete :password
 
-    pp p
-
     respond_to do |format|
       if @mosquitto_account.update(p)
         flash_message 'success', 'Mosquitto account was successfully updated.'

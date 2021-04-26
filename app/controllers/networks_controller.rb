@@ -37,8 +37,6 @@ class NetworksController < ApplicationController
   def create
     @network = Network.new(network_params.merge({ broker: Broker.first}))
 
-    pp @network
-
     respond_to do |format|
       if @network.save
         @network.users << current_user
@@ -123,6 +121,6 @@ class NetworksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def network_params
-      params.require(:network).permit(:name, :count_of_users, :token)
+      params.require(:network).permit(:name, :count_of_users)
     end
 end

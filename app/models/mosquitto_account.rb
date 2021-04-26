@@ -16,8 +16,6 @@ class MosquittoAccount < MosquittoRecord
 
     hashed_password = BCrypt::Password.create unencoded_password
 
-    puts "unencoded password for device is #{unencoded_password}"
-    puts "encoded password for device is #{hashed_password}"
     self.password = hashed_password
     self.save
 
@@ -34,8 +32,6 @@ class MosquittoAccount < MosquittoRecord
 
     hashed_password = "PBKDF2$sha512$#{iterations}$#{salt}$#{encoded}"
 
-    puts "unencoded password for device is #{unencoded_password}"
-    puts "encoded password for device is #{hashed_password}"
     self.password = hashed_password
     self.save
 

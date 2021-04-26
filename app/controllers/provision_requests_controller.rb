@@ -119,9 +119,6 @@ class ProvisionRequestsController < ApplicationController
         format.html { redirect_to @provision_request }
         format.json { render :show, status: :created, location: @provision_request }
       else
-        Rails.logger.error "ProvisionRequest.create failed"
-        Rails.logger.error @provision_request.errors.full_messages
-
         format.html { render :new }
         format.json { render json: @provision_request.errors, status: :unprocessable_entity }
       end

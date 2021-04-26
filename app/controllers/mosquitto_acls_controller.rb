@@ -50,7 +50,6 @@ class MosquittoAclsController < ApplicationController
     p.delete :provision_request_id
     p.delete :username
 
-    pp p
     respond_to do |format|
       if @mosquitto_acl.update(p)
         flash_message 'success', 'Mosquitto acl was successfully updated.'

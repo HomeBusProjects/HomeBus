@@ -35,6 +35,8 @@ jobs:
           DATABASE_URL: postgres://postgres:@localhost:5432/test
           RAILS_ENV: test
           RAILS_MASTER_KEY: $
+	  WITH_COVERAGE: true
+	  DISABLE_SPRING: 1
         run: |
           sudo apt-get -yqq install libpq-dev
           yarn install
