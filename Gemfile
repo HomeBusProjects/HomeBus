@@ -65,5 +65,6 @@ gem 'net-ssh'
 gem 'ed25519'
 gem 'bcrypt_pbkdf'
 
-gem 'rubocop'
-gem 'brakeman'
+gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
+gem 'brakeman', require: false
