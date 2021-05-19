@@ -185,7 +185,7 @@ GEM
     pg (1.2.3-x86-mingw32)
     popper_js (2.9.2)
     public_suffix (4.0.6)
-    puma (5.1.1)
+    puma (5.3.1)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -341,7 +341,7 @@ DEPENDENCIES
   mqtt
   net-ssh
   pg
-  puma (~> 5.1.0)
+  puma (~> 5.3.1)
   rails (~> 6.1.1)
   railties (>= 6.0.0)
   rubocop
