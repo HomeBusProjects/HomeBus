@@ -1,0 +1,34 @@
+<%= form_with(model: token) do |form| %>
+  <% if token.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(token.errors.count, "error") %> prohibited this token from being saved:</h2>
+
+      <ul>
+        <% token.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+<% if can? :manage, :token %>
+  <div class='field'>
+    <%= form.label :user %>
+    <%= form.collection_select :user_id, User.all.order(name: :asc), :id, :email, {}, { class: 'form-control', disabled: true } %>
+  </div>
+<% end %>
+
+  <div class="field">
+    <%= form.label :enabled %>
+    <%= form.check_box :enabled %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Save", class: "btn btn-primary" %>
+  </div>
+<% end %>

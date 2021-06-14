@@ -4,12 +4,9 @@ class ProvisionController < ApplicationController
   protect_from_forgery except: ['index']
 
   def index
-    decoded_request = Network.find_from_auth_token request.headers['Authorization']
+    token = Token.find request.headers['Authorization']
 
-    user = User.find decoded_request['user']['id']
-    network = Network.find decoded_request['network']['id']
-
-    raise ActionController::InvalidAuthenticityToken unless network && user
+    raise ActionController::InvalidAuthenticityToken unless token.scope == 'provision_request' && token.network && token.user
 
     #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
 
@@ -51,7 +48,7 @@ class ProvisionController < ApplicationController
             secure_mqtt_port: 8883
           },
           uuids: pr.devices.map(&:id),
-          refresh_token: pr.get_refresh_token(pr.user)
+          refresh_token: pr.create_token(user: user, network: network, scope: 'provision_request')
         }
       else
         response = { refresh_token: pr.get_refresh_token(pr.network.users.first),
