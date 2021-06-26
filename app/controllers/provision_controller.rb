@@ -9,11 +9,18 @@ class ProvisionController < ApplicationController
     user = User.find decoded_request['user']['id']
     network = Network.find decoded_request['network']['id']
 
+    Rails.logger.error 'No user' unless user
+    Rails.logger.network 'No user' unless network
+
     raise ActionController::InvalidAuthenticityToken unless network && user
 
     #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
 
-    raise ActionController::ParameterMissing unless validate_provision(p)
+    unless validate_provision(p)
+      Rails.logger.error 'parameter missing'
+
+      raise ActionController::ParameterMissing
+    end
 
     args = { ip_address: request.remote_ip, status: :unanswered }
     args[:manufacturer] = p[:provision][:identity][:manufacturer]
