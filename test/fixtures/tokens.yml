@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  token: MyString
+  id: token1
   enabled: false
+  name: One
+  scope: provision_request
 
 two:
-  token: MyString
+  id: token2
   enabled: false
+  name: Two
+  scope: device

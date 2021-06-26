@@ -4,7 +4,7 @@ class CreateTokens < ActiveRecord::Migration[6.1]
       t.references :user, index: true, foreign_key: true
       t.references :device, index: true, foreign_key: true, null: true, type: :uuid
       t.references :provision_request, index: true, foreign_key: true, null: true, type: :uuid
-      t.references :network, index: true, foreign_key: true, null: true, type: :uuid
+      t.references :network, index: true, foreign_key: true, null: true
 
       t.string :name, null: false
       t.string :scope, null: false
