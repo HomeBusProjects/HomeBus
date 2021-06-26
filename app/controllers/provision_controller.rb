@@ -6,6 +6,9 @@ class ProvisionController < ApplicationController
   def index
     decoded_request = Network.find_from_auth_token request.headers['Authorization']
 
+    Rails.logger.info 'Valid request'
+    Rails.logger.info request
+
     user = User.find decoded_request['user']['id']
     network = Network.find decoded_request['network']['id']
 
