@@ -163,7 +163,7 @@ class ProvisionController < ApplicationController
   end
 
   def validate_provision(params)
-    p = params[:provision]
+    p = params
 
     Rails.logger.error 'no params' unless p
 
