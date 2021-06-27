@@ -18,7 +18,7 @@ class ProvisionController < ApplicationController
 
     raise ActionController::InvalidAuthenticityToken unless network && user
 
-    #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
+    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
 
     unless validate_provision(p)
       Rails.logger.error 'parameter missing'
