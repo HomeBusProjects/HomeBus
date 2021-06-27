@@ -30,17 +30,17 @@ class ProvisionController < ApplicationController
     end
 
     args = { ip_address: request.remote_ip, status: :unanswered }
-    args[:manufacturer] = p[:provision][:identity][:manufacturer]
-    args[:model] = p[:provision][:identity][:model]
-    args[:serial_number] = p[:provision][:identity][:serial_number]
-    args[:pin] = p[:provision][:identity][:pin]
+    args[:manufacturer] = p[:identity][:manufacturer]
+    args[:model] = p[:identity][:model]
+    args[:serial_number] = p[:identity][:serial_number]
+    args[:pin] = p[:identity][:pin]
 
     args[:friendly_name] = "#{args[:manufacturer]}-#{args[:model]}-#{args[:serial_number]}"
 
-    args[:requested_uuid_count] = p[:provision][:requested_uuid_count]
+    args[:requested_uuid_count] = p[:requested_uuid_count]
 
-    args[:ro_ddcs] = p[:provision][:ddcs][:'read-only']
-    args[:wo_ddcs] = p[:provision][:ddcs][:'write-only']
+    args[:ro_ddcs] = p[:ddcs][:'read-only']
+    args[:wo_ddcs] = p[:ddcs][:'write-only']
 
     pr = ProvisionRequest.find_by(serial_number: args[:serial_number],
                                   manufacturer: args[:manufacturer],
