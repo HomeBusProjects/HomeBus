@@ -20,6 +20,9 @@ class ProvisionController < ApplicationController
 
     p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
 
+    Rails.logger.info 'validate_provision'
+    Rails.logger.info p
+
     unless validate_provision(p)
       Rails.logger.error 'parameter missing'
 
@@ -162,11 +165,18 @@ class ProvisionController < ApplicationController
   def validate_provision(params)
     p = params[:provision]
 
+    Rails.logger.error 'no params' unless p
+
     return false unless p
+
+    Rails.logger.error 'no identity' unless p[:identity]
+    Rails.logger.error 'no ddcs' unless p[:ddcs]
 
     return false unless p[:identity] && p[:ddcs]
 
     i = p[:identity]
+    Rails.logger.error 'no manufacturer' unless i[:manufacturer]
+
     return false unless i[:manufacturer]
 
     i[:model] ||= ''
