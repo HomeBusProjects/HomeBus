@@ -2,6 +2,7 @@
 
 class ProvisionController < ApplicationController
   protect_from_forgery except: ['index']
+  skip_before_action :authenticate_user!, only: [:index]
 
   def index
     decoded_request = Network.find_from_auth_token request.headers['Authorization']
