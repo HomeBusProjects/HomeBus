@@ -11,21 +11,20 @@ Rails.application.routes.draw do
   resources :ddcs
   resources :brokers
   resources :networks
-  devise_for :users
-  root to: 'devices#index'
-
   resources :devices
   resources :users
   resources :mosquitto_accounts
   resources :mosquitto_acls
-  resources :provision_requests do
-    member do
-      get 'accept'
-      get 'deny'
-      get 'revoke'
-    end
+  resources :provision_requests
+
+  namespace :api, defaults: { format: :json} do
+    resources :api_provision_requests
   end
 
+  devise_for :users
+  root to: 'devices#index'
+
+  # deprecated, to be removed
   post '/provision', to: 'provision#index'
   post '/provision/refresh', to: 'provision#refresh'
   post '/provision/broker', to: 'provision#broker'

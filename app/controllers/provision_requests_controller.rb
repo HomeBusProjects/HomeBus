@@ -8,6 +8,7 @@ class ProvisionRequestsController < ApplicationController
 
   before_action :set_provision_request, only: %i[show edit update destroy accept deny revoke]
 
+  # deprecated - need to replace with PATCH call
   def accept
     @provision_request.accept!
 

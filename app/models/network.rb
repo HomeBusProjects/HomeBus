@@ -59,18 +59,20 @@ class Network < ApplicationRecord
   end
 
   def self.find_from_auth_token(token)
-    request = JsonWebToken.decode(token)
+    begin
+      request = JsonWebToken.decode(token)
 
-    if Time.now.to_i > request['exp']
-      Rails.logger.error 'request expired'
+      if Time.now.to_i > request['exp']
+        Rails.logger.error 'request expired'
+
+        return nil
+      end
+
+      return request
+    rescue StandardError => e
+      Rails.logger.error "JsonWebToken exception#{e.backtrace.join("\n")}"
 
       return nil
     end
-
-    request
-  rescue StandardError => e
-    Rails.logger.error "JsonWebToken exception#{e.backtrace.join("\n")}"
-
-    nil
   end
 end
