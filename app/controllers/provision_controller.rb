@@ -2,45 +2,28 @@
 
 class ProvisionController < ApplicationController
   protect_from_forgery except: ['index']
-  skip_before_action :authenticate_user!, only: [:index]
 
   def index
-    decoded_request = Network.find_from_auth_token request.headers['Authorization']
+    token = Token.find request.headers['Authorization']
 
-    Rails.logger.info 'Valid request'
-    Rails.logger.info request
+    raise ActionController::InvalidAuthenticityToken unless token.scope == 'provision_request' && token.network && token.user
 
-    user = User.find decoded_request['user']['id']
-    network = Network.find decoded_request['network']['id']
+    #    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
 
-    Rails.logger.error 'No user' unless user
-    Rails.logger.network 'No user' unless network
-
-    raise ActionController::InvalidAuthenticityToken unless network && user
-
-    p = params.require(:provision).permit(:uuid,  identity: [ :manufacturer, :model, :serial_number, :pin, ], ddcs: [ 'write-only': [], 'read-only': [] ])
-
-    Rails.logger.info 'validate_provision'
-    Rails.logger.info p
-
-    unless validate_provision(p)
-      Rails.logger.error 'parameter missing'
-
-      raise ActionController::ParameterMissing
-    end
+    raise ActionController::ParameterMissing unless validate_provision(p)
 
     args = { ip_address: request.remote_ip, status: :unanswered }
-    args[:manufacturer] = p[:identity][:manufacturer]
-    args[:model] = p[:identity][:model]
-    args[:serial_number] = p[:identity][:serial_number]
-    args[:pin] = p[:identity][:pin]
+    args[:manufacturer] = p[:provision][:identity][:manufacturer]
+    args[:model] = p[:provision][:identity][:model]
+    args[:serial_number] = p[:provision][:identity][:serial_number]
+    args[:pin] = p[:provision][:identity][:pin]
 
     args[:friendly_name] = "#{args[:manufacturer]}-#{args[:model]}-#{args[:serial_number]}"
 
-    args[:requested_uuid_count] = p[:requested_uuid_count]
+    args[:requested_uuid_count] = p[:provision][:requested_uuid_count]
 
-    args[:ro_ddcs] = p[:ddcs][:'read-only']
-    args[:wo_ddcs] = p[:ddcs][:'write-only']
+    args[:ro_ddcs] = p[:provision][:ddcs][:'read-only']
+    args[:wo_ddcs] = p[:provision][:ddcs][:'write-only']
 
     pr = ProvisionRequest.find_by(serial_number: args[:serial_number],
                                   manufacturer: args[:manufacturer],
@@ -65,7 +48,7 @@ class ProvisionController < ApplicationController
             secure_mqtt_port: 8883
           },
           uuids: pr.devices.map(&:id),
-          refresh_token: pr.get_refresh_token(pr.user)
+          refresh_token: pr.create_token(user: user, network: network, scope: 'provision_request')
         }
       else
         response = { refresh_token: pr.get_refresh_token(pr.network.users.first),
@@ -163,20 +146,13 @@ class ProvisionController < ApplicationController
   end
 
   def validate_provision(params)
-    p = params
-
-    Rails.logger.error 'no params' unless p
+    p = params[:provision]
 
     return false unless p
-
-    Rails.logger.error 'no identity' unless p[:identity]
-    Rails.logger.error 'no ddcs' unless p[:ddcs]
 
     return false unless p[:identity] && p[:ddcs]
 
     i = p[:identity]
-    Rails.logger.error 'no manufacturer' unless i[:manufacturer]
-
     return false unless i[:manufacturer]
 
     i[:model] ||= ''

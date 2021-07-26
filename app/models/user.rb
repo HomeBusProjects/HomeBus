@@ -13,6 +13,7 @@ class User < ApplicationRecord
 
   has_many :provision_requests, dependent: :destroy
   has_many :app_instances, dependent: :destroy
+  has_many :tokens, dependent: :destroy
 
   has_and_belongs_to_many :devices
 

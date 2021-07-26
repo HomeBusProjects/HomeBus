@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_153527) do
+ActiveRecord::Schema.define(version: 2021_07_13_171149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -91,8 +91,11 @@ ActiveRecord::Schema.define(version: 2021_03_22_153527) do
     t.uuid "provision_request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "calibrated", default: false, null: false
     t.boolean "public", default: false, null: false
+    t.string "manufacturer", default: "", null: false
+    t.string "model", default: "", null: false
+    t.string "serial_number", default: "", null: false
+    t.string "pin", default: "", null: false
     t.index ["provision_request_id"], name: "index_devices_on_provision_request_id"
     t.index ["public"], name: "index_devices_on_public"
   end
@@ -148,20 +151,13 @@ ActiveRecord::Schema.define(version: 2021_03_22_153527) do
   end
 
   create_table "provision_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "pin", default: "", null: false
     t.inet "ip_address", null: false
     t.string "friendly_name", default: "", null: false
-    t.string "manufacturer", default: "", null: false
-    t.string "model", default: "", null: false
-    t.string "serial_number", default: "", null: false
     t.integer "status", limit: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "ro_ddcs", default: [], null: false, array: true
     t.string "wo_ddcs", default: [], null: false, array: true
-    t.string "rw_ddcs", default: [], null: false, array: true
-    t.uuid "allocated_uuids", default: [], null: false, array: true
-    t.integer "requested_uuid_count", default: 1, null: false
     t.integer "networks_counter", default: 0, null: false
     t.bigint "network_id"
     t.datetime "last_refresh"
@@ -172,17 +168,13 @@ ActiveRecord::Schema.define(version: 2021_03_22_153527) do
     t.string "account_id"
     t.string "account_password"
     t.string "account_encrypted_password"
-    t.index ["allocated_uuids"], name: "index_provision_requests_on_allocated_uuids", using: :gin
     t.index ["autoremove_at"], name: "index_provision_requests_on_autoremove_at"
     t.index ["autoremove_interval"], name: "index_provision_requests_on_autoremove_interval"
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
     t.index ["last_refresh"], name: "index_provision_requests_on_last_refresh"
-    t.index ["manufacturer"], name: "index_provision_requests_on_manufacturer"
-    t.index ["model"], name: "index_provision_requests_on_model"
     t.index ["network_id"], name: "index_provision_requests_on_network_id"
     t.index ["ready"], name: "index_provision_requests_on_ready"
     t.index ["ro_ddcs"], name: "index_provision_requests_on_ro_ddcs", using: :gin
-    t.index ["rw_ddcs"], name: "index_provision_requests_on_rw_ddcs", using: :gin
     t.index ["user_id"], name: "index_provision_requests_on_user_id"
     t.index ["wo_ddcs"], name: "index_provision_requests_on_wo_ddcs", using: :gin
   end
@@ -205,6 +197,23 @@ ActiveRecord::Schema.define(version: 2021_03_22_153527) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["network_id"], name: "index_public_networks_on_network_id"
+  end
+
+  create_table "tokens", id: :string, force: :cascade do |t|
+    t.bigint "user_id"
+    t.uuid "device_id"
+    t.uuid "provision_request_id"
+    t.bigint "network_id"
+    t.string "name", null: false
+    t.string "scope", null: false
+    t.boolean "enabled", default: false, null: false
+    t.datetime "expires"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["device_id"], name: "index_tokens_on_device_id"
+    t.index ["network_id"], name: "index_tokens_on_network_id"
+    t.index ["provision_request_id"], name: "index_tokens_on_provision_request_id"
+    t.index ["user_id"], name: "index_tokens_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -243,4 +252,8 @@ ActiveRecord::Schema.define(version: 2021_03_22_153527) do
   add_foreign_key "provision_requests", "users"
   add_foreign_key "public_devices", "devices"
   add_foreign_key "public_networks", "networks"
+  add_foreign_key "tokens", "devices"
+  add_foreign_key "tokens", "networks"
+  add_foreign_key "tokens", "provision_requests"
+  add_foreign_key "tokens", "users"
 end

@@ -1,0 +1,47 @@
+<h1><%= @token.name %></h1>
+
+<h2>Token</h2>
+<p>
+<%= @token.id %>
+</p>
+
+<h2><%= @token.enabled ? '✅ Enabled' : '❌ Disabled' %></h2>
+
+<h2>Scope</h2>
+<p>
+<%= @token.scope %>
+</p>
+
+<h2>Expiration</h2>
+<p>
+<%= @token.expires %>
+</p>
+
+<h2>Owner</h2>
+<p>
+<%= link_to @token.user.name, @token.user %>
+</p>
+
+<% if @token.provision_request %>
+<h2>Provision Request</h2>
+<p>
+<%= link_to @token.provision_request.friendly_name, @token.provision_request %>
+</p>
+<% end %>
+
+<% if @token.network %>
+<h2>Network</h2>
+<p>
+<%= link_to @token.network.name, @token.network %>
+</p>
+<% end %>
+
+<% if @token.device %>
+<h2>Device</h2>
+<p>
+<%= link_to @token.device.friendly_name, @token.device %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', edit_token_path(@token) %> |
+<%= link_to 'Back', tokens_path %>

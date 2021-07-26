@@ -47,6 +47,9 @@
 	    <li class="nav-item">
 	      <a class="nav-link" href="<%= apps_path %>">Apps</a>
 	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="<%= tokens_path %>">Tokens</a>
+	    </li>
 <% if can? :manage, :all %>
 	    <li class="nav-item">
 	      <a class="nav-link" href="<%= app_instances_path %>">App Instances</a>
@@ -58,6 +61,7 @@
 	      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		<%= link_to 'Users', users_path, class: 'dropdown-item' %>
                 <div class="dropdown-divider"></div>
+
 		<%= link_to 'Permissions', permissions_path, class: 'dropdown-item' %>
                 <div class="dropdown-divider"></div>
   		<%= link_to 'Brokers', brokers_path, class: 'dropdown-item' %>

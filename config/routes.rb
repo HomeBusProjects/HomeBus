@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root to: 'devices#index'
+
+  devise_for :users
+
+  resources :tokens
   resources :public_networks
   resources :public_devices
   resources :app_instances
@@ -10,21 +15,22 @@ Rails.application.routes.draw do
   resources :ddcs
   resources :brokers
   resources :networks
-  devise_for :users
-  root to: 'devices#index'
-
   resources :devices
   resources :users
   resources :mosquitto_accounts
   resources :mosquitto_acls
-  resources :provision_requests do
-    member do
-      get 'accept'
-      get 'deny'
-      get 'revoke'
-    end
+  resources :provision_requests
+
+#  namespace :api, defaults: { format: :json} do
+  namespace :api do
+    resources :auth
+    resources :provision_requests
+    resources :devices
+    resources :networks
   end
 
+
+  # deprecated, to be removed
   post '/provision', to: 'provision#index'
   post '/provision/refresh', to: 'provision#refresh'
   post '/provision/broker', to: 'provision#broker'

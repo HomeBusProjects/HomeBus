@@ -13,4 +13,11 @@ class Device < ApplicationRecord
 
   has_many :permissions, dependent: :destroy
   has_one :public_device, dependent: :destroy
+  has_many :tokens, dependent: :destroy
+
+  after_create :set_user
+
+  def set_user
+    self.users << self.pr.user
+  end
 end

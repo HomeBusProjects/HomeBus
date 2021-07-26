@@ -8,60 +8,6 @@ class ProvisionRequestsController < ApplicationController
 
   before_action :set_provision_request, only: %i[show edit update destroy accept deny revoke]
 
-  def accept
-    @provision_request.accept!
-
-    respond_to do |format|
-      if @provision_request.save
-        PublishDevicesJob.perform_later(@provision_request.network)
-
-        flash_message 'success', 'Provision request was successfully accepted.'
-
-        format.html { redirect_to @provision_request }
-        format.json { render :show, status: :created, location: @provision_request }
-      else
-        format.html { render :new }
-        format.json { render json: @provision_request.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def deny
-    @provision_request.devices.update_all(provisioned: false)
-    @provision_request.denied!
-
-    @provision_request.mosquitto_account.enabled = false
-
-    respond_to do |format|
-      if @provision_request.save
-        flash_message 'warning', 'Provision request was successfully denied.'
-
-        format.html { redirect_to @provision_request }
-        format.json { render :show, status: :created, location: @provision_request }
-      else
-        format.html { render :new }
-        format.json { render json: @provision_request.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def revoke
-    @provision_request.devices.update_all(provisioned: false)
-    @provision_request.revoke
-
-    respond_to do |format|
-      if @provision_request.save
-        flash_message 'danger', 'Provision request was successfully revoked.'
-
-        format.html { redirect_to @provision_request }
-        format.json { render :show, status: :created, location: @provision_request }
-      else
-        format.html { render :new }
-        format.json { render json: @provision_request.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # GET /provision_requests
   # GET /provision_requests.json
   def index
@@ -134,8 +80,26 @@ class ProvisionRequestsController < ApplicationController
   def update
     p = provision_request_params
 
+    p[:status] = p[:status].to_i
+
     respond_to do |format|
       if @provision_request.update(p)
+        if @provision_request.status_changed?
+          case @provision_request.status
+          when :accepted
+            @provision_request.accept!
+            flash_message 'success', 'Provision request was successfully accepted.'
+          when :denied
+            @provision_request.devices.update_all(provisioned: false)
+            @provision_request.deny!
+            flash_message 'warning', 'Provision request was successfully denied.'
+          when :revoked
+            @provision_request.devices.update_all(provisioned: false)
+            @provision_request.revoke
+            flash_message 'danger', 'Provision request was successfully revoked.'
+          end
+        end
+
         PublishDevicesJob.perform_later(@provision_request.network)
 
         flash_message 'success', 'Provision request was successfully updated.'
@@ -171,8 +135,7 @@ class ProvisionRequestsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def provision_request_params
-    arrayize_ddcs!(params.require(:provision_request).permit(:pin, :friendly_name, :manufacturer, :model,
-                                                             :serial_number, :status, :wo_ddcs, :ro_ddcs, :rw_ddcs, :network_id, :uuids))
+    arrayize_ddcs!(params.require(:provision_request).permit(:friendly_name, :status, :wo_ddcs, :ro_ddcs, :network_id))
   end
 
   def arrayize_ddcs!(p)
