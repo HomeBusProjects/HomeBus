@@ -87,20 +87,24 @@ class NetworksController < ApplicationController
     end
     @uuid_name_map = @network.devices.map { |device| { id: device[:id], name: device[:friendly_name] } }
 
-    pr = ProvisionRequest.create manufacturer: 'Homebus',
-                                 model: 'Temporary web monitor',
-                                 serial_number: @network.id,
+    pr = ProvisionRequest.create(
                                  ro_ddcs: @consume_ddcs,
                                  wo_ddcs: [],
-                                 requested_uuid_count: 1,
                                  network: @network,
                                  ip_address: '127.0.0.1',
                                  friendly_name: 'Temporary web monitor',
                                  user: current_user,
                                  autoremove_interval: 9 * 60,
                                  autoremove_at: Time.zone.now + 9.minutes
+    )
+
+    Device.create  manufacturer: 'Homebus',
+                   model: 'Temporary web monitor',
+                   serial_number: @network.id,
+                   provision_request: pr
 
     pr.accept!
+
 
     @broker = {}
 

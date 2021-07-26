@@ -18,6 +18,6 @@ class Device < ApplicationRecord
   after_create :set_user
 
   def set_user
-    self.users << self.pr.user
+    self.users << self.provision_request.user
   end
 end
