@@ -23,6 +23,41 @@
     </div>
  </div>
 
+
+
+
+  
+  <div class="row">
+    <div class="col">
+      <p>The manufacturer, model, serial number and PIN uniquely identify each device.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= form.label :manufacturer %>
+      <%= form.text_field :manufacturer, { class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :model %>
+      <%= form.text_field :model,  {class: "form-control" } %>
+    </div>
+
+    <div class="col">
+      <%= form.label :serial_number %>
+      <%= form.text_field :serial_number,  { class: "form-control" }  %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= form.label :pin, 'PIN' %>
+      <%= form.text_field :pin,  { class: "form-control" }  %>
+    </div>
+  </div>
+    
+ 
    <div class="row">
     <div class="col">
       <h2>Publish</h2>

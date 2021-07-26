@@ -1,10 +1,6 @@
 <div class='row'>
   <div class='col'>
     <h1><%= @provision_request.friendly_name %></h1>
-    <%= @provision_request.manufacturer %>, <%= @provision_request.model %><br />
-    <h3>serial number:</h3> <%= @provision_request.serial_number %>
-    <h3>Pin:</h3>
-    <%= @provision_request.pin %>
 
     <hr>
 
@@ -31,8 +27,18 @@
     <% if %>
     <h3><%= @provision_request.status.capitalize %></h3>
     <% end %>
+
     <% if @provision_request.unanswered? %>
-    <a href='<%= accept_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-success">Accept</button></a><a href='<%= deny_provision_request_path(@provision_request) %>'><button type='button' class="btn btn-danger">Deny</button></a>
+      <%= render 'accept_pr' %>
+      <%= render 'deny_pr' %>
+    <% end %>
+
+    <% if @provision_request.denied? %>
+      <%= render 'accept_pr' %>
+    <% end %>
+
+    <% if @provision_request.accepted? %>
+      <%= render 'deny_pr' %>
     <% end %>
 
   </div>
@@ -60,7 +66,7 @@
 
 <div class='row'>
   <div class='col'>
-    <h3>Devices ( <%= @provision_request.requested_uuid_count %>)</h3>
+    <h3>Devices</h3>
     <ul class='list-group-flush'>
       <% @provision_request.devices.pluck(:id).each do |uuid| %>
       <li class='list-group-item'><%= uuid %> - <%= link_to Device.find(uuid).friendly_name, Device.find(uuid) %></li>

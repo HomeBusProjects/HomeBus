@@ -6,7 +6,7 @@ class TokensController < ApplicationController
 
   # GET /tokens or /tokens.json
   def index
-    @tokens = Token.all
+    @tokens = current_user.tokens.order(created_at: :desc)
   end
 
   # GET /tokens/1 or /tokens/1.json

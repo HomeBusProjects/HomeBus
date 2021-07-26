@@ -11,6 +11,7 @@ class Network < ApplicationRecord
   has_many :users, through: :networks_users
 
   has_many :provision_requests
+  has_many :tokens, dependent: :destroy
 
   has_one :public_network, dependent: :destroy
 
@@ -21,25 +22,28 @@ class Network < ApplicationRecord
 
   def create_homebus_announcer(user)
     pr = ProvisionRequest.create friendly_name: 'Homebus',
-                                 manufacturer: 'Homebus',
-                                 model: 'Network announcer',
-                                 serial_number: id,
-                                 pin: '',
+
                                  network: self,
                                  user: user,
                                  ip_address: '127.0.0.1',
-                                 requested_uuid_count: 1,
                                  wo_ddcs: ['org.homebus.experimental.homebus.devices'],
                                  ro_ddcs: []
 
-    pr.accept!
 
-    d = pr.devices.first
-    d.friendly_name = 'Homebus Device Announcer'
-    d.save
+
+    
+    d = Device.create provision_request: pr,
+                      friendly_name: 'Homebus Device Announcer',
+                      manufacturer: 'Homebus',
+                      model: 'Network announcer',
+                      serial_number: id,
+                      pin: ''
 
     self.announcer = d
     save
+
+    pr.accept!
+
   end
 
   def get_auth_token(user)

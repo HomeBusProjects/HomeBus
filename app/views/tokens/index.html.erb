@@ -6,9 +6,13 @@
   <thead>
     <tr>
       <th>Token</th>
-      <th>Owner</th>
       <th>Enabled</th>
-      <th colspan="3"></th>
+      <th>Scope</th>
+      <th>Owner</th>
+      <th>Provision Request</th>
+      <th>Network</th>
+      <th>Device</th>
+      <th colspan="6"></th>
     </tr>
   </thead>
 
@@ -16,11 +20,12 @@
     <% @tokens.each do |token| %>
       <tr>
         <td><%= link_to token.name, token %></td>
-	<td><%= link_to token.owner.name, token.owner %></td>
-        <td><%= token.enabled %></td>
-        <td><%= link_to 'Show', token %></td>
-        <td><%= link_to 'Edit', edit_token_path(token) %></td>
-        <td><%= link_to 'Destroy', token, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= token.enabled ?  '✅' : '❌' %></td>
+	<td><%= token.scope %></td>
+	<td><%= token.user ? link_to(token.user.name, token.user) : '' %></td>
+	<td><%= token.provision_request ? link_to(token.provision_request.friendly_name, token.provision_request) : '' %></td>
+	<td><%= token.network ? link_to(token.network.name, token.network) : '' %></td>
+	<td><%= token.device ? link_to(token.device.friendly_name, token.device) : '' %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +33,4 @@
 
 <br>
 
-<%= link_to 'New Token', new_token_path %>
+<%= link_to 'New Token', new_token_path, class: "btn btn-primary" %>

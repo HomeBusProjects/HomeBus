@@ -4,6 +4,7 @@ class ProvisionRequest < ApplicationRecord
   enum status: { unanswered: 0, accepted: 1, denied: 2 }
 
   has_many :devices, dependent: :destroy
+  has_many :tokens, dependent: :destroy
 
   has_one :mosquitto_account, dependent: :destroy
   has_many :mosquitto_acl, dependent: :destroy
@@ -40,15 +41,6 @@ class ProvisionRequest < ApplicationRecord
       Ddc.where(name: ddc_name).first_or_create(description: '', reference_url: '')
     end
 
-    requested_uuid_count.times do |i|
-      device = devices.create friendly_name: "#{friendly_name}-#{i}"
-
-      device.networks << network
-      device.users << network.users.first
-
-      Permission.from_device(device, network)
-    end
-
     #    self.create_mosquitto_account(superuser: false, password: SecureRandom.base64(32), enabled: true)
 
     ma = MosquittoAccount.new
@@ -57,7 +49,7 @@ class ProvisionRequest < ApplicationRecord
     #    self.account_password = ma.generate_pbkdf2_password!
     self.account_password = ma.generate_password!
     self.account_encrypted_password = ma.password
-    save
+    self.save
 
     UpdateMqttAuthJob.perform_later(self)
 

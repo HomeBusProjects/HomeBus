@@ -1,5 +1,11 @@
 # Homebus Protocols
 
+Homebus provides a network abstration designed to simplify sharing of data between IoT devices. Just as IP provides an abstract internetwork that runs above network hardware while hiding the details of the network hardware's implementation, and TCP provides a reliable stream networking abstraction, Homebus focusses on an abstract network where blocks of data can be shared between devices using a standardized format.
+
+Homebus consists of three protocols: a provisioning protocol, a layer that runs Homebus over MQTT and a 
+
+The first is a provisioning protocol. A client that wishes to join a Homebus network requests access via the provisioning protocol via a provisioning server. It is preconfigured with a security token and contact information for the server.
+
 Homebus provides a "pubsub" networking abstraction in which clients can publish and subscribe to specific data types.
 
 Clients are identified by a UUID which will be unique in their networks.
@@ -10,16 +16,13 @@ A Homebus client may request to publish or receive specific DDCs. The Homebus ne
 
 A Homebus client may also request to transmit a DDC to another Homebus client.
 
+**Homebus protocols are under development. They may change substantially from their current implementation and from this specification.**
 
 ## Tokens
 
-The Homebus Provisioning Protocol uses JWT tokens.
+Homebus provisioning requests are authenticated and authorized using security tokens provided by the Homebus provisioning server. The tokens are opaque and, although they are not OAuth tokens, they shall be used in a manner consistent with [RFC 6750 - The OAuth 2.0 Authorization Framework: Bearer Token Usage](https://datatracker.ietf.org/doc/html/rfc6750).
 
-The initial __auth token__ is used for the first communication between a device and Homebus. Auth tokens are short lived, maybe a day or a few hours. An IOT device would generally have an auth token shared with it when it's provisioned for network access. It would immediately attempt Homebus provisioning using the auth token.
 
-Homebus returns a __refresh token__ with its provisioning information. The refresh token is long lived - maybe a year. The refresh token cannot be used to provision a device but it can be used to update the device's provisioning information. It uniquely identifies the device, so the device only needs the refresh token and does not need to further identify itself. A device uses the refresh token to ask for new permissions (publish or consume a different set of DDCs), refresh its credentials or broker information, or refresh its refresh token (recommend doing this well in advance of the refresh token's expiration; it's not a costly operation so daily is fine).
-
-A refresh token cannot be used for initial provisioning.
 
 ## Homebus Provisioning Protocol
 
@@ -38,26 +41,20 @@ A response includes credentials for connecting to the Homebus network, an array 
 request:
 ```
 {
- identity: {
-    manufacturer: "",
-    model: "",
-    serial_number: string, 
-    pin: string
-	},
-  capabilities: {
-    can_identify: boolean,
-    has_screen: boolean,
-	can_client_certificate: boolean,
-	can_broker_certificate: boolean,
-	can_sign: boolean,
-    can_verify: boolean
-  },
+  name: '',
   ddcs: {
-    ro_ddcs: [ string ],
-    wo_ddcs: [ string ],
-    rw_ddcs: [ string ]
-	},
-  number_of_uuids: integer
+    consume_ddcs: [ string ],
+    publish_ddcs: [ string ],
+  },
+  devices: [
+    {
+      identity: {
+      manufacturer: "",
+      model: "",
+      serial_number: string, 
+      pin: string
+      }
+  ]
 }
 ```
 ->
@@ -74,8 +71,10 @@ response:
     client_certificate: string,
 	broker_certificate: string
   },
-  uuids: [ uuid, ... ],
-  refresh_token: string
+  devices: [
+  {
+  }
+  ]
 }
 ```
 

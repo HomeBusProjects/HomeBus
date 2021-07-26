@@ -20,11 +20,12 @@
       <tr>
 	<td><%= link_to device.friendly_name, device %></td>
 <% if can? :manage, :all %>
-	<td><%= link_to device.users.first.name, device.users.first %> / <%= link_to device.networks.first.name, device.networks.first %></td>
+	<td><%= link_to device.provision_request.user.name, device.provision_request.user %> / <%= link_to device.provision_request.network.name, device.provision_request.network %></td>
 <% else %>
-        <td><%= link_to device.networks.first.name, device.networks.first %></td>
+        <td><%= link_to device.provision_request.network.name, device.provision_request.network %></td>
 <% end %>
 	<td><%= link_to device.id, device %>
+        <td><%= device.manufacturer %> /<%= device.model %> / <%= device.serial_number %></td>
         <td><%= link_to device.provision_request.friendly_name, device.provision_request %></td>
 
         <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
