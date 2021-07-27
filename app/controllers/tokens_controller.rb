@@ -68,6 +68,6 @@ class TokensController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def token_params
-      params.require(:token).permit(:name, :user, :provision_request, :network, :device, :scope, :enabled)
+      params.require(:token).permit(:name, :user_id, :provision_request_id, :network_id, :device_id, :scope, :enabled)
     end
 end
