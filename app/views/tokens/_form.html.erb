@@ -19,7 +19,12 @@
 <% if can? :manage, :token %>
   <div class='field'>
     <%= form.label :user %>
-    <%= form.collection_select :user_id, User.all.order(name: :asc), :id, :email, {}, { class: 'form-control', disabled: true } %>
+    <%= form.collection_select :user_id, User.all.order(name: :asc), :id, :email, {}, { class: 'form-control' } %>
+  </div>
+
+  <div class='field'>
+    <%= form.label :network %>
+    <%= form.collection_select :network_id, Network.all.order(name: :asc), :id, :name, {}, { class: 'form-control' } %>
   </div>
 <% end %>
 
