@@ -114,8 +114,8 @@ class NetworksController < ApplicationController
     @broker[:username] = pr.account_id
     @broker[:password] = pr.account_password
 
-    @client_id = pr.id
-    @refresh_token = pr.get_refresh_token(current_user)
+    @provision_request_id = pr.id
+    @provision_request_token = pr.token
   end
 
   private

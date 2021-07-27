@@ -6,7 +6,7 @@ $(document).ready(function() {
 	return;
     }
 
-//    client = new Paho.Client(monitor_params['broker']['server'], monitor_params['broker']['port'], monitor_params['broker']['client_id']);
+//    client = new Paho.Client(monitor_params['broker']['server'], monitor_params['broker']['port'], monitor_params['broker']['provision_request_id']);
     client = new Paho.Client(monitor_params['broker']['server'], monitor_params['broker']['port'], monitor_params['broker']['username']);
 
     client.onConnectionLost = onConnectionLost; 
@@ -18,12 +18,12 @@ $(document).ready(function() {
     // refresh the refresh token once per minute to keep the monitor alive
     setInterval(function () {
 	$.ajax({
-	    url: '/provision/refresh',
+	    url: '/api/provision_request/' + monitor_params['provision_request_id'],
 	    method: 'POST',
 	    error: function(jqXHR, status, error) { console.error('refresh token refresh failed'); console.error(status); console.error(error); },
 	    success: function(data) { console.log('got refresh_token'); console.log(data); monitor_params['refresh_token'] = data['refresh_token']; },
 	    dataType: 'json',
-	    headers: { 'Authorization': monitor_params['refresh_token'] }
+	    headers: { 'Authorization': monitor_params['provision_request_token'] }
 	});
     }, 1000*60);
 });
