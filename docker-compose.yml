@@ -11,7 +11,7 @@ services:
       - homebus-net
 
   redis:
-    image: redis:6.0.9
+    image: redis:6.2.5
     ports:
       - "6379:6379"
     restart: always
@@ -27,12 +27,12 @@ services:
     volumes:
       - .:/app
       - '/app/tmp' # don't mount tmp directory
-    environment:
-      - REDIS_URL_SIDEKIQ=redis://redis:6379/0
-      - REDIS_URL=redis://redis:6379/0
-      - REDIS_PROVIDER=redis://redis:6379/0
     networks: 
       - homebus-net
+    environment:
+      RAILS_ENV: development
+      RAILS_DOCKER: 1
+      REDIS_URL: redis://redis:6379/0
 
   mosquitto:
     image: eclipse-mosquitto:1.6.12
@@ -52,12 +52,15 @@ services:
       - "127.0.0.1:3000:3000"
     links:
       - postgres
+      - redis
+      - sidekiq
     volumes:
       - .:/app
     environment:
       DOCKER: docker
       RAILS_ENV: development
       RAILS_DOCKER: 1
+      REDIS_URL: redis://redis:6379/0
     env_file: .env.docker
     networks: 
       - homebus-net 
