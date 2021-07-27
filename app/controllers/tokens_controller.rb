@@ -32,8 +32,6 @@ class TokensController < ApplicationController
         format.html { redirect_to @token, notice: "Token was successfully created." }
         format.json { render :show, status: :created, location: @token }
       else
-        Rails.logger.error @token.errors
-
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @token.errors, status: :unprocessable_entity }
       end
