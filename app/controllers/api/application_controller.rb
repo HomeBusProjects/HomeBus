@@ -29,18 +29,22 @@ class Api::ApplicationController < ActionController::Base
       
     if @token.nil? then
       Rails.logger.error "unauthorized, token #{header_token}"
+      Rails.logger.error "headers\n#{request.headers.inspect}"
 
       return render_unauthorized(scope)
     end
 
     if @token.expires && @token.expires <= Time.now then
       Rails.logger.error "expired, token #{header_token}"
+      Rails.logger.error "headers\n#{request.headers.inspect}"
 
       return render_expired(scope)
     end
 
     if @token.scope != scope then
       Rails.logger.error "out of scope, needed #{scope}, got #{@token.scope}"
+      Rails.logger.error "headers\n#{request.headers.inspect}"
+
       return render_bad_scope(scope)
     end
 
