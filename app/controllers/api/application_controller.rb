@@ -20,18 +20,21 @@ class Api::ApplicationController < ActionController::Base
       return false
     end
 
+    header_token = ''
+
     authenticate_with_http_token do |token, options|
+      header_token = token
       @token = Token.find(token)
     end
       
     if @token.nil? then
-      Rails.logger.error "unauthorized, token #{token}"
+      Rails.logger.error "unauthorized, token #{header_token}"
 
       return render_unauthorized(scope)
     end
 
     if @token.expires && @token.expires <= Time.now then
-      Rails.logger.error "expired, token #{token}"
+      Rails.logger.error "expired, token #{header_token}"
 
       return render_expired(scope)
     end
