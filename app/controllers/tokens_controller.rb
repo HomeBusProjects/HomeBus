@@ -25,12 +25,15 @@ class TokensController < ApplicationController
   # POST /tokens or /tokens.json
   def create
     @token = Token.new(token_params)
+    @token.scope = 'provision_request:create'
 
     respond_to do |format|
       if @token.save
         format.html { redirect_to @token, notice: "Token was successfully created." }
         format.json { render :show, status: :created, location: @token }
       else
+        Rails.logger.error @token.errors
+
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @token.errors, status: :unprocessable_entity }
       end
