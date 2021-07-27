@@ -25,13 +25,13 @@ class Api::ApplicationController < ActionController::Base
     end
       
     if @token.nil? then
-      Rails.logger.error "unauthorized"
+      Rails.logger.error "unauthorized, token #{token}"
 
       return render_unauthorized(scope)
     end
 
     if @token.expires && @token.expires <= Time.now then
-      Rails.logger.error "expired"
+      Rails.logger.error "expired, token #{token}"
 
       return render_expired(scope)
     end
