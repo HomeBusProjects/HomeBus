@@ -29,6 +29,10 @@ class Api::ApplicationController < ActionController::Base
       
     if @token.nil? then
       Rails.logger.error "unauthorized, token #{header_token}"
+      Rails.logger.error "unauthorized, token #{request.headers['AUTHORIZATION']}"
+      Rails.logger.error "unauthorized, token #{request.headers['Authorization']}"
+      Rails.logger.error "unauthorized, token #{request.headers['HTTP_Authorization']}"
+      Rails.logger.error "unauthorized, token #{request.headers['HTTP_AUTHORIZATION']}"
       Rails.logger.error "headers\n#{request.headers.inspect}"
 
       return render_unauthorized(scope)
