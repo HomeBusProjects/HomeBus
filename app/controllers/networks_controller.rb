@@ -105,7 +105,6 @@ class NetworksController < ApplicationController
 
     pr.accept!
 
-
     @broker = {}
 
     @broker[:server] = pr.network.broker.name

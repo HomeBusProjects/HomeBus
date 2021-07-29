@@ -55,8 +55,8 @@ class Api::ProvisionRequestsController < Api::ApplicationController
 
       render json: response, status: 200
     else
-      response[:retry_time] = 30
-      render json: response, status: :accepted
+      response[:retry_interval] = 30
+      render json: response, status: 201
     end
 
   end
