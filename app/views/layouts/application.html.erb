@@ -55,25 +55,25 @@
 	      <a class="nav-link" href="<%= app_instances_path %>">App Instances</a>
 	    </li>
 	    <li class="nav-item dropdown">
-	      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 	        Admin
 	      </a>
-	      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		<%= link_to 'Users', users_path, class: 'dropdown-item' %>
-                <div class="dropdown-divider"></div>
+	      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<li><%= link_to 'Users', users_path, class: 'dropdown-item' %></li>
+                <li><hr class="dropdown-divider"></li>
 
-		<%= link_to 'Permissions', permissions_path, class: 'dropdown-item' %>
-                <div class="dropdown-divider"></div>
-  		<%= link_to 'Brokers', brokers_path, class: 'dropdown-item' %>
-		<%= link_to 'Broker Accounts', mosquitto_accounts_path, class: 'dropdown-item' %>
-		<%= link_to 'Broker ACLs', mosquitto_acls_path, class: 'dropdown-item' %>
-                <div class="dropdown-divider"></div>
-		<%= link_to 'Sidekiq', '/sidekiq', class: 'dropdown-item' %>
+		<%= link_to 'Permissions', permissions_path, class: 'dropdown-item' %></li>
+                <li><hr class="dropdown-divider"></li>
+  		<%= link_to 'Brokers', brokers_path, class: 'dropdown-item' %></li>
+		<%= link_to 'Broker Accounts', mosquitto_accounts_path, class: 'dropdown-item' %><li>
+		<%= link_to 'Broker ACLs', mosquitto_acls_path, class: 'dropdown-item' %><li>
+                <li><h class="dropdown-divider"></li>
+		<%= link_to 'Sidekiq', '/sidekiq', class: 'dropdown-item' %></li>
 <% if Rails.env == 'development' || ENV['USE_LETTEROPENER'] %>
-		<%= link_to 'Letter Opener', '/letter_opener', class: 'dropdown-item' %>
+		<%= link_to 'Letter Opener', '/letter_opener', class: 'dropdown-item' %></li>
 <% end %>
-              </div>
-            </li>
+		</ul>
+	      </li>
 <% end %>
 	  <% if Rails.env == 'development' %>
 	    <li class="nav-item">
@@ -82,13 +82,13 @@
 	  <% end %>
 	  <% if user_signed_in? %>
 	    <li class="nav-item dropdown">
-	      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	        <%= current_user.name || current_user.email %>
+	      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	        <%= current_user.email %>
   	      </a>
-	      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-  	      <%= link_to 'Profile', current_user, class: 'dropdown-item' %>
-	      <%= link_to 'Sign out',  destroy_user_session_path, :method => 'delete', class: 'dropdown-item' %>
-              </div>
+	      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+  	        <li><%= link_to 'Profile', current_user, class: 'dropdown-item' %></li>
+	        <li><%= link_to 'Sign out',  destroy_user_session_path, :method => 'delete', class: 'dropdown-item' %></li>
+              </ul>
 	    </li>
 	  <% end %>
 	  </ul>
