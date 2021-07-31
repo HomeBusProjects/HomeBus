@@ -1,9 +1,8 @@
 FROM ruby:2.6.6
 RUN apt-get update && apt-get install -y \ 
   build-essential \ 
-  mdns-scan \
-  avahi-daemon avahi-utils libavahi-client-dev libavahi-client3 libavahi-common-dev libavahi-compat-libdnssd-dev \
-  zip
+  zip \
+  nodejs
 
 RUN mkdir -p /app 
 WORKDIR /app
