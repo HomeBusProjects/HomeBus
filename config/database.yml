@@ -4,60 +4,32 @@ default: &default
   pool: 5
 
 development:
-  primary:
-    <<: *default
-    url: postgresql://postgres:homebus-development@postgres:5432/homebus_development?pool=5
-  mqtt0:
-    <<: *default
-    migrations_paths: db/mosquitto_migrate
-    url: postgresql://postgres:homebus-development@postgres:5432/homebus_development_mqtt0?pool=5
+  <<: *default
+  url: postgresql://postgres:homebus-development@postgres:5432/homebus_development?pool=5
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  primary:
-    <<: *default 
-    url: <%= ENV['DATABASE_URL'] || 'postgresql://postgres:homebus-development@postgres:5432/homebus_test?pool=5' %>
-  mqtt0:
-    <<: *default
-    migrations_paths: db/mosquitto_migrate
-    url: <%= ENV['DATABASE_URL'] || 'postgresql://postgres:homebus-development@postgres:5432/homebus_test?pool=5' %>
+  <<: *default 
+  url: <%= ENV['DATABASE_URL'] || 'postgresql://postgres:homebus-development@postgres:5432/homebus_test?pool=5' %>
 
 staging:
-  primary:
-    <<: *default
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-    host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
-    username: <%= ENV['POSTGRESQL_USERNAME'] %>
-    password: <%= ENV['POSTGRESQL_PASSWORD'] %>
-    port: <%= ENV['POSTGRESQL_PORT'] %>
-    database: homebus_staging
-  mqtt0:
-    <<: *default
-    migrations_paths: db/mosquitto_migrate
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
+  <<: *default
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
+  username: <%= ENV['POSTGRESQL_USERNAME'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+  port: <%= ENV['POSTGRESQL_PORT'] %>
+  database: homebus_staging
 
 production:
-  primary:
-    <<: *default
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-    host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
-    username: <%= ENV['POSTGRESQL_USERNAME'] %>
-    password: <%= ENV['POSTGRESQL_PASSWORD'] %>
-    port: <%= ENV['POSTGRESQL_PORT'] %>
-    database: homebus_production
-  mqtt0:
-    <<: *default
-    migrations_paths: db/mosquitto_migrate
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-    # ssh tunnel to mqtt0.homebus.io
-    host: 127.0.0.1
-    username: <%= ENV['MOSQUITTO_POSTGRESQL_USERNAME'] %>
-    password: <%= ENV['MOSQUITTO_POSTGRESQL_PASSWORD'] %>
-    port: <%= ENV['MOSQUITTO_POSTGRESQL_PORT'] || 6000 %>
-    database: <%= ENV['MOSQUITTO_POSTGRESQL_DATABASE'] %>
+  <<: *default
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
+  username: <%= ENV['POSTGRESQL_USERNAME'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+  port: <%= ENV['POSTGRESQL_PORT'] %>
+  database: homebus_production

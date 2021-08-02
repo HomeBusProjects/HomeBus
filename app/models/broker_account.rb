@@ -47,4 +47,11 @@ class BrokerAccount < ApplicationRecord
 
     unencoded_password
   end
+
+  def to_sql
+    records = "BEGIN;\n\n"
+    records += "DELETE FROM \"mosquitto_accounts\" WHERE \"id\" = '#{self.id}';\n\n"
+    records += "INSERT INTO \"mosquitto_accounts\" (\"id\", \"password\", \"provision_request_id\", \"superuser\", \"enabled\", \"created_at\", \"updated_at\") VALUES\n"
+    records += "\t('#{self.id}', '#{self.password}', '#{self.provision_request.id}', '#{self.superuser}', '#{self.enabled}', NOW(), NOW())"
+  end
 end

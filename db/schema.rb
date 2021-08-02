@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_151603) do
+ActiveRecord::Schema.define(version: 2021_08_02_165247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -91,6 +91,12 @@ ActiveRecord::Schema.define(version: 2021_07_30_151603) do
     t.integer "insecure_port", default: 1883, null: false
     t.integer "insecure_websocket_port", default: 9001, null: false
     t.integer "secure_websocket_port", default: 8083, null: false
+    t.string "ssh_hostname"
+    t.string "ssh_username"
+    t.string "ssh_key"
+    t.string "postgresql_database"
+    t.string "postgresql_username"
+    t.string "postgresql_password"
     t.index ["name"], name: "index_brokers_on_name", unique: true
   end
 

@@ -8,43 +8,30 @@ class Api::ProvisionRequestsController < Api::ApplicationController
   before_action -> { api_authenticate!('provision_request:create') }, only: [ :create ]
   before_action -> { api_authenticate!('provision_request:manage') }, only: [ :show, :update, :destroy ]
 
+  before_action :set_provision_request, except: [ :index, :create ]
+
   # GET /api/provision_requests
   def show
     Rails.logger.info 'API/PR SHOW'
-
-    if @token.scope != 'provision_request:manage'
-      Rails.logger.error 'BAD SCOPE'
-
-      unauthorized_token!('provision_request:manage')
-      return
-    end
-
-    if @token.provision_request_id != params[:id]
-      Rails.logger.error 'BAD ID'
-
-      unauthorized_token!('provision_request:manage') 
-     return
-    end
-
-    pr = ProvisionRequest.find params[:id]
-    if pr.nil?
-      render json: 'not found', status: 404
-      return
-    end
 
     Rails.logger.info "found PR!"
     Rails.logger.info pr.inspect
 
     response = {
-      id: pr.id,
-      token: @token.id
+      id: @provision_request.id,
+      token: @token.id,
+      provision_request: {
+        name: @provision_request.friendly_name,
+        wo_ddcs: @provision_request.wo_ddcs,
+        rw_ddcs: @provision_request.rw_ddcs
+      }
     }
 
-    if pr.accepted?
+    if @provision_request.accepted?
       broker = Broker.first
       response[:credentials] = {
-        mqtt_username: pr.account_id,
-        mqtt_password: pr.account_password
+        mqtt_username: @provision_request.broker_account.id,
+        mqtt_password: @provision_request.broker_account.enc_password
       }
 
       response[:broker] = {
@@ -110,7 +97,17 @@ class Api::ProvisionRequestsController < Api::ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_provision_request
+    if @token.provision_request_id != params[:id]
+      Rails.logger.error 'BAD ID'
+
+      unauthorized_token!('provision_request:manage') 
+    end
+
     @provision_request = ProvisionRequest.find(params[:id])
+
+    if @provision_request.nil?
+      render json: 'not found', status: 404
+    end
   end
 
 
