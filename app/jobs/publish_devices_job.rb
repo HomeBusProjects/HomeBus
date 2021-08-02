@@ -23,8 +23,8 @@ class PublishDevicesJob < ApplicationJob
     conn_opts = {
       remote_host: network.broker.name,
       remote_port: network.broker.secure_port,
-      username: network.announcer.provision_request.mosquitto_account.id,
-      password: network.announcer.provision_request.mosquitto_account.generate_password!,
+      username: network.announcer.provision_request.broker_account.id,
+      password: network.announcer.provision_request.broker_account.enc_password,
       ssl: true
     }
 
@@ -43,8 +43,10 @@ class PublishDevicesJob < ApplicationJob
     puts "conn_opts #{conn_opts}"
     puts "message #{homebus_message.pretty_inspect}"
 
-    mqtt = MQTT::Client.connect(conn_opts) do |c|
-      c.publish "homebus/device/#{network.announcer.id}/#{DDC}", JSON.generate(homebus_message), true
+    unless Rails.env.development?
+      mqtt = MQTT::Client.connect(conn_opts) do |c|
+        c.publish "homebus/device/#{network.announcer.id}/#{DDC}", JSON.generate(homebus_message), true
+      end
     end
   end
 end
