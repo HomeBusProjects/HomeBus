@@ -1,0 +1,35 @@
+<h1>Broker Acls</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Topic</th>
+      <th>Read</th>
+      <th>Write</th>
+      <th>Subscribe</th>
+      <th>Provision request</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @broker_acls.each do |broker_acl| %>
+      <tr>
+        <td><%= broker_acl.username %></td>
+        <td><%= broker_acl.topic %></td>
+        <td><%= broker_acl.read? %></td>
+        <td><%= broker_acl.write? %></td>
+        <td><%= broker_acl.subscribe? %></td>
+        <td><%=  if broker_acl.provision_request then link_to(broker_acl.provision_request.friendly_name, broker_acl.provision_request) end %></td>
+        <td><%= link_to 'Show', broker_acl %></td>
+        <td><%= link_to 'Edit', edit_broker_acl_path(broker_acl) %></td>
+        <td><%= link_to 'Destroy', broker_acl, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Broker Acl', new_broker_acl_path, class: 'btn btn-info' %>

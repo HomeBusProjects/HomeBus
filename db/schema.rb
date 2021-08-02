@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_171149) do
+ActiveRecord::Schema.define(version: 2021_07_30_151603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -51,6 +51,34 @@ ActiveRecord::Schema.define(version: 2021_07_13_171149) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "description", default: "", null: false
     t.string "parameters", default: "", null: false
+  end
+
+  create_table "broker_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "password", null: false
+    t.string "enc_password", null: false
+    t.boolean "superuser", default: false, null: false
+    t.boolean "enabled", default: false, null: false
+    t.uuid "provision_request_id", null: false
+    t.bigint "broker_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["broker_id"], name: "index_broker_accounts_on_broker_id"
+    t.index ["created_at"], name: "index_broker_accounts_on_created_at"
+    t.index ["enabled"], name: "index_broker_accounts_on_enabled"
+    t.index ["provision_request_id"], name: "index_broker_accounts_on_provision_request_id"
+  end
+
+  create_table "broker_acls", force: :cascade do |t|
+    t.uuid "username", null: false
+    t.string "topic", null: false
+    t.uuid "provision_request_id", null: false
+    t.integer "permissions", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_broker_acls_on_created_at"
+    t.index ["provision_request_id"], name: "index_broker_acls_on_provision_request_id"
+    t.index ["topic"], name: "index_broker_acls_on_topic"
+    t.index ["username"], name: "index_broker_acls_on_username"
   end
 
   create_table "brokers", force: :cascade do |t|
@@ -165,9 +193,6 @@ ActiveRecord::Schema.define(version: 2021_07_13_171149) do
     t.bigint "user_id", null: false
     t.datetime "autoremove_at"
     t.boolean "ready", default: true, null: false
-    t.string "account_id"
-    t.string "account_password"
-    t.string "account_encrypted_password"
     t.index ["autoremove_at"], name: "index_provision_requests_on_autoremove_at"
     t.index ["autoremove_interval"], name: "index_provision_requests_on_autoremove_interval"
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
@@ -245,6 +270,9 @@ ActiveRecord::Schema.define(version: 2021_07_13_171149) do
   add_foreign_key "app_instances", "apps"
   add_foreign_key "app_instances", "users"
   add_foreign_key "app_servers", "users", column: "owner_id"
+  add_foreign_key "broker_accounts", "brokers"
+  add_foreign_key "broker_accounts", "provision_requests"
+  add_foreign_key "broker_acls", "provision_requests"
   add_foreign_key "devices", "provision_requests"
   add_foreign_key "permissions", "ddcs"
   add_foreign_key "permissions", "devices"

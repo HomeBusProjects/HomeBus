@@ -27,7 +27,7 @@
       <p>
 	<br>
 	<%= form.label :user %>
-	<%= form.collection_select :user_id, @users, :id, :name, {}, { class: 'form-control', readonly: true } %>
+	<%= form.collection_select :user_id, User.order(email: :asc), :id, :name, {}, { class: 'form-control', readonly: true } %>
       </p>
     </div>
   </div>
@@ -40,7 +40,7 @@
       <p>
 	<br>
 	<%= form.label :network %>
-	<%= form.collection_select :network_id, @networks, :id, :name, {}, { class: 'form-control', readonly: true } %>
+	<%= form.collection_select :network_id, Network.order(name: :asc), :id, :name, {}, { class: 'form-control', readonly: true } %>
       </p>
     </div>
   </div>
@@ -50,7 +50,7 @@
   <div class="row">
    <div class="col">
      <%= form.label :status %>
-     <%= form.select :status, options_for_select([:unanswered, :accepted, :denied], selected: form.object.status) %>
+     <%= form.select :status, options_for_select([[:unanswered, 0], [:accepted, 1], [:denied, 2]], selected: form.object.status) %>
    </div>
   </div>
 

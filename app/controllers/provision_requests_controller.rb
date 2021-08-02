@@ -80,23 +80,34 @@ class ProvisionRequestsController < ApplicationController
   def update
     p = provision_request_params
 
+    Rails.logger.info 'PR UPDATE'
+    Rails.logger.info "old status #{@provision_request.status}, new status #{p[:status]}"
+
     p[:status] = p[:status].to_i
+    if @provision_request.status != p[:status]
+      Rails.logger.info "UPDATE STATUS TRUE"
+      update_status = true
+    else
+      Rails.logger.info "UPDATE STATUS FALSE"
+    end
 
     respond_to do |format|
       if @provision_request.update(p)
-        if @provision_request.status_changed?
-          case @provision_request.status
-          when :accepted
+        if update_status
+          case p[:status]
+          when 1
+            Rails.logger.info "...accepting"
+
             @provision_request.accept!
             flash_message 'success', 'Provision request was successfully accepted.'
-          when :denied
+          when 2
+            Rails.logger.info "...denying"
+
             @provision_request.devices.update_all(provisioned: false)
             @provision_request.deny!
             flash_message 'warning', 'Provision request was successfully denied.'
-          when :revoked
-            @provision_request.devices.update_all(provisioned: false)
-            @provision_request.revoke
-            flash_message 'danger', 'Provision request was successfully revoked.'
+          else
+            Rails.logger.info "...ELSE"
           end
         end
 

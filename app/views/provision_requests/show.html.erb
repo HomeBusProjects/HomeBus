@@ -78,16 +78,16 @@
 <hr>
 <p>
   <h3>Broker Account</h3>
-<% if @provision_request.mosquitto_account %>
+<% if @provision_request.broker_account %>
   <table class='table'>
     <tr>
       <td>username</td>
-      <td><%= link_to @provision_request.mosquitto_account.id, @provision_request.mosquitto_account %></td>
+      <td><%= link_to @provision_request.broker_account.id, @provision_request.broker_account %></td>
     </tr>
 <% if can? :manage, :all %>
     <tr>
       <td>Superuser?</td>
-      <td><% @provision_request.mosquitto_account.superuser? %></td>
+      <td><% @provision_request.broker_account.superuser? %></td>
     </tr>
 <% end %>
     <tr>
@@ -119,9 +119,9 @@
 
 <% if can? :manage, :all %>
 <p>
-  <h3>Mosquitto ACLs</h3>
+  <h3>Broker ACLs</h3>
   <ul>
-    <% MosquittoAcl.where(provision_request_id: @provision_request.id).find_each do |acl| %>
+    <% BrokerAcl.where(provision_request_id: @provision_request.id).find_each do |acl| %>
     <li><%= link_to acl.topic, acl %></li>
     <% end %>    
   </ul>
@@ -130,7 +130,7 @@
 
 <% if @provision_request.accepted? %>
 <code>
-  <%= MosquittoAcl.from_provision_request2(@provision_request).to_s %>
+  <%= BrokerAcl.from_provision_request2(@provision_request).to_s %>
 </code>
 <% end %>
 

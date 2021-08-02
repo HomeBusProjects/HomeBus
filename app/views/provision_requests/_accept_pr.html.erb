@@ -1,6 +1,6 @@
-    <form action='<%= provision_request_path(@provision_request) %>' method='post'>
+    <form action='<%= provision_request_path(@provision_request) %>' method='post' accept-charset='UTF-8' data-remote='true'>
       <input type="hidden" name="_method" value="PATCH">
-      <input type="hidden" name="provision_request[id]" value="<%= @provision_request.id %>">
+      <xinput type="hidden" name="provision_request[id]" value="<%= @provision_request.id %>">
       <input type='hidden' value='1' name='provision_request[status]'>
       <%= token_tag %>
       <input type='submit' value='Accept' class='btn btn-info'>

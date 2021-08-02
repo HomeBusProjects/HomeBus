@@ -9,6 +9,9 @@ class ProvisionRequest < ApplicationRecord
   has_one :mosquitto_account, dependent: :destroy
   has_many :mosquitto_acl, dependent: :destroy
 
+  has_one :broker_account, dependent: :destroy
+  has_many :broker_acl, dependent: :destroy
+
   belongs_to :network
   belongs_to :user
 
@@ -41,23 +44,15 @@ class ProvisionRequest < ApplicationRecord
       Ddc.where(name: ddc_name).first_or_create(description: '', reference_url: '')
     end
 
-    #    self.create_mosquitto_account(superuser: false, password: SecureRandom.base64(32), enabled: true)
-
-    ma = MosquittoAccount.new
-
-    self.account_id = SecureRandom.uuid
-    #    self.account_password = ma.generate_pbkdf2_password!
-    self.account_password = ma.generate_password!
-    self.account_encrypted_password = ma.password
-    self.save
+    Rails.logger.info 'create broker account'
+    self.create_broker_account(superuser: false, enabled: true, broker: self.network.broker)
+    BrokerAcl.from_provision_request2 self
 
     UpdateMqttAuthJob.perform_later(self)
-
-    #    MosquittoAcl.from_provision_request2 self
   end
 
   def revoke!
-    mosquitto_account.update(enabled: false)
+    broker_account.update(enabled: false)
   end
 
   def self.find_by_refresh_token(token)

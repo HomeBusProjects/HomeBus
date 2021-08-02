@@ -1,0 +1,22 @@
+<p>
+  <strong>Username/ID:</strong>
+  <%= @broker_account.id %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @broker_account.password %>
+</p>
+
+<p>
+  <strong>Superuser (ignores ACL):</strong>
+  <%= @broker_account.superuser %>
+</p>
+
+<p>
+  <strong>Provision request:</strong>
+  <%= link_to @broker_account.provision_request.friendly_name, @broker_account.provision_request %>
+</p>
+
+<%= link_to 'Edit', edit_broker_account_path(@broker_account) %> |
+<%= link_to 'Back', broker_accounts_path %>

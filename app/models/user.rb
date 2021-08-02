@@ -17,7 +17,14 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many :devices
 
+  before_create :set_name
   after_create :send_admin_mail
+
+  def set_name
+    if self.name.nil?
+      self.name = self.email
+    end
+  end
 
   def send_admin_mail
     NotifyRequestMailer.with(user: self).admins_new_user.deliver_later

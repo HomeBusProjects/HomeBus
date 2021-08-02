@@ -1,0 +1,32 @@
+<p>
+  <strong>Username:</strong>
+  <%= @broker_acl.username %>
+</p>
+
+<p>
+  <strong>Topic:</strong>
+  <%= @broker_acl.topic %>
+</p>
+
+<p>
+  <strong>Read?:</strong>
+  <%= @broker_acl.read? %>
+</p>
+
+<p>
+  <strong>Write?:</strong>
+  <%= @broker_acl.write? %>
+</p>
+
+<p>
+  <strong>Subscribe?:</strong>
+  <%= @broker_acl.subscribe? %>
+</p>
+
+<p>
+  <strong>Provision request:</strong>
+  <%= if broker_acl.provision_request then @broker_acl.provision_request.friendly_name end %>
+</p>
+
+<%= link_to 'Edit', edit_broker_acl_path(@broker_acl) %> |
+<%= link_to 'Back', broker_acls_path %>

@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resources :users
   resources :mosquitto_accounts
   resources :mosquitto_acls
+  resources :broker_accounts
+  resources :broker_acls
   resources :provision_requests
 
 #  namespace :api, defaults: { format: :json} do

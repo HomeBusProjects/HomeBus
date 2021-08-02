@@ -65,8 +65,8 @@
 		<%= link_to 'Permissions', permissions_path, class: 'dropdown-item' %></li>
                 <li><hr class="dropdown-divider"></li>
   		<%= link_to 'Brokers', brokers_path, class: 'dropdown-item' %></li>
-		<%= link_to 'Broker Accounts', mosquitto_accounts_path, class: 'dropdown-item' %><li>
-		<%= link_to 'Broker ACLs', mosquitto_acls_path, class: 'dropdown-item' %><li>
+		<%= link_to 'Broker Accounts', broker_accounts_path, class: 'dropdown-item' %><li>
+		<%= link_to 'Broker ACLs', broker_acls_path, class: 'dropdown-item' %><li>
                 <li><h class="dropdown-divider"></li>
 		<%= link_to 'Sidekiq', '/sidekiq', class: 'dropdown-item' %></li>
 <% if Rails.env == 'development' || ENV['USE_LETTEROPENER'] %>

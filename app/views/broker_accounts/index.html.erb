@@ -1,0 +1,27 @@
+<h1>Broker Accounts</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Username/ID</th>
+      <th>Superuser</th>
+      <th>Provision request</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @broker_accounts.each do |broker_account| %>
+      <tr>
+        <td><%= link_to broker_account.id, broker_account %></td>
+        <td><%= broker_account.superuser %></td>
+        <td><%= link_to broker_account.provision_request.friendly_name, broker_account.provision_request %></td>
+        <td><%= link_to 'Delete', broker_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to( 'New Broker Account', new_broker_account_path, class: 'btn btn-info' ) %>
