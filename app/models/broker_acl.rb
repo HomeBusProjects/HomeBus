@@ -158,7 +158,7 @@ class BrokerAcl < ApplicationRecord
     device.ddcs.each do |ddc|
       Rails.logger.debug "ACL homebus/device/#{device.id}/#{ddc.name} -> #{permissions}"
 
-      records.push "\t('#{pr.broker_account_id}', 'homebus/device/#{device.id}/#{ddc.name}', '#{pr.id}', #{permissions}, NOW(), NOW())"
+      records.push "\t('#{pr.broker_account.id}', 'homebus/device/#{device.id}/#{ddc.name}', '#{pr.id}', #{permissions}, NOW(), NOW())"
     end
 
     records
