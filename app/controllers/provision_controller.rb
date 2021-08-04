@@ -22,8 +22,8 @@ class ProvisionController < ApplicationController
 
     args[:requested_uuid_count] = p[:provision][:requested_uuid_count]
 
-    args[:ro_ddcs] = p[:provision][:ddcs][:'read-only']
-    args[:wo_ddcs] = p[:provision][:ddcs][:'write-only']
+    args[:consumes] = p[:provision][:ddcs][:'read-only']
+    args[:publishes] = p[:provision][:ddcs][:'write-only']
 
     pr = ProvisionRequest.find_by(serial_number: args[:serial_number],
                                   manufacturer: args[:manufacturer],

@@ -1,7 +1,7 @@
 require 'securerandom'
 
 class Token < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :provision_request, optional: true
   belongs_to :network, optional: true
   belongs_to :device, optional: true

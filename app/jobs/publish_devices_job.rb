@@ -7,12 +7,16 @@ class PublishDevicesJob < ApplicationJob
 
   DDC = 'org.homebus.experimental.homebus.devices'
 
+  discard_on ActiveJob::DeserializationError    
+
   def perform(network)
+    return unless network
+
     devices = []
     network.devices.each do |device|
       devices.push({
                      name: device.friendly_name,
-                     uuid: device.id,
+                     id: device.id,
                      consumes: device.provision_request.ro_ddcs,
                      publishes: device.provision_request.wo_ddcs,
                      temporary: !device.provision_request.autoremove_at.nil?,

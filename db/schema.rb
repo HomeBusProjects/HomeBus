@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_165247) do
+ActiveRecord::Schema.define(version: 2021_08_04_032011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -190,8 +190,8 @@ ActiveRecord::Schema.define(version: 2021_08_02_165247) do
     t.integer "status", limit: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "ro_ddcs", default: [], null: false, array: true
-    t.string "wo_ddcs", default: [], null: false, array: true
+    t.string "consumes", default: [], null: false, array: true
+    t.string "publishes", default: [], null: false, array: true
     t.integer "networks_counter", default: 0, null: false
     t.bigint "network_id"
     t.datetime "last_refresh"
@@ -201,13 +201,13 @@ ActiveRecord::Schema.define(version: 2021_08_02_165247) do
     t.boolean "ready", default: true, null: false
     t.index ["autoremove_at"], name: "index_provision_requests_on_autoremove_at"
     t.index ["autoremove_interval"], name: "index_provision_requests_on_autoremove_interval"
+    t.index ["consumes"], name: "index_provision_requests_on_consumes", using: :gin
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
     t.index ["last_refresh"], name: "index_provision_requests_on_last_refresh"
     t.index ["network_id"], name: "index_provision_requests_on_network_id"
+    t.index ["publishes"], name: "index_provision_requests_on_publishes", using: :gin
     t.index ["ready"], name: "index_provision_requests_on_ready"
-    t.index ["ro_ddcs"], name: "index_provision_requests_on_ro_ddcs", using: :gin
     t.index ["user_id"], name: "index_provision_requests_on_user_id"
-    t.index ["wo_ddcs"], name: "index_provision_requests_on_wo_ddcs", using: :gin
   end
 
   create_table "public_devices", force: :cascade do |t|

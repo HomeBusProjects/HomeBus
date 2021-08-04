@@ -22,8 +22,8 @@ class Api::ProvisionRequestsController < Api::ApplicationController
       token: @token.id,
       provision_request: {
         name: @provision_request.friendly_name,
-        wo_ddcs: @provision_request.wo_ddcs,
-        rw_ddcs: @provision_request.rw_ddcs
+        publishes: @provision_request.publishes,
+        consumes: @provision_request.consumes
       }
     }
 
@@ -62,34 +62,61 @@ class Api::ProvisionRequestsController < Api::ApplicationController
       friendly_name: params[:name],
       status: :unanswered,
 
-      ro_ddcs: params[:ro_ddcs],
-      wo_ddcs: params[:wo_ddcs],
+      consumes: params[:consumes],
+      publishes: params[:publishes],
 
       ip_address: request.remote_ip,
       user: @token.user,
       network: @token.network
     )
 
-    Rails.logger.info 'created pr'
-    Rails.logger.info pr.inspect
-    Rails.logger.error pr.errors.full_messages
+    if pr
+      Rails.logger.info 'created pr'
+      Rails.logger.info pr.inspect
+      Rails.logger.error pr.errors.full_messages
 
-    response = get_response(pr)
-    response[:retry_interval] = 30
+      response = {
+        token: pr.token.id,
+        provision_request: pr.to_json,
+        devices: []
+      }
 
-    # return 202 Accepted to indicate that the client should come back later to get broker credentials
-    render json: response, status: :accepted
+      params[:devices].each do |d|
+        device = Device.create({ provision_request: pr,
+                                 friendly_name: "#{d[:identity][:manufacturer]}-#{d[:identity][:model]}-#{d[:identity][:serial_number]}",
+                                 manufacturer: d[:identity][:manufacturer],
+                                 model: d[:identity][:model],
+                                 serial_number:  d[:identity][:serial_number],
+                                 pin:  d[:identity][:pin],
+                                 public: false
+                               })
+        response[:devices].push(device.to_json)
+      end
+
+      if pr.accepted?
+        response[:broker] = pr.network.broker.to_json
+        response[:credentials] = pr.broker_account.to_json
+      else
+        response[:retry_interval] = 30
+      end
+
+      # return 202 Accepted to indicate that the client should come back later to get broker credentials
+      render json: response, status: :accepted
+    else
+      render json: 'ProvisionRequest creation failure', status: 503
+    end
   end
 
   # PATCH/PUT /api/provision_requests/1.json
   def update
     p = provision_request_params
-    # validate params, are we allowed to modify these?
 
     if @provision_request.update(p)
       PublishDevicesJob.perform_later(@provision_request.network)
 
-      format.json { render :show, status: :ok, location: @provision_request }
+      render json: @provision_request.to_json, status: :ok
+    else
+      render json: 'ProvisionRequest update failure', status: 503
     end
   end
 
@@ -108,36 +135,5 @@ class Api::ProvisionRequestsController < Api::ApplicationController
     if @provision_request.nil?
       render json: 'not found', status: 404
     end
-  end
-
-
-  def get_response(pr)
-    response_token = Token.create({ name: params[:name],
-                                    scope: 'provision_request:manage',
-                                    enabled: true,
-                                    user: @token.user,
-                                    provision_request: pr,
-                                    network: pr.network
-                                  })
-   devices = []
-   params[:devices].each do |d|
-     device = Device.create({ provision_request: pr,
-                              friendly_name: "#{d[:identity][:manufacturer]}-#{d[:identity][:model]}-#{d[:identity][:serial_number]}",
-                              manufacturer: d[:identity][:manufacturer],
-                              model: d[:identity][:model],
-                              serial_number:  d[:identity][:serial_number],
-                              pin:  d[:identity][:pin],
-                              public: false
-                             })
-     devices.push({ uuid: device.id, identity: d[:identity] })
-   end
-
-   response = {
-     id: pr.id,
-     token: response_token.id,
-     devices: devices,
-    }
-
-   response
   end
 end

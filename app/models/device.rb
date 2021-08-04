@@ -20,4 +20,16 @@ class Device < ApplicationRecord
   def set_user
     self.users << self.provision_request.user
   end
+
+  def to_json
+    {
+      id: self.id,
+      name: self.friendly_name,
+      identity: {
+        manufacturer: self.manufacturer,
+        model: self.model,
+        serial_number: self.serial_number
+      }
+    }
+  end
 end

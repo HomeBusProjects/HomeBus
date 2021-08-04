@@ -59,12 +59,12 @@
   <div class="row">
     <div class="col">
       <%= form.label "Publishes" %>
-      <%= form.text_area :wo_ddcs, { class: "form-control", value: @provision_request.wo_ddcs.join("\r\n") } %>
+      <%= form.text_area :publishes, { class: "form-control", value: @provision_request.publishes.join("\r\n") } %>
     </div>
 
     <div class="col">
       <%= form.label "Consumes" %>
-      <%= form.text_area :ro_ddcs, { class: "form-control", value: @provision_request.ro_ddcs.join("\r\n") }  %>
+      <%= form.text_area :consumes, { class: "form-control", value: @provision_request.consumes.join("\r\n") }  %>
     </div>
   </div>
 

@@ -146,15 +146,12 @@ class ProvisionRequestsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def provision_request_params
-    arrayize_ddcs!(params.require(:provision_request).permit(:friendly_name, :status, :wo_ddcs, :ro_ddcs, :network_id))
+    arrayize_ddcs!(params.require(:provision_request).permit(:friendly_name, :status, :consumes, :publishes, :network_id))
   end
 
   def arrayize_ddcs!(p)
-    wo_ddcs = p[:wo_ddcs]
-    p.merge!({ wo_ddcs: wo_ddcs.split }) if wo_ddcs.present?
-
-    ro_ddcs = p[:ro_ddcs]
-    p.merge!({ ro_ddcs: ro_ddcs.split }) if ro_ddcs.present?
+    p.merge!({ publishes: p[:publishes].split }) if p[:publishes].present?
+    p.merge!({ consumes: p[:consumes].split }) if p[:consumes].present?
 
     p
   end
