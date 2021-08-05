@@ -12,15 +12,10 @@ class Api::ProvisionRequestsController < Api::ApplicationController
 
   # GET /api/provision_requests
   def show
-    Rails.logger.info 'API/PR SHOW'
-
-    Rails.logger.info "found PR!"
-    Rails.logger.info pr.inspect
-
     response = {
-      id: @provision_request.id,
       token: @token.id,
       provision_request: {
+        id: @provision_request.id,
         name: @provision_request.friendly_name,
         publishes: @provision_request.publishes,
         consumes: @provision_request.consumes
@@ -45,19 +40,10 @@ class Api::ProvisionRequestsController < Api::ApplicationController
       response[:retry_interval] = 30
       render json: response, status: 201
     end
-
   end
 
   # POST /api/provision_requests
   def create
-    Rails.logger.info 'params'
-    Rails.logger.info params
-    Rails.logger.info 'token'
-    Rails.logger.info @token.inspect
-    Rails.logger.info 'headers'
-    Rails.logger.info request.headers
-    pp request.headers
-
     pr = ProvisionRequest.create(
       friendly_name: params[:name],
       status: :unanswered,
@@ -71,10 +57,6 @@ class Api::ProvisionRequestsController < Api::ApplicationController
     )
 
     if pr
-      Rails.logger.info 'created pr'
-      Rails.logger.info pr.inspect
-      Rails.logger.error pr.errors.full_messages
-
       response = {
         token: pr.token.id,
         provision_request: pr.to_json,
