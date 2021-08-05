@@ -31,7 +31,6 @@ Rails.application.routes.draw do
     resources :networks
   end
 
-  get '/cleardb', to: 'admin#clear_db'
   get '/search', to: 'search#index'
 
   get '/network/:id/monitor', to: 'networks#monitor'
