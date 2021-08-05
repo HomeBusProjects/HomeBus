@@ -15,7 +15,7 @@
     <div class='col'>
       <h2>Published</h2>
       <ul>
-	<% @wo_ddcs.each do |ddc| %>
+	<% @publishes.each do |ddc| %>
 	<li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
 	<% end %>
       </ul>
@@ -23,7 +23,7 @@
     <div class='col'>
       <h2>Consumed</h2>
       <ul>
-	<% @ro_ddcs.each do |ddc| %>
+	<% @consumes.each do |ddc| %>
 	<li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
 	<% end %>
       </ul>
@@ -41,26 +41,5 @@
     </div>
 </div>
 
-
-<div class='row'>
-    <div class='col'>
-<h2>Authentication Token</h2>
-
-<p>Copy this token into src/config.h</p>
-<p><a href='#' onclick="if($('#auth_token_code').is(':visible')) { $('#auth_token_code').hide(); } else { $('#auth_token_code').show(); } return false;">Click to reveal authentication token</a></p>
-<div id='auth_token_code' style="display: none;">
-  <p>Authorization token is:</p>
-  <p><code><%= @token %></code></p>
-  <p>Use this token in multiball-related firmware by using these lines in <code>src/config.h</code>.</p>
-  <pre>
-#define HOMEBUS_AUTHENTICATION_TOKEN "<%= @token %>"
-#define HOMEBUS_SERVER "homebus.org"
-  </pre>
-</div>
-<p>
-  This token is good for 24 hours (until <%= Time.now + 24.hours %>). Refresh the page to generate a new token.
-</p>
-  </div>
-</div>
 
 <%= link_to 'Edit', edit_network_path(@network), class: 'btn btn-info' %>

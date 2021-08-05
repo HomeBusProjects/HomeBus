@@ -19,10 +19,8 @@ class NetworksController < ApplicationController
   # GET /networks/1
   # GET /networks/1.json
   def show
-    @token = @network.get_auth_token(current_user)
-
-    @wo_ddcs = @network.provision_requests.pluck(:wo_ddcs).flatten.uniq.sort
-    @ro_ddcs = @network.provision_requests.pluck(:ro_ddcs).flatten.uniq.sort
+    @publishes = @network.provision_requests.pluck(:publishes).flatten.uniq.sort
+    @consumes = @network.provision_requests.pluck(:consumes).flatten.uniq.sort
   end
 
   # GET /networks/new
@@ -80,7 +78,7 @@ class NetworksController < ApplicationController
 
   # GET /networks/#/monitor
   def monitor
-    @consume_ddcs = @network.provision_requests.pluck(:wo_ddcs).flatten.uniq.sort
+    @consumes = @network.provision_requests.pluck(:consumes).flatten.uniq.sort
 
     @endpoints = Permission.where(network: @network, publishes: true).map do |perm|
       "homebus/device/#{perm.device.id}/#{perm.ddc.name}"
@@ -88,8 +86,8 @@ class NetworksController < ApplicationController
     @uuid_name_map = @network.devices.map { |device| { id: device[:id], name: device[:friendly_name] } }
 
     pr = ProvisionRequest.create(
-                                 ro_ddcs: @consume_ddcs,
-                                 wo_ddcs: [],
+                                 consumes: @consumes,
+                                 publishes: [],
                                  network: @network,
                                  ip_address: '127.0.0.1',
                                  friendly_name: 'Temporary web monitor',

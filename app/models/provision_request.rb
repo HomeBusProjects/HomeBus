@@ -19,22 +19,6 @@ class ProvisionRequest < ApplicationRecord
 
   scope :owned_by, ->(user) { ProvisionRequest.where(network_id: user.networks.pluck(:id)) }
 
-  def get_refresh_token(user)
-    payload = {
-      kind: 'refresh',
-      provision_request: {
-        name: friendly_name,
-        id: id
-      },
-      user: {
-        id: user.id
-      },
-      created_at: Time.now.to_i
-    }
-
-    JsonWebToken.encode(payload, Time.zone.now + 1.year)
-  end
-
   def accept!
     accepted!
 
@@ -48,23 +32,12 @@ class ProvisionRequest < ApplicationRecord
 
     Rails.logger.info 'create broker account'
     self.create_broker_account(superuser: false, enabled: true, broker: self.network.broker)
-    BrokerAcl.from_provision_request2 self
 
     UpdateMqttAuthJob.perform_later(self)
   end
 
   def revoke!
     broker_account.update(enabled: false)
-  end
-
-  def self.find_by_refresh_token(token)
-    request = JsonWebToken.decode(token)
-
-    return nil if Time.now.to_i > request['exp']
-
-    ProvisionRequest.find request['provision_request']['id']
-  rescue StandardError
-    nil
   end
 
   def get_token

@@ -13,7 +13,7 @@ class UpdateMqttAuthJob < ApplicationJob
 #    END_OF_ACCOUNT
 
     sql_commands = pr.broker_account.to_sql
-    sql_commands += BrokerAcl.from_provision_request2(pr)
+    sql_commands += BrokerAcl.from_provision_request(pr)
 
     puts sql_commands
     puts command

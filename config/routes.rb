@@ -31,13 +31,6 @@ Rails.application.routes.draw do
     resources :networks
   end
 
-
-  # deprecated, to be removed
-  post '/provision', to: 'provision#index'
-  post '/provision/refresh', to: 'provision#refresh'
-  post '/provision/broker', to: 'provision#broker'
-  post '/provision/ddcs', to: 'provision#ddcs'
-
   get '/cleardb', to: 'admin#clear_db'
   get '/search', to: 'search#index'
 

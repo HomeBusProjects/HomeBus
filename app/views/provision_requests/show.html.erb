@@ -130,7 +130,7 @@
 
 <% if @provision_request.accepted? %>
 <code>
-  <%= BrokerAcl.from_provision_request2(@provision_request).to_s %>
+  <%= BrokerAcl.from_provision_request(@provision_request).to_s %>
 </code>
 <% end %>
 
