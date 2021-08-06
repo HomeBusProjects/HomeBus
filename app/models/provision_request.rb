@@ -6,9 +6,6 @@ class ProvisionRequest < ApplicationRecord
   has_many :devices, dependent: :destroy
   has_one :token, dependent: :destroy
 
-  has_one :mosquitto_account, dependent: :destroy
-  has_many :mosquitto_acl, dependent: :destroy
-
   has_one :broker_account, dependent: :destroy
   has_many :broker_acl, dependent: :destroy
 
