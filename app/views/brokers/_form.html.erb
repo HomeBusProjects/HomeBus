@@ -39,7 +39,7 @@
   </div>
   <div class="field">
     <%= form.label :ssh_key %>
-    <%= form.text_field :ssh_key, class: 'form-control' %>
+    <%= form.text_area :ssh_key, class: 'form-control' %>
   </div>
 
   <hr>
@@ -54,7 +54,7 @@
   </div>
   <div class="field">
     <%= form.label :postgresql_password %>
-    <%= form.text_field :postgresql_password, class: 'form-control' %>
+    <%= form.password_field :postgresql_password, class: 'form-control' %>
   </div>
   
   <div class="actions">

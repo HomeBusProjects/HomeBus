@@ -1,34 +1,26 @@
-<p>
-  <strong>Name:</strong>
+  <h2>Name:</h2>
   <%= @broker.name %>
-</p>
 
-<p>
-  <strong>Insecure Port</strong>
-</p>
-<p>
+  <h2>Insecure Port</h2>
   <%= @broker.insecure_port %>
-</p>
 
-<p>
-  <strong>Secure Port</strong>
-</p>
-<p>
+  <h2>Secure Port</h2>
   <%= @broker.secure_port %>
-</p>
 
-<p>
-  <strong>Networks (<%= @broker.networks_count %>):</strong>
+  <h2>Networks (<%= @broker.networks_count %>):</h2>
   <ul>
     <% @broker.networks.each do |network| %>
       <li><%= link_to network.name, network %></li>
     <% end %>
   </ul>
-</p>
 
-<p>
-  <strong>Devices:</strong>
+  <h2>Devices:</h2>
   <%= @broker.devices_count %>
-</p>
+
+  <h2>SSH config</h2>
+  Hostname <%= @broker.ssh_hostname %> Username <%= @broker.ssh_username %>
+
+  <h2>PostgreSQL config</h2>
+  Database <%= @broker.postgresql_database %> Username <%= @broker.postgresql_username %>
 
 <%= link_to 'Edit', edit_broker_path(@broker), class: 'btn btn-info'  %>
