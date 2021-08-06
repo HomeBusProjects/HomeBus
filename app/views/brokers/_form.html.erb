@@ -26,6 +26,37 @@
     <%= form.text_field :secure_port, class: 'form-control' %>
   </div>
 
+  <hr>
+
+  <div class="field">
+    <%= form.label :ssh_hostname %>
+    <%= form.text_field :ssh_hostname, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ssh_username %>
+    <%= form.text_field :ssh_username, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :ssh_key %>
+    <%= form.text_field :ssh_key, class: 'form-control' %>
+  </div>
+
+  <hr>
+
+  <div class="field">
+    <%= form.label :postgresql_database %>
+    <%= form.text_field :postgresql_database, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :postgresql_username %>
+    <%= form.text_field :postgresql_username, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :postgresql_password %>
+    <%= form.text_field :postgresql_password, class: 'form-control' %>
+  </div>
+  
   <div class="actions">
     <%= form.submit class: 'btn btn-info' %>
   </div>

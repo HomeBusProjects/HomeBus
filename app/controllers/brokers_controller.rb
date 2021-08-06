@@ -76,6 +76,6 @@ class BrokersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def broker_params
-    params.require(:broker).permit(:name, :secure_port, :insecure_port)
+    params.require(:broker).permit(:name, :secure_port, :insecure_port, :ssh_hostname, :ssh_username, :ssh_key, :postgresql_database, :postgresql_username, :postgresql_password)
   end
 end
