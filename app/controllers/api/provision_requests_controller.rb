@@ -13,9 +13,9 @@ class Api::ProvisionRequestsController < Api::ApplicationController
   # GET /api/provision_requests
   def show
     response = {
-      token: @token.id,
       provision_request: {
         id: @provision_request.id,
+        token: @token.id,
         name: @provision_request.friendly_name,
         publishes: @provision_request.publishes,
         consumes: @provision_request.consumes
@@ -58,10 +58,11 @@ class Api::ProvisionRequestsController < Api::ApplicationController
 
     if pr
       response = {
-        token: pr.token.id,
         provision_request: pr.to_json,
         devices: []
       }
+
+      response[:provision_request][:token] = pr.token.id
 
       params[:devices].each do |d|
         device = Device.create({ provision_request: pr,
