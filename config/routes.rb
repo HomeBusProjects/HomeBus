@@ -5,25 +5,17 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :provision_requests
+  resources :networks
+  resources :devices
   resources :tokens
   resources :public_networks
   resources :public_devices
-  resources :app_instances
-  resources :permissions
   resources :apps
-  resources :app_servers
-  resources :ddcs
-  resources :brokers
-  resources :networks
-  resources :devices
-  resources :users
-  resources :mosquitto_accounts
-  resources :mosquitto_acls
+  resources :app_instances
   resources :broker_accounts
-  resources :broker_acls
-  resources :provision_requests
+  resources :ddcs
 
-#  namespace :api, defaults: { format: :json} do
   namespace :api do
     resources :auth
     resources :provision_requests
@@ -38,6 +30,12 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development? || ENV['USE_LETTEROPENER']
 
   authenticate :user, ->(user) { user.site_admin? } do
+    resources :app_servers
+    resources :brokers
+    resources :permissions
+    resources :broker_acls
+    resources :users
+
     mount Sidekiq::Web => '/sidekiq'
   end
 
