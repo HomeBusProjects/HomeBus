@@ -1,24 +1,21 @@
-<p>
-  <strong>Name:</strong>
-  <%= @app.name %>
-</p>
-
-<p>
-  <strong>Source:</strong>
-  <%= @app.source %>
-</p>
-
-<p>
-  <strong>Description:</strong>
+<h1><%= @app.name %></h1>
+<div>
+  <p>
+    <%= link_to 'Source', @app.source %>
+  </p>
+  <p>
   <%= @app.description %>
-</p>
+  </p>
+  <h2>Parameters:</h2>
+  <p>
+    <code>
+      <%= @app.parameters %>
+    </code>
+  </p>
+</div>
 
-<p>
-  <strong>Parameters:</strong>
-  <code>
-    <%= @app.parameters %>
-  </code>
-</p>
-
-<%= link_to 'Edit', edit_app_path(@app), class: 'btn btn-info' %>
-<%= link_to 'Delete', @app, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% if can? @app, :manage %>
+  <%= link_to 'Edit', edit_app_path(@app), class: 'btn btn-info' %>
+  <%= link_to 'Delete', @app, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
+  
