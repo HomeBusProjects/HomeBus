@@ -21,7 +21,7 @@ class UpdateMqttAuthJob < ApplicationJob
     result = ''
 
     unless Rails.env.development?
-      Net::SSH.start(pr.broker.ssh_hostname, pr.broker.ssh_username, key_data: pr.broker.ssh_key) do |session|
+      Net::SSH.start(pr.network.broker.ssh_hostname, pr.network.broker.ssh_username, key_data: pr.network..broker.ssh_key) do |session|
         session.open_channel do |channel|
           channel.exec(command) do |ch, success|
             raise 'could not execute command' unless success
