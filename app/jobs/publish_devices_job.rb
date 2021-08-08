@@ -17,8 +17,8 @@ class PublishDevicesJob < ApplicationJob
       devices.push({
                      name: device.friendly_name,
                      id: device.id,
-                     consumes: device.provision_request.ro_ddcs,
-                     publishes: device.provision_request.wo_ddcs,
+                     consumes: device.provision_request.consumes,
+                     publishes: device.provision_request.publishes,
                      temporary: !device.provision_request.autoremove_at.nil?,
                      public: false
                    })
