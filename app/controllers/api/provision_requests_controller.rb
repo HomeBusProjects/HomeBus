@@ -18,9 +18,9 @@ class Api::ProvisionRequestsController < Api::ApplicationController
         token: @token.id,
         name: @provision_request.friendly_name,
         publishes: @provision_request.publishes,
-        consumes: @provision_request.consumes,
-        devices: []
-      }
+        consumes: @provision_request.consumes
+      },
+      devices: []
     }
 
     if @provision_request.accepted?
