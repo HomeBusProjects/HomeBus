@@ -25,14 +25,6 @@ class Api::ProvisionRequestsController < Api::ApplicationController
 
     if @provision_request.accepted?
       @provision_request.devices.each do |d|
-        device = Device.create({ provision_request: @provision_request,
-                                 friendly_name: "#{d[:identity][:manufacturer]}-#{d[:identity][:model]}-#{d[:identity][:serial_number]}",
-                                 manufacturer: d[:identity][:manufacturer],
-                                 model: d[:identity][:model],
-                                 serial_number:  d[:identity][:serial_number],
-                                 pin:  d[:identity][:pin],
-                                 public: false
-                               })
         response[:devices].push(device.to_json)
       end
 
