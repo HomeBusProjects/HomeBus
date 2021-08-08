@@ -25,7 +25,7 @@ class Api::ProvisionRequestsController < Api::ApplicationController
 
     if @provision_request.accepted?
       @provision_request.devices.each do |d|
-        response[:devices].push(device.to_json)
+        response[:devices].push(d.to_json)
       end
 
       broker = Broker.first
