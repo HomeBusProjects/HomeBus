@@ -18,11 +18,24 @@ class Api::ProvisionRequestsController < Api::ApplicationController
         token: @token.id,
         name: @provision_request.friendly_name,
         publishes: @provision_request.publishes,
-        consumes: @provision_request.consumes
+        consumes: @provision_request.consumes,
+        devices: []
       }
     }
 
     if @provision_request.accepted?
+      pr.devices.each do |d|
+        device = Device.create({ provision_request: pr,
+                                 friendly_name: "#{d[:identity][:manufacturer]}-#{d[:identity][:model]}-#{d[:identity][:serial_number]}",
+                                 manufacturer: d[:identity][:manufacturer],
+                                 model: d[:identity][:model],
+                                 serial_number:  d[:identity][:serial_number],
+                                 pin:  d[:identity][:pin],
+                                 public: false
+                               })
+        response[:devices].push(device.to_json)
+      end
+
       broker = Broker.first
       response[:credentials] = {
         mqtt_username: @provision_request.broker_account.id,
