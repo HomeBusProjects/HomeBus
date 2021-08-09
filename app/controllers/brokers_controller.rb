@@ -30,6 +30,9 @@ class BrokersController < ApplicationController
   # POST /brokers
   # POST /brokers.json
   def create
+    # Net::SSH doesn't like \r\n, turn it into \n
+    broker_params[:ssh_key].gsub! /\r/, ''
+
     @broker = Broker.new(broker_params)
 
     respond_to do |format|

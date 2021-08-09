@@ -8,10 +8,6 @@ class UpdateMqttAuthJob < ApplicationJob
   def perform(pr)
     command = "PGPASSWORD='#{pr.network.broker.postgresql_password}' psql -h localhost -p 5432 -U #{pr.network.broker.postgresql_username} -d #{pr.network.broker.postgresql_database}"
 
-#    sql_commands = <<~END_OF_ACCOUNT
-#      INSERT INTO "mosquitto_accounts" ("id", "password", "provision_request_id", "superuser", "enabled", "created_at", "updated_at") VALUES ('#{pr.account_id}', '#{pr.account_encrypted_password}', '#{pr.id}', false, true, NOW(), NOW()) ON CONFLICT ("id") DO UPDATE SET "password" = '#{pr.account_encrypted_password}', "updated_at" = NOW();
-#    END_OF_ACCOUNT
-
     sql_commands = pr.broker_account.to_sql
     sql_commands += BrokerAcl.from_provision_request(pr)
 
