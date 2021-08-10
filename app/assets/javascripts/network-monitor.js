@@ -18,7 +18,7 @@ $(document).ready(function() {
     // refresh the refresh token once per minute to keep the monitor alive
     setInterval(function () {
 	$.ajax({
-	    url: '/api/provision_request/' + monitor_params['provision_request_id'],
+	    url: '/api/provision_requests/' + monitor_params['provision_request_id'],
 	    method: 'GET',
 	    error: function(jqXHR, status, error) { console.error('refresh token refresh failed'); console.error(status); console.error(error); },
 	    success: function(data) { console.log('got refresh_token'); console.log(data); monitor_params['refresh_token'] = data['refresh_token']; },
