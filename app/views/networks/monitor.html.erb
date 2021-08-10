@@ -34,7 +34,7 @@
       client_id: '<%= @broker[:client_id] %>'
     },
     ddcs: [ 
-<% @consume_ddcs.each do |ddc| %>
+<% @consumes.each do |ddc| %>
     '<%= ddc %>', 
 <% end %>
     ],
