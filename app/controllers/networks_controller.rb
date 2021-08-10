@@ -108,8 +108,8 @@ class NetworksController < ApplicationController
     @broker[:server] = pr.network.broker.name
     @broker[:port] = 8083
 
-    @broker[:username] = pr.account_id
-    @broker[:password] = pr.account_password
+    @broker[:username] = pr.broker_account.id
+    @broker[:password] = pr.broker_account.enc_password
 
     @provision_request_id = pr.id
     @provision_request_token = pr.token
