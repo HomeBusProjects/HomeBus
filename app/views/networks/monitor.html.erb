@@ -48,7 +48,8 @@
   "<%= uuid_name[:id] %>": "<%= uuid_name[:name] %>",
 <% end %>
   },
-  refresh_token: '<%= @refresh_token %>'
+  refresh_token: '<%= @provision_request_token %>',
+  provision_request_id: '<%= @provision_request_id %>'
   };
 console.log('network monitor script');
 </script>

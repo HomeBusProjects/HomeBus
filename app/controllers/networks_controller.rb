@@ -112,7 +112,7 @@ class NetworksController < ApplicationController
     @broker[:password] = pr.broker_account.enc_password
 
     @provision_request_id = pr.id
-    @provision_request_token = pr.token
+    @provision_request_token = pr.token.id
   end
 
   private

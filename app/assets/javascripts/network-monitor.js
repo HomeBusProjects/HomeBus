@@ -19,7 +19,7 @@ $(document).ready(function() {
     setInterval(function () {
 	$.ajax({
 	    url: '/api/provision_request/' + monitor_params['provision_request_id'],
-	    method: 'POST',
+	    method: 'GET',
 	    error: function(jqXHR, status, error) { console.error('refresh token refresh failed'); console.error(status); console.error(error); },
 	    success: function(data) { console.log('got refresh_token'); console.log(data); monitor_params['refresh_token'] = data['refresh_token']; },
 	    dataType: 'json',
