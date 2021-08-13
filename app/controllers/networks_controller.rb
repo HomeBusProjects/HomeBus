@@ -76,45 +76,6 @@ class NetworksController < ApplicationController
     end
   end
 
-  # GET /networks/#/monitor
-  def monitor
-    @consumes = @network.provision_requests.pluck(:consumes).flatten.uniq.sort
-
-    @endpoints = Permission.where(network: @network, publishes: true).map do |perm|
-      "homebus/device/#{perm.device.id}/#{perm.ddc.name}"
-    end
-    @uuid_name_map = @network.devices.map { |device| { id: device[:id], name: device[:friendly_name] } }
-
-    pr = ProvisionRequest.create(
-                                 consumes: @consumes,
-                                 publishes: [],
-                                 network: @network,
-                                 ip_address: '127.0.0.1',
-                                 friendly_name: 'Temporary web monitor',
-                                 user: current_user,
-                                 autoremove_interval: 9 * 60,
-                                 autoremove_at: Time.zone.now + 9.minutes
-    )
-
-    Device.create  manufacturer: 'Homebus',
-                   model: 'Temporary web monitor',
-                   serial_number: @network.id,
-                   provision_request: pr
-
-    pr.accept!
-
-    @broker = {}
-
-    @broker[:server] = pr.network.broker.name
-    @broker[:port] = 8083
-
-    @broker[:username] = pr.broker_account.id
-    @broker[:password] = pr.broker_account.enc_password
-
-    @provision_request_id = pr.id
-    @provision_request_token = pr.token.id
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -1,0 +1,32 @@
+<%= form_with(model: network_monitor) do |form| %>
+  <% if network_monitor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(network_monitor.errors.count, "error") %> prohibited this network_monitor from being saved:</h2>
+
+      <ul>
+        <% network_monitor.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :provision_request %>
+    <%= form.text_field :provision_request %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_accessed %>
+    <%= form.datetime_select :last_accessed %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -18,12 +18,12 @@ $(document).ready(function() {
     // refresh the refresh token once per minute to keep the monitor alive
     setInterval(function () {
 	$.ajax({
-	    url: '/api/provision_requests/' + monitor_params['provision_request_id'],
+	    url: '/api/network_monitors/' + monitor_params['network_monitor_id'],
 	    method: 'GET',
-	    error: function(jqXHR, status, error) { console.error('refresh token refresh failed'); console.error(status); console.error(error); },
-	    success: function(data) { console.log('got refresh_token'); console.log(data); monitor_params['refresh_token'] = data['refresh_token']; },
+	    error: function(jqXHR, status, error) { console.error('refresh failed'); console.error(status); console.error(error); },
+	    success: function(data) { console.log('refresh success'); },
 	    dataType: 'json',
-	    headers: { 'Authorization': monitor_params['provision_request_token'] }
+	    headers: { 'Authorization': 'Bearer ' + monitor_params['network_monitor_token'] }
 	});
     }, 1000*60);
 });

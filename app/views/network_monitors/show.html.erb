@@ -1,4 +1,4 @@
-<h1>Network Monitor <%= @network.name %></h1>
+<h1>Network Monitor <%= @network_monitor.provision_request.network.name %></h1>
 <p>
   The monitor has created a temporary device on your network which will be automatically removed after a period of inactivity. Refresh this page if it stops working.
 </p>
@@ -48,8 +48,8 @@
   "<%= uuid_name[:id] %>": "<%= uuid_name[:name] %>",
 <% end %>
   },
-  provision_request_token: '<%= @provision_request_token %>',
-  provision_request_id: '<%= @provision_request_id %>'
+  network_monitor_token: '<%= @network_monitor.token.id %>',
+  network_monitor_id: '<%= @network_monitor.id %>'
   };
 console.log('network monitor script');
 </script>

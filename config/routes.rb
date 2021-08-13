@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :networks
   resources :devices
   resources :tokens
+  resources :network_monitors
   resources :public_networks
   resources :public_devices
   resources :apps
@@ -21,11 +22,10 @@ Rails.application.routes.draw do
     resources :provision_requests
     resources :devices
     resources :networks
+    resources :network_monitors
   end
 
   get '/search', to: 'search#index'
-
-  get '/network/:id/monitor', to: 'networks#monitor'
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development? || ENV['USE_LETTEROPENER']
 

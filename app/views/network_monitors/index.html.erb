@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Network Monitors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Provision request</th>
+      <th>Last accessed</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @network_monitors.each do |network_monitor| %>
+      <tr>
+        <td><%= network_monitor.user_id %></td>
+        <td><%= network_monitor.provision_request %></td>
+        <td><%= network_monitor.last_accessed %></td>
+        <td><%= link_to 'Show', network_monitor %></td>
+        <td><%= link_to 'Edit', edit_network_monitor_path(network_monitor) %></td>
+        <td><%= link_to 'Destroy', network_monitor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Network Monitor', new_network_monitor_path %>

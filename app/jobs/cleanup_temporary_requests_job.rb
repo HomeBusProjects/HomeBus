@@ -4,6 +4,6 @@ class CleanupTemporaryRequestsJob < ApplicationJob
   queue_as :default
 
   def perform(*_args)
-    ProvisionRequest.where('autoremove_at < ?', Time.zone.now).destroy_all
+    Monitor.where('last_accessed < ?', Time.zone.now - 10.minutes).destroy_all
   end
 end

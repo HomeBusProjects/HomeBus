@@ -33,7 +33,19 @@
 <div class='row'>
   <div class='col'>
     <p>
-      <a href='/network/<%= @network.id %>/monitor' class='btn btn-info'>Monitor this network</a>
+      <h2>use this one</h2>
+      <form action='<%= network_monitors_path %>' method='post' accept-charset='UTF-8' data-remote='true'>
+        <input type='hidden' value='<%= @network.id %>'' name='network[id]'>
+        <%= token_tag %>
+      <input type='submit' value='Monitor this network'' class='btn btn-info'>
+    </form>
+
+    <p>
+      <h2>not this one</h2>
+      <%= form_with(model: NetworkMonitor.new) do |f| %>
+        <%=hidden_field(:network, :id) %>
+	<%= f.submit 'Monitor this network', class: 'btn btn-info' %>
+      <% end %>
     </p>
     <p>
       This will create a temporary device on your network which will automatically be removed after a period of inactivity.

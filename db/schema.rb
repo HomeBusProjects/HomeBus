@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_04_032011) do
+ActiveRecord::Schema.define(version: 2021_08_12_163344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -151,6 +151,19 @@ ActiveRecord::Schema.define(version: 2021_08_04_032011) do
     t.index ["user_id"], name: "index_devices_users_on_user_id"
   end
 
+  create_table "network_monitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.uuid "provision_request_id", null: false
+    t.datetime "last_accessed"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "token_id", null: false
+    t.index ["last_accessed"], name: "index_network_monitors_on_last_accessed"
+    t.index ["provision_request_id"], name: "index_network_monitors_on_provision_request_id"
+    t.index ["token_id"], name: "index_network_monitors_on_token_id"
+    t.index ["user_id"], name: "index_network_monitors_on_user_id"
+  end
+
   create_table "networks", force: :cascade do |t|
     t.string "name", null: false
     t.integer "count_of_users", default: 0, null: false
@@ -194,16 +207,10 @@ ActiveRecord::Schema.define(version: 2021_08_04_032011) do
     t.string "publishes", default: [], null: false, array: true
     t.integer "networks_counter", default: 0, null: false
     t.bigint "network_id"
-    t.datetime "last_refresh"
-    t.integer "autoremove_interval"
     t.bigint "user_id", null: false
-    t.datetime "autoremove_at"
     t.boolean "ready", default: true, null: false
-    t.index ["autoremove_at"], name: "index_provision_requests_on_autoremove_at"
-    t.index ["autoremove_interval"], name: "index_provision_requests_on_autoremove_interval"
     t.index ["consumes"], name: "index_provision_requests_on_consumes", using: :gin
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
-    t.index ["last_refresh"], name: "index_provision_requests_on_last_refresh"
     t.index ["network_id"], name: "index_provision_requests_on_network_id"
     t.index ["publishes"], name: "index_provision_requests_on_publishes", using: :gin
     t.index ["ready"], name: "index_provision_requests_on_ready"
@@ -280,6 +287,9 @@ ActiveRecord::Schema.define(version: 2021_08_04_032011) do
   add_foreign_key "broker_accounts", "provision_requests"
   add_foreign_key "broker_acls", "provision_requests"
   add_foreign_key "devices", "provision_requests"
+  add_foreign_key "network_monitors", "provision_requests"
+  add_foreign_key "network_monitors", "tokens"
+  add_foreign_key "network_monitors", "users"
   add_foreign_key "permissions", "ddcs"
   add_foreign_key "permissions", "devices"
   add_foreign_key "permissions", "networks"
