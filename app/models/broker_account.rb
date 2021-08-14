@@ -23,7 +23,6 @@ class BrokerAccount < ApplicationRecord
 
     self.password = hashed_password
     self.enc_password = unencoded_password
-    save
 
     unencoded_password
   end
