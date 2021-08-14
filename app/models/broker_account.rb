@@ -10,7 +10,8 @@ class BrokerAccount < ApplicationRecord
 
   has_many :broker_acl
 
-  before_create :generate_pbkdf2_password!
+  #  before_create :generate_pbkdf2_password!
+    before_create :generate_password!
 
   def generate_password!
     unencoded_password = SecureRandom.base64(40)

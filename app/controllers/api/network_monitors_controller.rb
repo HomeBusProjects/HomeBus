@@ -14,7 +14,7 @@ class Api::NetworkMonitorsController < Api::ApplicationController
     @network_monitor.last_accessed = Time.now
 
     if @network_monitor.save
-      render json: 'okay', status: 200
+      render json: { status: 'okay' }, status: 200
     else
       render json: response, status: 500
     end
