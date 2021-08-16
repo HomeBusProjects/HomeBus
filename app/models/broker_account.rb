@@ -55,7 +55,7 @@ class BrokerAccount < ApplicationRecord
     records += "DELETE FROM \"mosquitto_acls\" WHERE \"username\" = '#{self.id}';\n\n"
     records += "COMMIT;\n\n"
 
-    RemoveRemoteMQTTAuthJob.perform(records)
+    RemoveRemoteMQTTAuthJob.perform_later(self.broker, records)
   end
 
   def to_sql

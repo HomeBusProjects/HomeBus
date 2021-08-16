@@ -5,7 +5,7 @@ require 'net/ssh'
 class RemoveRemoteMQTTAuthJob < UpdateRemoteBrokerJob
   queue_as :default
 
-  def perform(sql_commands)
-    update_remote_broker(pr.network.broker, sql_commands)
+  def perform(broker, sql_commands)
+    update_remote_broker(broker, sql_commands)
   end
 end
