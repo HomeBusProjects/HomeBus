@@ -10,8 +10,8 @@ class BrokerAccount < ApplicationRecord
 
   has_many :broker_acl
 
-  #  before_create :generate_pbkdf2_password!
-    before_create :generate_password!
+  before_create :generate_password!
+  before_delete :schedule_remote_delete
 
   def generate_password!
     unencoded_password = SecureRandom.base64(40)
@@ -27,6 +27,7 @@ class BrokerAccount < ApplicationRecord
     unencoded_password
   end
 
+# not using this one, never got it working right with Mosquitto
   def generate_pbkdf2_password!
     Rails.logger.info 'generating passwords'
 
@@ -46,6 +47,15 @@ class BrokerAccount < ApplicationRecord
     Rails.logger.info 'assigned'
 
     unencoded_password
+  end
+
+  def schedule_remote_delete
+    records = "BEGIN;\n\n"
+    records += "DELETE FROM \"mosquitto_accounts\" WHERE \"id\" = '#{self.id}';\n\n"
+    records += "DELETE FROM \"mosquitto_acls\" WHERE \"username\" = '#{self.id}';\n\n"
+    records += "COMMIT;\n\n"
+
+    RemoveRemoteMQTTAuthJob.perform(records)
   end
 
   def to_sql
