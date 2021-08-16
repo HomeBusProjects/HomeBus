@@ -10,7 +10,6 @@ class UpdateMqttAuthJob < UpdateRemoteBrokerJob
     sql_commands += BrokerAcl.from_provision_request(pr)
 
     puts sql_commands
-    puts command
 
     update_remote_broker(pr.network.broker, sql_commands)
 
