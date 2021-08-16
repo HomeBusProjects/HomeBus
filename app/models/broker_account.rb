@@ -11,7 +11,7 @@ class BrokerAccount < ApplicationRecord
   has_many :broker_acl
 
   before_create :generate_password!
-  before_delete :schedule_remote_delete
+  before_destroy :schedule_remote_delete
 
   def generate_password!
     unencoded_password = SecureRandom.base64(40)
