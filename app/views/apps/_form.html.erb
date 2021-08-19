@@ -26,6 +26,23 @@
     <%= form.text_field :source, class: 'form-control' %>
   </div>
 
+  <hr>
+
+  <div class="row">
+    <div class="col">
+      <%= form.label "Publishes" %>
+      <%= form.text_area :publishes, { class: "form-control", value: @app.publishes.join("\r\n") } %>
+    </div>
+
+    <div class="col">
+      <%= form.label "Consumes" %>
+      <%= form.text_area :consumes, { class: "form-control", value: @app.consumes.join("\r\n") }  %>
+    </div>
+  </div>
+
+  <hr>
+
+
   <div class="field">
     <%= form.label :parameters %>
     <%= form.text_area :parameters, class: 'form-control' %>

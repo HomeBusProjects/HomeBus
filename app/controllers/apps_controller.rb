@@ -70,6 +70,12 @@ class AppsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def app_params
-    params.require(:app).permit(:name, :source, :description, :parameters)
+    arrayize_ddcs!(params.require(:app).permit(:name, :source, :description, :parameters, :consumes, :publishes))
+  end
+
+  def arrayize_ddcs!(p)
+    p.merge!({ publishes: p[:publishes].split }) if p[:publishes].present?
+    p.merge!({ consumes: p[:consumes].split }) if p[:consumes].present?
+    p
   end
 end

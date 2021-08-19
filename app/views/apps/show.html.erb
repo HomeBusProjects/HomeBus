@@ -6,6 +6,21 @@
   <p>
   <%= @app.description %>
   </p>
+
+  <h2>Publishes</h2>
+    <ul class='list-group-flush'>
+    <% @app.publishes.each do |ddc| %>
+      <li class='list-group-item'><%= ddc %></li>
+    <% end %>
+  </ul>
+
+  <h2>Consumes</h2>
+    <ul class='list-group-flush'>
+    <% @app.consumes.each do |ddc| %>
+      <li class='list-group-item'><%= ddc %></li>
+    <% end %>
+  </ul>
+
   <h2>Parameters:</h2>
   <p>
     <code>
