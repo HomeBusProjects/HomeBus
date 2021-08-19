@@ -19,7 +19,6 @@ class PublishDevicesJob < ApplicationJob
                      id: device.id,
                      consumes: device.provision_request.consumes,
                      publishes: device.provision_request.publishes,
-                     temporary: !device.provision_request.autoremove_at.nil?,
                      public: false
                    })
     end
