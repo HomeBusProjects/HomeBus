@@ -19,13 +19,13 @@ class BrokerAcl < ApplicationRecord
 
     # allow subscriptions to homebus/device/+/DDC for each DDC
     pr.consumes.each do |ddc|
-      raw_records += "\t('#{pr.broker_account.id}', 'homebus/device/+/#{ddc}', '#{pr.id}', NULL, 4, NOW(), NOW())"
+      raw_records.push "\t('#{pr.broker_account.id}', 'homebus/device/+/#{ddc}', '#{pr.id}', NULL, 4, NOW(), NOW())"
     end
 
     # allow publication to homebus/device/ID/DDC for each publish DDC
     pr.publishes.each do |ddc|
       pr.devices.each do |device|
-        raw_records += "\t('#{pr.broker_account.id}', 'homebus/device/#{device.id}/#{ddc}', '#{pr.id}', NULL, 2, NOW(), NOW())"
+        raw_records.push "\t('#{pr.broker_account.id}', 'homebus/device/#{device.id}/#{ddc}', '#{pr.id}', NULL, 2, NOW(), NOW())"
       end
     end
 
@@ -36,14 +36,14 @@ class BrokerAcl < ApplicationRecord
       # list every single device/DDC combo that the PR is allowed to receive from, with perms 1
       pr.consumes.each do |ddc|
         _ddc_publishes(common_devices, ddc).each do |publisher|
-          raw_records += "\t('#{pr.broker_account.id}', 'homebus/device/#{publisher.id}/#{ddc}', '#{pr.id}', '#{publisher.provision_request_id}', 1, NOW(), NOW())"
+          raw_records.push "\t('#{pr.broker_account.id}', 'homebus/device/#{publisher.id}/#{ddc}', '#{pr.id}', '#{publisher.provision_request_id}', 1, NOW(), NOW())"
         end
       end
 
       # list every single device/DDC combo that is allowed to consume from this PR, with perms 1
       pr.publishes.each do |ddc|
         _ddc_consumes(common_devices, ddc).each do |consumer|
-          raw_records += "\t('#{consumer.provision_request.broker_account.id}', 'homebus/device/#{device.id}/#{ddc}', '#{consumer.provision_request_id}', '#{pr.id}', 1, NOW(), NOW())"
+          raw_records.push "\t('#{consumer.provision_request.broker_account.id}', 'homebus/device/#{device.id}/#{ddc}', '#{consumer.provision_request_id}', '#{pr.id}', 1, NOW(), NOW())"
         end
       end
     end
