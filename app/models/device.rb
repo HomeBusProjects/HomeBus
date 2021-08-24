@@ -21,6 +21,10 @@ class Device < ApplicationRecord
     self.users << self.provision_request.user
   end
 
+  def set_network
+    self.networks << self.provision_request.network
+  end
+
   def to_json
     {
       id: self.id,
