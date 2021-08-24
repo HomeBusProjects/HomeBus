@@ -6,7 +6,7 @@ class UpdateMqttAclJob < UpdateRemoteBrokerJob
   queue_as :default
 
   def perform(pr)
-    sql_commands += BrokerAcl.from_provision_request(pr)
+    sql_commands = BrokerAcl.from_provision_request(pr)
 
     puts sql_commands
 
