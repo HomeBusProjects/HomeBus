@@ -12,7 +12,7 @@
     <p>
       <h2>Publish</h2>
       <ul>
-	<% @device.provision_request.wo_ddcs.each do |ddc| %>
+	<% @device.provision_request.publishes.each do |ddc| %>
 	<li><%= link_to ddc, Ddc.find_by( name: ddc) %></li>
 	<% end %>
       </ul>
@@ -22,7 +22,7 @@
     <p>
       <h2>Consume</h2>
       <ul>
-	<% @device.provision_request.ro_ddcs.each do |ddc| %>
+	<% @device.provision_request.consumes.each do |ddc| %>
 	<li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
 	<% end %>
       </ul>
