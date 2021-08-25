@@ -16,6 +16,7 @@ class Device < ApplicationRecord
   has_many :tokens, dependent: :destroy
 
   after_create :set_user
+  after_create :set_network
 
   def set_user
     self.users << self.provision_request.user
