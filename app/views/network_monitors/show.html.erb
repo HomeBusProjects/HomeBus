@@ -2,9 +2,6 @@
 <p>
   The monitor has created a temporary device on your network which will be automatically removed after a period of inactivity. Refresh this page if it stops working.
 </p>
-<p>
-  Devices added after this instance of the monitor is opened will not appear. Reload the page to see traffic from these devices.
-</p>
 <table id='monitor_table' class='table'>
   <thead>
     <tr>
@@ -38,11 +35,6 @@
     '<%= ddc %>', 
 <% end %>
     ],
-  endpoints: [
-<% @endpoints.each do |endpoint| %>
-    '<%= endpoint %>', 
-<% end %>
-  ],
   uuid_name_map: {
 <% @uuid_name_map.each do |uuid_name| %>
   "<%= uuid_name[:id] %>": "<%= uuid_name[:name] %>",

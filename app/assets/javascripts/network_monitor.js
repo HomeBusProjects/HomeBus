@@ -6,16 +6,15 @@ $(document).ready(function() {
 	return;
     }
 
-//    client = new Paho.Client(monitor_params['broker']['server'], monitor_params['broker']['port'], monitor_params['broker']['provision_request_id']);
     client = new Paho.Client(monitor_params['broker']['server'], monitor_params['broker']['port'], monitor_params['broker']['username']);
 
     client.onConnectionLost = onConnectionLost; 
     client.onMessageArrived = onMessageArrived;
 
     setTimeout(function () { brokerConnect(); }, 1000*15);
-//    brokerConnect();
+    brokerConnect();
 
-    // refresh the refresh token once per minute to keep the monitor alive
+    // refresh the monitor once per minute to keep it alive
     setInterval(function () {
 	$.ajax({
 	    url: '/api/network_monitors/' + monitor_params['network_monitor_id'],
@@ -47,11 +46,6 @@ function onConnect() {
   monitor_params['ddcs'].forEach(function(ddc) {
     client.subscribe('homebus/device/+/' + ddc);
       console.log('subscribed to ' + 'homebus/device/+/' + ddc);
-  });
-
-  monitor_params['endpoints'].forEach(function(endpoint) {
-      client.subscribe(endpoint);
-      console.log('subscribed to ' + endpoint);
   });
 }
 

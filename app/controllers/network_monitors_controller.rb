@@ -13,9 +13,7 @@ class NetworkMonitorsController < ApplicationController
   def show
     @network = @network_monitor.provision_request.network
     @consumes = @network.provision_requests.pluck(:consumes).flatten.uniq.sort
-    @endpoints = Permission.where(network: @network, publishes: true).map do |perm|
-      "homebus/device/#{perm.device.id}/#{perm.ddc.name}"
-    end
+
     @uuid_name_map = @network.devices.map { |device| { id: device[:id], name: device[:friendly_name] } }
 
     @broker = {}
