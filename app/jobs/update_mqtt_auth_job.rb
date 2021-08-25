@@ -9,7 +9,8 @@ class UpdateMqttAuthJob < UpdateRemoteBrokerJob
     sql_commands = pr.broker_account.to_sql
     sql_commands += BrokerAcl.from_provision_request(pr)
 
-    puts sql_commands
+    Rails.logger.info '>>>> MQTT AUTH <<<<'
+    Rails.logger.info sql_commands
 
     update_remote_broker(pr.network.broker, sql_commands)
 
