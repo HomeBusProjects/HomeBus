@@ -1,7 +1,7 @@
 class NetworkMonitor < ApplicationRecord
   belongs_to :user
-  belongs_to :provision_request
-  belongs_to :token
+  belongs_to :provision_request, dependent: :destroy
+  belongs_to :token, dependent: :destroy
 
   before_validation :get_token
   after_create :set_token_name
