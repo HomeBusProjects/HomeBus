@@ -11,10 +11,6 @@ class BrokerAcl < ApplicationRecord
   def self.from_provision_request(pr)
     puts "ACCOUNT ID #{pr.broker_account.id}"
 
-    records = "BEGIN;\n\n"
-    records += "DELETE FROM \"mosquitto_acls\" WHERE \"consumer_provision_request_id\" = '#{pr.id}' OR \"publisher_provision_request_id\" = '#{pr.id}';\n\n"
-    records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"consumer_provision_request_id\", \"publisher_provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES\n"
-
     raw_records = []
 
     # allow subscriptions to homebus/device/+/DDC for each DDC
@@ -48,13 +44,22 @@ class BrokerAcl < ApplicationRecord
       end
     end
 
-    records += raw_records.join(",\n")
-    records += ";\n"
 
-    Rails.logger.debug "#{records.length} records"
+    if raw_records.length > 0
+      records = "BEGIN;\n\n"
+      records += "DELETE FROM \"mosquitto_acls\" WHERE \"consumer_provision_request_id\" = '#{pr.id}' OR \"publisher_provision_request_id\" = '#{pr.id}';\n\n"
+      records += "INSERT INTO \"mosquitto_acls\" (\"username\", \"topic\", \"consumer_provision_request_id\", \"publisher_provision_request_id\", \"permissions\", \"created_at\", \"updated_at\") VALUES\n"
+
+      records += raw_records.join(",\n")
+
+      records += ";\nCOMMIT;\n"
+    else
+      records = ''
+    end
+
+    Rails.logger.debug "#{raw_records.length} raw records"
     Rails.logger.debug records.inspect.to_s
 
-    records += "COMMIT;\n"
     records
   end
 
