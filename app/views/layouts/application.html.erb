@@ -22,7 +22,11 @@
 
   </head>
 
-  <body>
+  <body
+  <% if content_for?(:body_attributes) %>
+    <%= yield(:body_attributes) %> 
+  <% end %>>
+
     <div class="container">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 	<a class="navbar-brand" href="/">HomeBus</a>

@@ -45,3 +45,11 @@
   };
 console.log('network monitor script');
 </script>
+
+<!-- disable turbo links for the entire page, or the monitor will continue running
+  when we navigate away from this page
+ -->
+<% content_for(:body_attributes) do %>
+data-turbolinks="false"
+<% end %>
+  
