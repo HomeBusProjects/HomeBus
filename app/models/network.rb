@@ -25,6 +25,7 @@ class Network < ApplicationRecord
                                  ip_address: '127.0.0.1',
                                  publishes: ['org.homebus.experimental.homebus.devices'],
                                  consumes: []
+    pr.accept!
 
     
     d = Device.create provision_request: pr,
@@ -36,8 +37,6 @@ class Network < ApplicationRecord
 
     self.announcer = d
     save
-
-    pr.accept!
   end
 
   def consumes
