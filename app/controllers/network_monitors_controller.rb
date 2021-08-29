@@ -37,7 +37,7 @@ class NetworkMonitorsController < ApplicationController
   # POST /network_monitors or /network_monitors.json
   def create
     @network = Network.find network_monitor_params[:id]
-    consumes = @network.provision_requests.pluck(:publishes).flatten.uniq.sort
+    consumes = @network.devices.map { |d| d.provision_request.publishes}.flatten.uniq.sort
 
     pr = ProvisionRequest.create(
                                  consumes: consumes,

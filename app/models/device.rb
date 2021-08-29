@@ -15,15 +15,13 @@ class Device < ApplicationRecord
   has_one :public_device, dependent: :destroy
   has_many :tokens, dependent: :destroy
 
-  after_create :set_user
-  after_create :set_network
+  after_create :complete_setup
 
-  def set_user
+  def complete_setup
     self.users << self.provision_request.user
-  end
-
-  def set_network
     self.networks << self.provision_request.network
+
+    UpdateMqttAclJob.perform_later(self.provision_request)
   end
 
   def to_json
