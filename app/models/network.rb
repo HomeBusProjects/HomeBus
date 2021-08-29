@@ -41,10 +41,10 @@ class Network < ApplicationRecord
   end
 
   def consumes
-    @network.devices.map { |d| d.provision_request.consumes}.flatten.uniq
+    self.devices.map { |d| d.provision_request.consumes}.flatten.uniq
   end
 
   def publishes
-    @network.devices.map { |d| d.provision_request.publishes}.flatten.uniq
+    self.devices.map { |d| d.provision_request.publishes}.flatten.uniq
   end
 end
