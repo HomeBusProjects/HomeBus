@@ -25,6 +25,9 @@ class BrokerAcl < ApplicationRecord
       end
     end
 
+    Rails.logger.error 'direct consumes & publishes'
+    Rails.logger.error "#{raw_records.length} raw records"
+    Rails.logger.error records.inspect.to_s
 
     pr.devices.each do |device|
       common_devices = _get_all_devices(device)
@@ -36,14 +39,22 @@ class BrokerAcl < ApplicationRecord
         end
       end
 
+      Rails.logger.error 'CONSUMES'
+      Rails.logger.error "#{raw_records.length} raw records"
+      Rails.logger.error records.inspect.to_s
+
+
       # list every single device/DDC combo that is allowed to consume from this PR, with perms 1
       pr.publishes.each do |ddc|
         _ddc_consumes(common_devices, ddc).each do |consumer|
           raw_records.push "\t('#{consumer.provision_request.broker_account.id}', 'homebus/device/#{device.id}/#{ddc}', '#{consumer.provision_request_id}', '#{pr.id}', 1, NOW(), NOW())"
         end
       end
-    end
 
+      Rails.logger.error 'PUBLISHES'
+      Rails.logger.error "#{raw_records.length} raw records"
+      Rails.logger.error records.inspect.to_s
+    end
 
     if raw_records.length > 0
       records = "BEGIN;\n\n"
@@ -57,8 +68,8 @@ class BrokerAcl < ApplicationRecord
       records = ''
     end
 
-    Rails.logger.debug "#{raw_records.length} raw records"
-    Rails.logger.debug records.inspect.to_s
+    Rails.logger.error "#{raw_records.length} raw records"
+    Rails.logger.error records.inspect.to_s
 
     records
   end
