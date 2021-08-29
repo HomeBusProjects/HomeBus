@@ -39,4 +39,12 @@ class Network < ApplicationRecord
 
     pr.accept!
   end
+
+  def consumes
+    @network.devices.map { |d| d.provision_request.consumes}.flatten.uniq
+  end
+
+  def publishes
+    @network.devices.map { |d| d.provision_request.publishes}.flatten.uniq
+  end
 end

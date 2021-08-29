@@ -12,7 +12,7 @@ class NetworkMonitorsController < ApplicationController
   # GET /network_monitors/1 or /network_monitors/1.json
   def show
     @network = @network_monitor.provision_request.network
-    @consumes = @network_monitor.provision_request.consumes
+    @consumes = @network.publishes
 
     @uuid_name_map = @network.devices.map { |device| { id: device[:id], name: device[:friendly_name] } }
 
@@ -37,7 +37,7 @@ class NetworkMonitorsController < ApplicationController
   # POST /network_monitors or /network_monitors.json
   def create
     @network = Network.find network_monitor_params[:id]
-    consumes = @network.devices.map { |d| d.provision_request.publishes}.flatten.uniq.sort
+    consumes = @network.publishes
 
     pr = ProvisionRequest.create(
                                  consumes: consumes,

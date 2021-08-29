@@ -19,8 +19,8 @@ class NetworksController < ApplicationController
   # GET /networks/1
   # GET /networks/1.json
   def show
-    @publishes = @network.provision_requests.pluck(:publishes).flatten.uniq.sort
-    @consumes = @network.provision_requests.pluck(:consumes).flatten.uniq.sort
+    @publishes = @network.publishes.sort
+    @consumes = @network.consumes.sort
   end
 
   # GET /networks/new
