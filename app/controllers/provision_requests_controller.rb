@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'securerandom'
-
 class ProvisionRequestsController < ApplicationController
   load_and_authorize_resource
   check_authorization

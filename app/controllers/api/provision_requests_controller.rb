@@ -2,8 +2,6 @@
 
 # stripped down controller that handles provision_request operations from devices
 
-require 'securerandom'
-
 class Api::ProvisionRequestsController < Api::ApplicationController
   before_action -> { api_authenticate!('provision_request:create') }, only: [ :create ]
   before_action -> { api_authenticate!('provision_request:manage') }, only: [ :show, :update, :destroy ]
@@ -75,7 +73,7 @@ class Api::ProvisionRequestsController < Api::ApplicationController
                                  manufacturer: d[:identity][:manufacturer],
                                  model: d[:identity][:model],
                                  serial_number:  d[:identity][:serial_number],
-                                 pin:  d[:identity][:pin],
+                                 pin:  d[:identity][:pin] || '',
                                  public: false
                                })
         response[:devices].push(device.to_json)
