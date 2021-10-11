@@ -13,6 +13,7 @@ class Api::DevicesController < Api::ApplicationController
       render json: device_json(@device), status: 200
     end
 
+    # POST /api/devices
     def create
       p = device_params
 
@@ -32,7 +33,7 @@ class Api::DevicesController < Api::ApplicationController
       end
     end
 
-    # POST/PUT /api/devices
+    # PATCH/PUT /api/devices
     def update
       p = device_params
 

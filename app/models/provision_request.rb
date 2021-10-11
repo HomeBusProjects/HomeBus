@@ -41,12 +41,18 @@ class ProvisionRequest < ApplicationRecord
     Token.create(name: "manage #{self.friendly_name}", scope: 'provision_request:manage', provision_request: self, enabled: true)
   end
 
-  def to_json
-    {
+  def to_json(with_token = false)
+    json = {
       id: self.id,
       name: self.friendly_name,
       consumes: self.consumes,
       publishes: self.publishes,
     }
+
+    if with_token
+      json[:token] = self.token.id
+    end
+
+    json
   end
 end

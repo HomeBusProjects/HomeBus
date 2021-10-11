@@ -23,7 +23,7 @@ class Api::ProvisionRequestsController < Api::ApplicationController
 
     if @provision_request.accepted?
       @provision_request.devices.each do |d|
-        response[:devices].push(d.to_json)
+        response[:devices].push(d.to_json(true))
       end
 
       broker = Broker.first
@@ -61,11 +61,9 @@ class Api::ProvisionRequestsController < Api::ApplicationController
 
     if pr
       response = {
-        provision_request: pr.to_json,
+        provision_request: pr.to_json(true),
         devices: []
       }
-
-      response[:provision_request][:token] = pr.token.id
 
       params[:devices].each do |d|
         device = Device.create({ provision_request: pr,
