@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProvisionRequest < ApplicationRecord
+  self.implicit_order_column = "created_at"
+
   enum status: { unanswered: 0, accepted: 1, denied: 2 }
 
   has_many :devices, dependent: :destroy

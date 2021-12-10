@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_19_151109) do
+ActiveRecord::Schema.define(version: 2021_12_10_000331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
   create_table "app_instances", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "app_id", null: false
-    t.bigint "user_id", null: false
+    t.uuid "user_id", null: false
     t.json "parameters", default: "{}", null: false
     t.string "public_key", null: false
     t.string "log", default: "", null: false
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "public", default: false, null: false
-    t.bigint "owner_id", null: false
+    t.uuid "owner_id", null: false
     t.index ["owner_id"], name: "index_app_servers_on_owner_id"
   end
 
@@ -116,8 +116,8 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
   end
 
   create_table "ddcs_devices", force: :cascade do |t|
-    t.uuid "device_id"
-    t.bigint "ddc_id"
+    t.uuid "device_id", null: false
+    t.bigint "ddc_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ddc_id"], name: "index_ddcs_devices_on_ddc_id"
@@ -139,14 +139,14 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
   end
 
   create_table "devices_networks", force: :cascade do |t|
-    t.bigint "network_id"
-    t.uuid "device_id"
+    t.uuid "network_id", null: false
+    t.uuid "device_id", null: false
     t.index ["device_id"], name: "index_devices_networks_on_device_id"
     t.index ["network_id"], name: "index_devices_networks_on_network_id"
   end
 
   create_table "devices_users", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.uuid "user_id", null: false
     t.uuid "device_id", null: false
     t.integer "user_role", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
   end
 
   create_table "network_monitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.uuid "user_id", null: false
     t.uuid "provision_request_id", null: false
     t.datetime "last_accessed"
     t.datetime "created_at", precision: 6, null: false
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
     t.index ["user_id"], name: "index_network_monitors_on_user_id"
   end
 
-  create_table "networks", force: :cascade do |t|
+  create_table "networks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "count_of_users", default: 0, null: false
     t.integer "device_counter", default: 0, null: false
@@ -180,15 +180,15 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
   end
 
   create_table "networks_users", force: :cascade do |t|
-    t.bigint "network_id"
-    t.bigint "user_id"
+    t.uuid "network_id", null: false
+    t.uuid "user_id", null: false
     t.index ["network_id"], name: "index_networks_users_on_network_id"
     t.index ["user_id"], name: "index_networks_users_on_user_id"
   end
 
   create_table "permissions", force: :cascade do |t|
     t.uuid "device_id", null: false
-    t.bigint "network_id", null: false
+    t.uuid "network_id", null: false
     t.bigint "ddc_id", null: false
     t.boolean "consumes", null: false
     t.boolean "publishes", null: false
@@ -210,8 +210,8 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
     t.string "consumes", default: [], null: false, array: true
     t.string "publishes", default: [], null: false, array: true
     t.integer "networks_counter", default: 0, null: false
-    t.bigint "network_id"
-    t.bigint "user_id", null: false
+    t.uuid "network_id"
+    t.uuid "user_id", null: false
     t.boolean "ready", default: true, null: false
     t.index ["consumes"], name: "index_provision_requests_on_consumes", using: :gin
     t.index ["friendly_name"], name: "index_provision_requests_on_friendly_name"
@@ -222,30 +222,30 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
   end
 
   create_table "public_devices", force: :cascade do |t|
-    t.string "title"
-    t.string "description"
+    t.string "title", null: false
+    t.string "description", null: false
     t.uuid "device_id", null: false
-    t.boolean "active"
+    t.boolean "active", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["device_id"], name: "index_public_devices_on_device_id"
   end
 
   create_table "public_networks", force: :cascade do |t|
-    t.string "title"
-    t.string "description"
-    t.bigint "network_id", null: false
-    t.boolean "active"
+    t.string "title", null: false
+    t.string "description", null: false
+    t.uuid "network_id", null: false
+    t.boolean "active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["network_id"], name: "index_public_networks_on_network_id"
   end
 
   create_table "tokens", id: :string, force: :cascade do |t|
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.uuid "device_id"
     t.uuid "provision_request_id"
-    t.bigint "network_id"
+    t.uuid "network_id"
     t.string "name", null: false
     t.string "scope", null: false
     t.boolean "enabled", default: false, null: false
@@ -258,7 +258,7 @@ ActiveRecord::Schema.define(version: 2021_08_19_151109) do
     t.index ["user_id"], name: "index_tokens_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

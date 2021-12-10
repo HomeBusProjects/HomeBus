@@ -10,6 +10,8 @@
 
 require 'securerandom'
 
+if false
+
 admin = User.create(name: 'admin', email: 'invalid-email-address@localhost', password: SecureRandom.base64(20),
                     site_admin: true)
 
@@ -22,3 +24,5 @@ broker = Broker.create(name: 'mqtt0.homebus.io') if Rails.env.production?
 
 network = Network.create(name: 'prime', broker: broker)
 network.users << admin
+
+end

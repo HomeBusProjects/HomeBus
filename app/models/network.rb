@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Network < ApplicationRecord
+  self.implicit_order_column = "created_at"
+
   has_and_belongs_to_many :devices
 
   has_many :permissions, dependent: :destroy

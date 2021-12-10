@@ -11,21 +11,13 @@ HomeBus is *not* ready for prime time. This is an experimental prototype; we hav
 
 ## Installation
 
-### Vagrant
-
-You'll need [Vagrant](https://vagrantup.com) installed on your computer. Vagrant needs a virtual machine manager; you'll most likely want [VirtualBox](https://www.virtualbox.org/). If you use something other than VirtualBox you'll need to update Vagrantfile to specify the vm manager.
-
-You'll also need [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) installed on your computer.
-
-Once Vagrant is set up you can bring up a HomeBus Vagrant instance by running
-
-```
-vagrant up
-```
-
-in the root of the HomeBus repo.
-
 ### Docker
+
+#### Import a `pg_dump` backup into Docker
+
+```
+docker-compose exec -T postgres  pg_restore --verbose --clean --no-acl --no-owner -d homebus_development -U postgres  < latest.dump
+```
 
 ### Raspberry Pi
 

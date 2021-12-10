@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Device < ApplicationRecord
+  self.implicit_order_column = "created_at"
+
   belongs_to :provision_request
 
   has_and_belongs_to_many :networks

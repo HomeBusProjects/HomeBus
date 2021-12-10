@@ -1,8 +1,9 @@
-FROM ruby:2.6.6
+FROM ruby:2.7.4
 RUN apt-get update && apt-get install -y \ 
   build-essential \ 
   zip \
-  nodejs
+  nodejs \
+  postgresql-contrib
 
 RUN mkdir -p /app 
 WORKDIR /app
