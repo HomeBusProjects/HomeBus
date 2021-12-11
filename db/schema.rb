@@ -16,9 +16,10 @@ ActiveRecord::Schema.define(version: 2021_12_10_000331) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "app_instances", force: :cascade do |t|
+  create_table "app_instances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "app_id", null: false
+    t.uuid "app_id", null: false
+    t.uuid "app_server_id", null: false
     t.uuid "user_id", null: false
     t.json "parameters", default: "{}", null: false
     t.string "public_key", null: false
@@ -33,7 +34,7 @@ ActiveRecord::Schema.define(version: 2021_12_10_000331) do
     t.index ["user_id"], name: "index_app_instances_on_user_id"
   end
 
-  create_table "app_servers", force: :cascade do |t|
+  create_table "app_servers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "port", null: false
     t.string "public_key", null: false
@@ -44,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_12_10_000331) do
     t.index ["owner_id"], name: "index_app_servers_on_owner_id"
   end
 
-  create_table "apps", force: :cascade do |t|
+  create_table "apps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "source", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -89,8 +90,6 @@ ActiveRecord::Schema.define(version: 2021_12_10_000331) do
     t.string "name", null: false
     t.integer "networks_count", default: 0, null: false
     t.integer "devices_count", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.integer "secure_port", default: 8883, null: false
     t.integer "insecure_port", default: 1883, null: false
     t.integer "insecure_websocket_port", default: 9001, null: false
@@ -101,6 +100,8 @@ ActiveRecord::Schema.define(version: 2021_12_10_000331) do
     t.string "postgresql_database"
     t.string "postgresql_username"
     t.string "postgresql_password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_brokers_on_name", unique: true
   end
 
@@ -221,7 +222,7 @@ ActiveRecord::Schema.define(version: 2021_12_10_000331) do
     t.index ["user_id"], name: "index_provision_requests_on_user_id"
   end
 
-  create_table "public_devices", force: :cascade do |t|
+  create_table "public_devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.string "description", null: false
     t.uuid "device_id", null: false
@@ -231,7 +232,7 @@ ActiveRecord::Schema.define(version: 2021_12_10_000331) do
     t.index ["device_id"], name: "index_public_devices_on_device_id"
   end
 
-  create_table "public_networks", force: :cascade do |t|
+  create_table "public_networks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.string "description", null: false
     t.uuid "network_id", null: false
@@ -284,16 +285,27 @@ ActiveRecord::Schema.define(version: 2021_12_10_000331) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "app_instances", "app_servers"
   add_foreign_key "app_instances", "apps"
   add_foreign_key "app_instances", "users"
   add_foreign_key "app_servers", "users", column: "owner_id"
   add_foreign_key "broker_accounts", "brokers"
   add_foreign_key "broker_accounts", "provision_requests"
+  add_foreign_key "broker_acls", "broker_accounts", column: "username"
   add_foreign_key "broker_acls", "provision_requests"
+  add_foreign_key "ddcs_devices", "ddcs"
+  add_foreign_key "ddcs_devices", "devices"
   add_foreign_key "devices", "provision_requests"
+  add_foreign_key "devices_networks", "devices"
+  add_foreign_key "devices_networks", "networks"
+  add_foreign_key "devices_users", "devices"
+  add_foreign_key "devices_users", "users"
   add_foreign_key "network_monitors", "provision_requests"
   add_foreign_key "network_monitors", "tokens"
   add_foreign_key "network_monitors", "users"
+  add_foreign_key "networks", "brokers"
+  add_foreign_key "networks_users", "networks"
+  add_foreign_key "networks_users", "users"
   add_foreign_key "permissions", "ddcs"
   add_foreign_key "permissions", "devices"
   add_foreign_key "permissions", "networks"
