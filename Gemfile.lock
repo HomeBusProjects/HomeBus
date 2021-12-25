@@ -160,6 +160,10 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
+    nokogiri (1.12.5-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (1.21.0)
     parser (3.0.3.2)
@@ -292,7 +296,9 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  arm64-darwin-20
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   actionview (>= 6.0.0)
