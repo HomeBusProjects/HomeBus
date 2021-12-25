@@ -109,7 +109,7 @@ class ProvisionRequestsController < ApplicationController
           end
         end
 
-        PublishDevicesJob.perform_later(@provision_request.network)
+//        PublishDevicesJob.perform_later(@provision_request.network)
 
         flash_message 'success', 'Provision request was successfully updated.'
 

@@ -1,47 +1,94 @@
 <h1><strong>Network</strong>  <%= @network.name %></h1>
 
 <div class='row'>
-    <div class='col'>
-<h2>Has  <%= @network.count_of_users %> owners</h2>
-<ul>
-  <% @network.users.each do |user| %>
-  <li><%= link_to user.name, user %></li>
-  <% end %>
-</ul>
-  </div>
-</div>
-
-<div class='row'>
-    <div class='col'>
-      <h2>Published</h2>
-      <ul>
-	<% @publishes.each do |ddc| %>
-	<li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
-	<% end %>
-      </ul>
-    </div>
-    <div class='col'>
-      <h2>Consumed</h2>
-      <ul>
-	<% @consumes.each do |ddc| %>
-	<li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
-	<% end %>
-      </ul>
-    </div>
-</div>
-
-<div class='row'>
   <div class='col'>
     <p>
       <form action='<%= network_monitors_path %>' method='post' accept-charset='UTF-8' data-remote='true'>
         <input type='hidden' value='<%= @network.id %>'' name='network[id]'>
         <%= token_tag %>
-      <input type='submit' value='Monitor this network'' class='btn btn-info'>
-    </form>
+	<input type='submit' value='Monitor this network'' class='btn btn-info'>
+      </form>
     <p>
-      This will create a temporary device on your network which will automatically be removed after a period of inactivity.
+      Create a temporary network monitor device on your network which will automatically be removed after a period of inactivity.
     </p>
+  </div>
+</div>
+
+<nav class="nav nav-pills nav-justified">
+  <a class="nav-link active" id="devices-tab" data-bs-toggle="tab" data-bs-target="#devices" aria-current="page" href="#">Devices</a>
+  <a class="nav-link" id="publishes-tab" data-bs-toggle="tab" data-bs-target="#publishes" href="#">Publishes</a>
+  <a class="nav-link" id="consumes-tab" data-bs-toggle="tab" data-bs-target="#consumes" href="#">Consumes</a>
+  <a class="nav-link" id="owners-tab" data-bs-toggle="tab" data-bs-target="#owners" href="#">Owners</a>
+</nav>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="devices" role="tabpanel" aria-labelledby="devices-tab">
+    <div class='row'>
+      <div class='col'>
+	<h2>Devices</h2>
+
+	<h3>Subscribe to new device</h3>
+	<div>
+	<form action='<%= devices_networks_path %>' method='post' accept-charset='UTF-8' data-remote='true'>
+          <input type='hidden' value='<%= @network.id %>'' name='devices_networks[network_id]'>
+          <%= token_tag %>
+	  <label>Device ID</label>
+	  <input type='string' name='devices_networks[device_id]' class="form-control">
+
+	  <input type='submit' value='Subscribe to device' size='40' class='btn btn-info'>
+	</form>
+	</div>
+
+	<hr>
+
+	<table class='table  table-striped table-hover'>
+	  <% @network.devices.order(friendly_name: :asc).each do |device| %>
+	  <tr>
+	    <td><%= link_to device.friendly_name, device %></td>
+	    <td><%= link_to 'Remove', device, method: :delete, data: { confirm: 'Are you sure you want to remove this device from this network?' } %></td>
+	  </tr>
+	  <% end %>
+	  </table>
+      </div>
     </div>
+  </div>
+
+  <div class="tab-pane fade" id="publishes" role="tabpanel" aria-labelledby="publishes-tab">
+    <div class='row'>
+      <div class='col'>
+	<ul>
+	  <% @publishes.each do |ddc| %>
+	  <li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
+	  <% end %>
+	</ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade" id="consumes" role="tabpanel" aria-labelledby="consumes-tab">
+    <div class='row'>
+      <div class='col'>
+	<ul>
+	  <% @consumes.each do |ddc| %>
+	  <li><%= link_to ddc, Ddc.find_by(name: ddc) %></li>
+	  <% end %>
+	</ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade" id="owners" role="tabpanel" aria-labelledby="pills-owners-tab">
+    <div class='row'>
+      <div class='col'>
+	<h2>Has  <%= @network.count_of_users %> owners</h2>
+	<ul>
+	  <% @network.users.each do |user| %>
+	  <li><%= link_to user.name, user %></li>
+	  <% end %>
+	</ul>
+      </div>
+    </div>
+  </div>
 </div>
 
 

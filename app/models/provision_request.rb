@@ -31,8 +31,6 @@ class ProvisionRequest < ApplicationRecord
 
     Rails.logger.info 'create broker account'
     self.create_broker_account(superuser: false, enabled: true, broker: self.network.broker)
-
-    UpdateMqttAuthJob.perform_later(self)
   end
 
   def revoke!
