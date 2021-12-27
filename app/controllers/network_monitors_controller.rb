@@ -47,16 +47,18 @@ class NetworkMonitorsController < ApplicationController
                                  ip_address: '127.0.0.1',
                                  user: current_user
     )
-    pr.accept!
-   
-    @network_monitor = NetworkMonitor.create(user: current_user,
-                                             provision_request: pr,
-                                             last_accessed: Time.now)
-
+    
     Device.create  manufacturer: 'Homebus',
                    model: 'Temporary web monitor',
                    serial_number: @network_monitor.id,
                    provision_request: pr
+
+       
+    @network_monitor = NetworkMonitor.create(user: current_user,
+                                             provision_request: pr,
+                                             last_accessed: Time.now)
+    
+    pr.accept!
 
     respond_to do |format|
       if @network_monitor.save
