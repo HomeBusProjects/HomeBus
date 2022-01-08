@@ -161,11 +161,11 @@
   "broker": {
     "hostname": "mqtt0.homebus.io",
     "port": 8883,
-    "uri": "mqtts://<%= @provision_request.broker_account.id %>:<%= CGI.escape(@provision_request.broker_account.password) %>@mqtt0.homebus.io:8883"
+    "uri": "mqtts://<%= @provision_request.broker_account.id %>:<%= CGI.escape(@provision_request.broker_account.enc_password) %>@mqtt0.homebus.io:8883"
   },
   "credentials": {
     "username": "<%= @provision_request.broker_account.id %>",
-    "password": "<%= @provision_request.broker_account.password %>"
+    "password": "<%= @provision_request.broker_account.enc_password %>"
   }
 }
   </code>
