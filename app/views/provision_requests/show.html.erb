@@ -127,6 +127,49 @@
 <code>
   <%= BrokerAcl.from_provision_request(@provision_request).to_s %>
 </code>
+
+<p>
+  <h3>.homebus-config.json</h3>
+  <code>
+    {
+  "homebus_server": "https://homebus.org",
+  "status": "provisioned",
+  "provision_request": {
+    "name": "<%= pr.friendly_name %>",
+    "consumes": [
+      <%= pr.consumes.map { |ddc| "\"#{ddc}\"" }.join('",\n") %>
+      ],
+    "publishes": [
+      <%= pr.publishes.map { |ddc| "\"#{ddc}\"" }.join('",\n") %>
+    ],
+    "devices": [
+      {
+        "name": "<%= pr.devices.first.friendly_name %>",
+        "identity": {
+          "manufacturer": "<%= pr.devices.first.manufacturer %>",
+          "model": "<%= pr.devices.first.model %>",
+          "serial_number": "<%= pr.devices.first.serial_number %>", 
+          "pin": ""
+        },
+        "id": "<%= pr.devices.first.id %>",
+        "token": "<%= pr.devices.first.token.id %>"
+      }
+    ],
+    "id": "<%= pr.id %>",
+    "token": "<%= pr.token.id %>"
+  },
+  "broker": {
+    "hostname": "mqtt0.homebus.io",
+    "port": 8883,
+    "uri": "mqtts://<%= pr.broker_account.username %>:<%= CGI.escape(pr.broker_account.password) %>@mqtt0.homebus.io:8883"
+  },
+  "credentials": {
+    "username": "<%= pr.broker_account.username %>",
+    "password": "<%= pr.broker_account.password %>"
+  }
+}
+  </code>
+</p>
 <% end %>
 
 <p>
