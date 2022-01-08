@@ -137,10 +137,10 @@
   "provision_request": {
     "name": "<%= pr.friendly_name %>",
     "consumes": [
-      <%= pr.consumes.map { |ddc| "\"#{ddc}\"" }.join('",\n") %>
+      <%= pr.consumes.map { |ddc| "\"#{ddc}\"" }.join(",\n") %>
       ],
     "publishes": [
-      <%= pr.publishes.map { |ddc| "\"#{ddc}\"" }.join('",\n") %>
+      <%= pr.publishes.map { |ddc| "\"#{ddc}\"" }.join'",\n") %>
     ],
     "devices": [
       {
