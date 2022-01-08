@@ -135,37 +135,37 @@
   "homebus_server": "https://homebus.org",
   "status": "provisioned",
   "provision_request": {
-    "name": "<%= pr.friendly_name %>",
+    "name": "<%= @provision_request.friendly_name %>",
     "consumes": [
-      <%= pr.consumes.map { |ddc| "\"#{ddc}\"" }.join(",\n") %>
+      <%= @provision_request.consumes.map { |ddc| "\"#{ddc}\"" }.join(",\n") %>
       ],
     "publishes": [
-      <%= pr.publishes.map { |ddc| "\"#{ddc}\"" }.join(",\n") %>
+      <%= @provision_request.publishes.map { |ddc| "\"#{ddc}\"" }.join(",\n") %>
     ],
     "devices": [
       {
-        "name": "<%= pr.devices.first.friendly_name %>",
+        "name": "<%= @provision_request.devices.first.friendly_name %>",
         "identity": {
-          "manufacturer": "<%= pr.devices.first.manufacturer %>",
-          "model": "<%= pr.devices.first.model %>",
-          "serial_number": "<%= pr.devices.first.serial_number %>", 
+          "manufacturer": "<%= @provision_request.devices.first.manufacturer %>",
+          "model": "<%= @provision_request.devices.first.model %>",
+          "serial_number": "<%= @provision_request.devices.first.serial_number %>", 
           "pin": ""
         },
-        "id": "<%= pr.devices.first.id %>",
-        "token": "<%= pr.devices.first.token.id %>"
+        "id": "<%= @provision_request.devices.first.id %>",
+        "token": "<%= @provision_request.devices.first.token.id %>"
       }
     ],
-    "id": "<%= pr.id %>",
-    "token": "<%= pr.token.id %>"
+    "id": "<%= @provision_request.id %>",
+    "token": "<%= @provision_request.token.id %>"
   },
   "broker": {
     "hostname": "mqtt0.homebus.io",
     "port": 8883,
-    "uri": "mqtts://<%= pr.broker_account.username %>:<%= CGI.escape(pr.broker_account.password) %>@mqtt0.homebus.io:8883"
+    "uri": "mqtts://<%= @provision_request.broker_account.username %>:<%= CGI.escape(provision_request.broker_account.password) %>@mqtt0.homebus.io:8883"
   },
   "credentials": {
-    "username": "<%= pr.broker_account.username %>",
-    "password": "<%= pr.broker_account.password %>"
+    "username": "<%= @provision_request.broker_account.username %>",
+    "password": "<%= @provision_request.broker_account.password %>"
   }
 }
   </code>
