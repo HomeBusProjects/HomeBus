@@ -27,28 +27,6 @@ class BrokerAccount < ApplicationRecord
     unencoded_password
   end
 
-# not using this one, never got it working right with Mosquitto
-  def generate_pbkdf2_password!
-    Rails.logger.info 'generating passwords'
-
-    unencoded_password = SecureRandom.base64(40)
-    salt = SecureRandom.base64(16)
-    iterations = 100_000
-    key_length = 64
-
-    encoded = Base64.encode64(OpenSSL::PKCS5.pbkdf2_hmac(unencoded_password, salt, iterations, key_length,
-                                                         OpenSSL::Digest.new('SHA512'))).chomp
-
-    hashed_password = "PBKDF2$sha512$#{iterations}$#{salt}$#{encoded}"
-
-    Rails.logger.info 'setting passwords'
-    self.password = hashed_password
-    self.enc_password = unencoded_password
-    Rails.logger.info 'assigned'
-
-    unencoded_password
-  end
-
   def schedule_remote_delete
     records = "BEGIN;\n\n"
     records += "DELETE FROM \"mosquitto_accounts\" WHERE \"id\" = '#{self.id}';\n\n"
