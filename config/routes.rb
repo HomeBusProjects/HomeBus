@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :journals
   resources :devices_networks
   root to: 'devices#index'
 

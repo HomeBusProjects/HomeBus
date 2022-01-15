@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_22_060901) do
+ActiveRecord::Schema.define(version: 2022_01_15_220518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -154,6 +154,15 @@ ActiveRecord::Schema.define(version: 2021_12_22_060901) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["device_id"], name: "index_devices_users_on_device_id"
     t.index ["user_id"], name: "index_devices_users_on_user_id"
+  end
+
+  create_table "journals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "req", null: false
+    t.string "notes", default: "", null: false
+    t.jsonb "params", default: {}, null: false
+    t.string "token"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "network_monitors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
