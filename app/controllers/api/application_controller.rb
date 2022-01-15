@@ -3,11 +3,24 @@
 class Api::ApplicationController < ActionController::Base
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  before_action :record_access
+
   skip_before_action :verify_authenticity_token
 
   rescue_from ActiveRecord::RecordNotFound, with: -> { render_unauthorized(@scope); }
 
   private
+
+  def record_access
+    Journal.create(req: request.fullpath,
+                   notes: request.method,
+                   params: '',
+                   token: request.headers['Authorization'] ||
+                          request.headers['AUTHORIZATION'] ||
+                          request.headers['HTTP_Authorization'] ||
+                          request.headers['HTTP_AUTHORIZATION'])
+
+  end
 
   def api_authenticate!(scope)
     @scope = scope
