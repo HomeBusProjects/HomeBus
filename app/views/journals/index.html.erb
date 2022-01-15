@@ -2,7 +2,7 @@
 
 <h1>Journals</h1>
 
-<table>
+<table class='table'>
   <thead>
     <tr>
       <th>Req</th>
@@ -16,12 +16,10 @@
   <tbody>
     <% @journals.each do |journal| %>
       <tr>
-        <td><%= journal.req %></td>
+        <td><%= link_to journal.req, journal %></td>
         <td><%= journal.notes %></td>
         <td><%= journal.params %></td>
         <td><%= journal.token %></td>
-        <td><%= link_to 'Show', journal %></td>
-        <td><%= link_to 'Edit', edit_journal_path(journal) %></td>
         <td><%= link_to 'Destroy', journal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -29,5 +27,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Journal', new_journal_path %>
