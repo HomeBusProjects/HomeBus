@@ -53,12 +53,12 @@ class NetworkMonitorsController < ApplicationController
                    serial_number: @network_monitor.id,
                    provision_request: pr
 
+    pr.accept!
        
     @network_monitor = NetworkMonitor.create(user: current_user,
                                              provision_request: pr,
                                              last_accessed: Time.now)
     
-    pr.accept!
 
     respond_to do |format|
       if @network_monitor.save
