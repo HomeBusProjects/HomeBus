@@ -21,7 +21,7 @@ class DevicesNetwork < ApplicationRecord
   end
 
   def refresh_authorization!
-    Rails.logger.info "Authorizing device #{self.device.friendly_name} on network #{self.network.name}"
+    Rails.logger.info ">>> Authorizing device #{self.device.friendly_name} on network #{self.network.name}"
     UpdateMqttAuthJob.perform_later(self.device.provision_request)
   end
 
