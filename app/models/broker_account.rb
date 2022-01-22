@@ -11,6 +11,7 @@ class BrokerAccount < ApplicationRecord
   has_many :broker_acl
 
   before_create :generate_password!
+  after_create :schedule_remote_create
   before_destroy :schedule_remote_delete
 
   def generate_password!
@@ -34,6 +35,11 @@ class BrokerAccount < ApplicationRecord
     records += "COMMIT;\n\n"
 
     RemoveRemoteMQTTAuthJob.perform_later(self.broker, records)
+  end
+
+  def schedule_remote_create
+    Rails.logger.info 'schedule_remote_create: UpdateMQTTAuthJob'
+    UpdateMqttAuthJob.perform_later(self.provision_request)
   end
 
   def to_sql
