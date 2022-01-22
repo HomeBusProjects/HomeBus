@@ -5,8 +5,8 @@ class Device < ApplicationRecord
 
   belongs_to :provision_request
 
-  has_and_belongs_to_many :networks, dependent: :destroy
-  has_and_belongs_to_many :users, dependent: :destroy
+  has_and_belongs_to_many :networks, dependent: :destroy, through: :networks_users
+  has_and_belongs_to_many :users, dependent: :destroy, through: :devices_users
 
   has_and_belongs_to_many :ddcs
 
