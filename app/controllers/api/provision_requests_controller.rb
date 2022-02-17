@@ -51,8 +51,8 @@ class Api::ProvisionRequestsController < Api::ApplicationController
       friendly_name: params[:name],
       status: :unanswered,
 
-      consumes: params[:consumes],
-      publishes: params[:publishes],
+      consumes: params[:consumes] || [],
+      publishes: params[:publishes] || [],
 
       ip_address: request.remote_ip,
       user: @token.user,
