@@ -69,4 +69,4 @@ gem 'net-ssh'
 gem 'brakeman', require: false
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
-gem 'nokogiri', '~> 1.13.5'
+gem 'nokogiri', '~> 1.13.6'
