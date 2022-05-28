@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require 'net/ssh'
-
 class UpdateMqttAuthJob < UpdateRemoteBrokerJob
   queue_as :default
 
   def perform(pr)
     sql_commands = pr.broker_account.to_sql
-#    sql_commands += BrokerAcl.from_provision_request(pr)
+    sql_commands += BrokerAcl.from_provision_request(pr)
 
     Rails.logger.error '>>>> MQTT AUTH <<<<'
     #    Rails.logger.error sql_commands[0, 20] + '...' + sql_commands[-10, 10]

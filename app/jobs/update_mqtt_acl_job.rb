@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'net/ssh'
-
 class UpdateMqttAclJob < UpdateRemoteBrokerJob
   queue_as :default
 

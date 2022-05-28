@@ -2,6 +2,8 @@
 
 require 'net/ssh'
 
+# This is meant to be used as a base class for jobs that need to update a remote broker.
+# It's not meant to be invoked directly.
 class UpdateRemoteBrokerJob < ApplicationJob
   queue_as :default
 
