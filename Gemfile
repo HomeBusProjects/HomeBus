@@ -70,3 +70,4 @@ gem 'brakeman', require: false
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 gem 'nokogiri', '~> 1.13.6'
+gem 'net-smtp'
