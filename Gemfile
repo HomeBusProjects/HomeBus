@@ -72,3 +72,4 @@ gem 'rubocop-rails', require: false
 gem 'nokogiri', '~> 1.13.6'
 gem 'net-smtp'
 gem 'net-pop'
+gem 'net-imap'
