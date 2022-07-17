@@ -64,7 +64,8 @@ gem 'sidekiq'
 
 gem 'bcrypt_pbkdf'
 gem 'ed25519'
-gem 'net-ssh'
+#gem 'net-ssh'
+gem 'net-ssh', git: 'https://github.com/romkey/net-ssh-fixed'
 
 gem 'brakeman', require: false
 gem 'rubocop', require: false

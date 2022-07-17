@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/romkey/net-ssh-fixed
+  revision: e4a2cfe8ef05d91a36f0fc1c7296300042704fa5
+  specs:
+    net-ssh (7.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -170,7 +176,6 @@ GEM
       digest
       net-protocol
       timeout
-    net-ssh (7.0.1)
     nio4r (2.5.8)
     nokogiri (1.13.7-arm64-darwin)
       racc (~> 1.4)
@@ -338,7 +343,7 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
-  net-ssh
+  net-ssh!
   nokogiri (~> 1.13.6)
   pg
   puma (~> 5.6.4)
