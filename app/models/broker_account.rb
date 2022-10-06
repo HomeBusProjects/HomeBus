@@ -34,6 +34,7 @@ class BrokerAccount < ApplicationRecord
 
     self.password = hashed_password
     self.enc_password
+    self.save
     UpdateMqttAuthJob.perform_later(self.provision_request)
   end
 
