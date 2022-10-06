@@ -16,7 +16,6 @@ class BrokerAccount < ApplicationRecord
 
   def generate_password!
     unencoded_password = SecureRandom.base64(40)
-    cost = 12
 
     BCrypt::Engine.cost = 12
 
@@ -26,6 +25,16 @@ class BrokerAccount < ApplicationRecord
     self.enc_password = unencoded_password
 
     unencoded_password
+  end
+  
+  def fix_password!
+    BCrypt::Engine.cost = 12
+
+    hashed_password = BCrypt::Password.create self.enc_password
+
+    self.password = hashed_password
+    self.enc_password
+    UpdateMqttAuthJob.perform_later(self.provision_request)
   end
 
   def schedule_remote_delete
