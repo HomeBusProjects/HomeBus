@@ -77,6 +77,11 @@ class Api::ProvisionRequestsController < Api::ApplicationController
         response[:devices].push(device.to_json)
       end
 
+
+      Rails.logger.info ''
+      Rails.logger.info '>>>> Sending PR email'
+      Rails.logger.info ''
+
       NotifyRequestMailer.with(user: pr.user, provision_request: pr).new_provisioning_request
 
       if pr.accepted?
