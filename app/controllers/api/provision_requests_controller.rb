@@ -82,7 +82,7 @@ class Api::ProvisionRequestsController < Api::ApplicationController
       Rails.logger.info '>>>> Sending PR email'
       Rails.logger.info ''
 
-      NotifyRequestMailer.with(user: pr.user, provision_request: pr).new_provisioning_request
+      NotifyRequestMailer.with(user: pr.user, provision_request: pr).new_provisioning_request.deliver_later
 
       if pr.accepted?
         response[:broker] = pr.network.broker.to_json
