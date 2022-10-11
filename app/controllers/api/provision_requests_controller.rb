@@ -75,9 +75,9 @@ class Api::ProvisionRequestsController < Api::ApplicationController
                                  public: false
                                })
         response[:devices].push(device.to_json)
-
-        NotifyRequestMailer.with(user: pr.user).new_provisioning_request
       end
+
+      NotifyRequestMailer.with(user: pr.user).new_provisioning_request
 
       if pr.accepted?
         response[:broker] = pr.network.broker.to_json
