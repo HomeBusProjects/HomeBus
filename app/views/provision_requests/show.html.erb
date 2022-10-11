@@ -175,3 +175,9 @@
 <p>
   <%= link_to 'Edit', edit_provision_request_path(@provision_request), class: 'btn btn-info' %>
 </p>
+
+<p>
+<% if can? :destroy, @device %>
+  <%= button_to "Delete this request", @provision_request, method: :delete, class: 'btn btn-danger' %>
+<% end %>
+</p>
