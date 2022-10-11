@@ -75,6 +75,8 @@ class Api::ProvisionRequestsController < Api::ApplicationController
                                  public: false
                                })
         response[:devices].push(device.to_json)
+
+        NotifyRequestMailer.with(user: current_user).new_provsioning_request.deliver_later
       end
 
       if pr.accepted?
