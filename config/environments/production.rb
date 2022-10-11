@@ -79,6 +79,7 @@ Rails.application.configure do
     config.action_mailer.delivery_method = :letter_opener_web
   else
     config.action_mailer.delivery_method = :smtp
+    config.action_mailer.deliver_later_queue_name = :default
 
     config.action_mailer.smtp_settings = {
       address: ENV['MAILGUN_SMTP_SERVER'],
