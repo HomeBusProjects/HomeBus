@@ -10,28 +10,23 @@
 A new device <%= @provision_request.friendly_name %> would like to join your Homebus network <%= @provision_request.network.name %>.
 </p>
 
-<ul>
-  <li><%= @provision_request.manufacturer %></li>
-  <li><%= @provision_request.model %></li>
-  <li><%= @provision_request.serial_number %></li>
-</ul>
 <% if @provision_request.pin.present? %>
 PIN number <%= @provision_request.pin %> - you may find the PIN printed on the device or displayed, if it has a display.
 <% end %>
 
-<% if @provision_request.wo_ddcs.length > 0 %>
+<% if @provision_request.publishes.length > 0 %>
 This device would like to publish the following:
 <ul>
-  <% @provision_request.wo_ddcs.each do |ddc| %>
+  <% @provision_request.publishes.each do |ddc| %>
   <li><%= ddc %></li>
   <% end %>
 </ul>
 <% end %>
 
-<% if @provision_request.ro_ddcs.length > 0 %>
+<% if @provision_request.consumes.length > 0 %>
 This device would like to consume the following:
 <ul>
-  <% @provision_request.ro_ddcs.each do |ddc| %>
+  <% @provision_request.consumes.each do |ddc| %>
   <li><%= ddc %></li>
   <% end %>
 </ul>
