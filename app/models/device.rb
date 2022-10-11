@@ -21,8 +21,6 @@ class Device < ApplicationRecord
     self.networks << self.provision_request.network
 
     Token.create(name: "manage device #{self.friendly_name}", scope: 'device:manage', device: self, enabled: true)
-
-    UpdateMqttAclJob.perform_later(self.provision_request)
   end
 
   def to_json(with_token = false)
