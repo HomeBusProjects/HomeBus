@@ -7,15 +7,15 @@ ruby '3.1.3'
 
 gem 'pg'
 gem 'puma', '~> 5.6.4'
-gem 'rails', '~> 6.1.1'
+gem 'rails', '~> 6.1.7.3'
 gem 'sass-rails', '~> 5.0'
 #gem 'uglifier', '>= 1.3.0'
 gem 'terser'
 
 # gem 'therubyracer'
 
-gem 'actionview', '>= 6.0.0'
-gem 'railties', '>= 6.0.0'
+gem 'actionview', '>= 6.1.7.3'
+gem 'railties', '>= 6.1.7.3'
 
 gem 'dotenv-rails'
 
