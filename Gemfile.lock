@@ -174,11 +174,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.13.10-aarch64-linux)
-      racc (~> 1.4)
-    nokogiri (1.13.10-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.13.10-x86_64-linux)
+    nokogiri (1.14.5-aarch64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (1.23.0)
@@ -212,8 +208,9 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.5.0)
-      loofah (~> 2.19, >= 2.19.1)
+    rails-html-sanitizer (1.6.0)
+      loofah (~> 2.21)
+      nokogiri (~> 1.14)
     railties (6.1.7.3)
       actionpack (= 6.1.7.3)
       activesupport (= 6.1.7.3)
@@ -317,8 +314,6 @@ GEM
 
 PLATFORMS
   aarch64-linux
-  arm64-darwin-22
-  x86_64-linux
 
 DEPENDENCIES
   actionview (>= 6.1.7.3)
@@ -345,7 +340,7 @@ DEPENDENCIES
   net-pop
   net-smtp
   net-ssh!
-  nokogiri (~> 1.13.6)
+  nokogiri (~> 1.14.3)
   pg
   puma (~> 5.6.4)
   rails (~> 6.1.7.3)
@@ -365,4 +360,4 @@ RUBY VERSION
    ruby 3.1.4p223
 
 BUNDLED WITH
-   2.4.7
+   2.4.14
