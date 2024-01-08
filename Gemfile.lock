@@ -175,7 +175,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nio4r (2.5.9)
+    nio4r (2.7.0)
     nokogiri (1.14.5-aarch64-linux)
       racc (~> 1.4)
     nokogiri (1.14.5-arm64-darwin)
@@ -190,7 +190,7 @@ GEM
     pg (1.5.3)
     popper_js (2.11.8)
     public_suffix (5.0.3)
-    puma (5.6.7)
+    puma (5.6.8)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
@@ -353,7 +353,7 @@ DEPENDENCIES
   net-ssh!
   nokogiri (~> 1.14.3)
   pg
-  puma (~> 5.6.7)
+  puma (~> 5.6.8)
   rails (~> 6.1.7.3)
   railties (>= 6.1.7.3)
   rubocop
