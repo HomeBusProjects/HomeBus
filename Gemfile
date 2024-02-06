@@ -71,7 +71,7 @@ gem 'net-ssh', git: 'https://github.com/romkey/net-ssh-fixed'
 gem 'brakeman', require: false
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
-gem 'nokogiri', '~> 1.14.3'
+gem 'nokogiri', '~> 1.16.2'
 gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap'
