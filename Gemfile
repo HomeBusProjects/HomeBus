@@ -7,7 +7,7 @@ ruby '3.1.4'
 
 gem 'pg'
 gem 'puma', '~> 5.6.7'
-gem 'rails', '~> 6.1.7.3'
+gem 'rails', '~> 6.1.7.7'
 gem 'sass-rails', '~> 5.0'
 #gem 'uglifier', '>= 1.3.0'
 gem 'terser'
